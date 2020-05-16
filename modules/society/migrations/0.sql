@@ -1,5 +1,3 @@
-USE `es_extended`;
-
 CREATE TABLE IF NOT EXISTS `society_moneywash` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(60) NOT NULL,

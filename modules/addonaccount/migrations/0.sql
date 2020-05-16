@@ -1,5 +1,3 @@
-USE `es_extended`;
-
 CREATE TABLE IF NOT EXISTS `addon_account` (
 	`name` VARCHAR(60) NOT NULL,
 	`label` VARCHAR(100) NOT NULL,
