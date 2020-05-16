@@ -48,7 +48,7 @@ self.DisableControls = function()
 
 end
 
-self.openMenu = function(namespace, name, data)
+self.OpenMenu = function(namespace, name, data)
 
 	for i=1, #self.Timeouts, 1 do
 		ESX.ClearTimeout(self.Timeouts[i])
@@ -73,7 +73,7 @@ self.openMenu = function(namespace, name, data)
 
 end
 
-self.closeMenu = function(namespace, name)
+self.CloseMenu = function(namespace, name)
 
 	self.OpenedMenus[namespace .. '_' .. name] = nil
 

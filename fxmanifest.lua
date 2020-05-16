@@ -107,6 +107,7 @@ esxmodule 'interact'       -- Interact menu (marker / npc)
 esxmodule 'addonaccount'   -- Addon account
 esxmodule 'addoninventory' -- Addon inventory
 esxmodule 'datastore'      -- Arbitrary data store
+esxmodule 'container'      -- Wrapper around addonaccount / addoninventory / datastore stuff
 esxmodule 'society'        -- Society management
 
 -- UI

@@ -1,4 +1,9 @@
 local self = ESX.Modules['job_police']
+local Container = ESX.Modules['container']
+
+AddEventHandler('esx:container:ready', function()
+  Container.Ensure('society_police', 'Police', nil, {})
+end)
 
 RegisterNetEvent('esx_policejob:confiscatePlayerItem')
 AddEventHandler('esx_policejob:confiscatePlayerItem', function(target, itemType, itemName, amount)

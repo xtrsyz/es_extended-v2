@@ -120,7 +120,7 @@ RegisterNUICallback('nui_ready', function(data, cb)
 end)
 
 RegisterNUICallback('frame_message', function(data, cb)
-  TriggerEvent('esx:frame_message', data.name, data.msg, data.cb)
+  TriggerEvent('esx:frame_message', data.name, data.msg)
   cb('')
 end)
 

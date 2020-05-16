@@ -111,4 +111,6 @@ MySQL.ready(function()
 
   self.Ready = true
 
+  TriggerEvent('esx_datastore:ready')
+
 end)

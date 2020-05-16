@@ -110,4 +110,6 @@ MySQL.ready(function()
 
   self.Ready = true
 
+  TriggerEvent('esx_addonaccount:ready')
+
 end)

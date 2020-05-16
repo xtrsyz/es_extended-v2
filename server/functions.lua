@@ -253,9 +253,6 @@ ESX.SavePlayer = function(xPlayer, cb)
 
   statement = statement .. ' WHERE `identifier` = @identifier'
 
-  print(statement)
-  print(ESX.DumpTable(fields))
-
   MySQL.Async.execute(statement, fields, function(rowsChanged)
 
 		print(('[es_extended] [^2INFO^7] Saved player "%s^7"'):format(xPlayer.getName()))

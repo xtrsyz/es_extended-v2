@@ -20,48 +20,52 @@ end
 
 self.CreateAddonAccount = function(name, owner, money)
 
-  local self = {}
+  local _self = {}
 
-	self.name  = name
-	self.owner = owner
-	self.money = money
+	_self.name  = name
+	_self.owner = owner
+	_self.money = money
 
-	self.addMoney = function(m)
-		self.money = self.money + m
-		self.save()
-
-		TriggerClientEvent('esx_addonaccount:setMoney', -1, self.name, self.money)
+	_self.getMoney = function()
+    return _self.money
 	end
 
-	self.removeMoney = function(m)
-		self.money = self.money - m
-		self.save()
+	_self.addMoney = function(m)
+		_self.money = _self.money + m
+		_self.save()
 
-		TriggerClientEvent('esx_addonaccount:setMoney', -1, self.name, self.money)
+		TriggerClientEvent('esx_addonaccount:setMoney', -1, _self.name, _self.money)
 	end
 
-	self.setMoney = function(m)
-		self.money = m
-		self.save()
+	_self.removeMoney = function(m)
+		_self.money = _self.money - m
+		_self.save()
 
-		TriggerClientEvent('esx_addonaccount:setMoney', -1, self.name, self.money)
+		TriggerClientEvent('esx_addonaccount:setMoney', -1, _self.name, _self.money)
 	end
 
-	self.save = function()
-		if self.owner == nil then
+	_self.setMoney = function(m)
+		_self.money = m
+		_self.save()
+
+		TriggerClientEvent('esx_addonaccount:setMoney', -1, _self.name, _self.money)
+	end
+
+	_self.save = function()
+		if _self.owner == nil then
 			MySQL.Async.execute('UPDATE addon_account_data SET money = @money WHERE account_name = @account_name', {
-				['@account_name'] = self.name,
-				['@money']        = self.money
+				['@account_name'] = _self.name,
+				['@money']        = _self.money
 			})
 		else
 			MySQL.Async.execute('UPDATE addon_account_data SET money = @money WHERE account_name = @account_name AND owner = @owner', {
-				['@account_name'] = self.name,
-				['@money']        = self.money,
-				['@owner']        = self.owner
+				['@account_name'] = _self.name,
+				['@money']        = _self.money,
+				['@owner']        = _self.owner
 			})
 		end
 	end
 
-  return self
+  return _self
 
 end

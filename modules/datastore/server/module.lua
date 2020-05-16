@@ -43,70 +43,67 @@ self.GetSharedDataStore = function(name)
 end
 
 self.CreateDataStore = function(name, owner, data)
-	local self = {}
 
-	self.name  = name
-	self.owner = owner
-	self.data  = data
+  local _self = {}
+
+	_self.name  = name
+	_self.owner = owner
+	_self.data  = data
 
 	local timeoutCallbacks = {}
 
-	self.set = function(key, val)
+	_self.set = function(key, val)
 		data[key] = val
-		self.save()
+		_self.save()
 	end
 
-	self.get = function(key, i)
-		local path = stringsplit(key, '.')
-		local obj  = self.data
+	_self.get = function(key)
+
+    local path = stringsplit(key, '.')
+		local obj  = _self.data
 
 		for i=1, #path, 1 do
 			obj = obj[path[i]]
 		end
 
-		if i == nil then
-			return obj
-		else
-			return obj[i]
-		end
+    return obj
+
 	end
 
-	self.count = function(key, i)
+  _self.count = function(key)
+
 		local path = stringsplit(key, '.')
-		local obj  = self.data
+		local obj  = _self.data
 
 		for i=1, #path, 1 do
 			obj = obj[path[i]]
-		end
-
-		if i ~= nil then
-			obj = obj[i]
-		end
+    end
 
 		if obj == nil then
 			return 0
 		else
 			return #obj
-		end
+    end
+
 	end
 
-	self.save = function()
+	_self.save = function()
 		for i=1, #timeoutCallbacks, 1 do
 			ESX.ClearTimeout(timeoutCallbacks[i])
 			timeoutCallbacks[i] = nil
 		end
 
 		local timeoutCallback = ESX.SetTimeout(10000, function()
-			if self.owner == nil then
+			if _self.owner == nil then
 				MySQL.Async.execute('UPDATE datastore_data SET data = @data WHERE name = @name', {
-					['@data'] = json.encode(self.data),
-					['@name'] = self.name,
+					['@data'] = json.encode(_self.data),
+					['@name'] = _self.name,
 				})
 			else
 				MySQL.Async.execute('UPDATE datastore_data SET data = @data WHERE name = @name and owner = @owner', {
-					['@data']  = json.encode(self.data),
-					['@name']  = self.name,
-					['@owner'] = self.owner,
+					['@data']  = json.encode(_self.data),
+					['@name']  = _self.name,
+					['@owner'] = _self.owner,
 				})
 			end
 		end)
@@ -114,5 +111,6 @@ self.CreateDataStore = function(name, owner, data)
 		table.insert(timeoutCallbacks, timeoutCallback)
 	end
 
-	return self
+  return _self
+
 end

@@ -94,7 +94,7 @@ MySQL.ready(function()
 				table.insert(items[itemOwner], {
 					name  = itemName,
 					count = itemCount,
-					label = Items[itemName]
+					label = self.Items[itemName]
 				})
 			end
 
@@ -120,5 +120,7 @@ MySQL.ready(function()
   end
 
   self.Ready = true
+
+  TriggerEvent('esx_addoninventory:ready')
 
 end)
