@@ -36,7 +36,7 @@ def create_markdown(cls, file_name):
     if method.returns[0].type.id != 'nil':
       file.write('<span style="color:' + colors[method.returns[0].type.id] + '">' + method.returns[0].type.id + '</span> ')
 
-    file.write('**' + method.name + ' ( **')
+    file.write('**' + method.name + '** **(** ')
 
     paramCount = 0
 
