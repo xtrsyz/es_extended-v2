@@ -45,7 +45,7 @@ def create_markdown(cls, file_name):
       if paramCount > 0:
         file.write(', ')
 
-      file.write('<span style="color:' + colors[param.type.id] + '">' + param.type.id + '</span> ' + param.name)
+      file.write('*<span style="color:' + colors[param.type.id] + '">' + param.type.id + '</span>* ' + param.name)
 
       paramCount = paramCount + 1
 
