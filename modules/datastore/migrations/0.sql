@@ -1,5 +1,3 @@
-USE `es_extended`;
-
 CREATE TABLE IF NOT EXISTS `datastore` (
 	`name` VARCHAR(60) NOT NULL,
 	`label` VARCHAR(100) NOT NULL,
