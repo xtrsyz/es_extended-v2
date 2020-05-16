@@ -1,5 +1,7 @@
 function CreateExtendedPlayer(data)
 
+  ---- Class representing a player
+  --- @class xPlayer
   local self = {}
 
 	self.source    = data.playerId
@@ -11,72 +13,131 @@ function CreateExtendedPlayer(data)
 
 	ExecuteCommand(('add_principal identifier.license:%s group.%s'):format(self.identifier, self.group))
 
+  --- @function xPlayer:triggerEvent
+  --- Trigger event to player
+  --- @param eventName string Event name
+  --- @param ...rest any Event arguments
+  --- @return nil
 	self.triggerEvent = function(eventName, ...)
 		TriggerClientEvent(eventName, self.source, ...)
 	end
 
+  --- @function xPlayer:setCoords
+  --- Update player coords on both server and client
+  --- @param coords vector3 Coords
+  --- @return nil
 	self.setCoords = function(coords)
 		self.updateCoords(coords)
 		self.triggerEvent('esx:teleport', coords)
 	end
 
+  --- @function xPlayer:updateCoords
+  --- Update player coords on server
+  --- @param coords vector3 Coords
+  --- @return nil
 	self.updateCoords = function(coords)
 		self.coords = {x = ESX.Math.Round(coords.x, 1), y = ESX.Math.Round(coords.y, 1), z = ESX.Math.Round(coords.z, 1), heading = ESX.Math.Round(coords.heading or 0.0, 1)}
 	end
 
-	self.getCoords = function(vector)
-		if vector then
+  --- @function xPlayer:getCoords
+  --- Update player coords on server
+  --- @param asVector boolean Get coords as vector or table ?
+  --- @return any
+	self.getCoords = function(asVector)
+		if asVector then
 			return vector3(self.coords.x, self.coords.y, self.coords.z)
 		else
 			return self.coords
 		end
 	end
 
+  --- @function xPlayer:kick
+  --- Kick player
+  --- @param reason string Reason to kick player for
+  --- @return nil
 	self.kick = function(reason)
 		DropPlayer(self.source, reason)
 	end
 
+  --- @function xPlayer:setMoney
+  --- Set amount for player 'money' account
+  --- @param money number Amount
+  --- @return nil
 	self.setMoney = function(money)
 		money = ESX.Math.Round(money)
 		self.setAccountMoney('money', money)
 	end
 
+  --- @function xPlayer:getMoney
+  --- Get amount for player 'money' account
+  --- @return number
 	self.getMoney = function()
 		return self.getAccount('money').money
 	end
 
+  --- @function xPlayer:addMoney
+  --- Add amount for player 'money' account
+  --- @param money number Amount
+  --- @return nil
 	self.addMoney = function(money)
 		money = ESX.Math.Round(money)
 		self.addAccountMoney('money', money)
 	end
 
+  --- @function xPlayer:removeMoney
+  --- Remove amount for player 'money' account
+  --- @param money number Amount
+  --- @return nil
 	self.removeMoney = function(money)
 		money = ESX.Math.Round(money)
 		self.removeAccountMoney('money', money)
 	end
 
+  --- @function xPlayer:getIdentifier
+  --- Get player identifier
+  --- @return string
 	self.getIdentifier = function()
 		return self.identifier
 	end
 
+  --- @function xPlayer:setGroup
+  --- Set player group
+  --- @param newGroup string New group
+  --- @return nil
 	self.setGroup = function(newGroup)
 		ExecuteCommand(('remove_principal identifier.license:%s group.%s'):format(self.identifier, self.group))
 		self.group = newGroup
 		ExecuteCommand(('add_principal identifier.license:%s group.%s'):format(self.identifier, self.group))
 	end
 
+  --- @function xPlayer:getGroup
+  --- Get player group
+  --- @return string
 	self.getGroup = function()
 		return self.group
 	end
 
+  --- @function xPlayer:set
+  --- Set field on this xPlayer instance
+  --- @param k string Field name
+  --- @param v any Field value
+  --- @return nil
 	self.set = function(k, v)
 		self[k] = v
 	end
 
+  --- @function xPlayer:get
+  --- Get field on this xPlayer instance
+  --- @param k string Field name
+  --- @return any
 	self.get = function(k)
 		return self[k]
 	end
 
+  --- @function xPlayer:getAccounts
+  --- Get player accounts
+  --- @param minimal boolean Compact output
+  --- @return table
 	self.getAccounts = function(minimal)
 		if minimal then
 			local minimalAccounts = {}
@@ -91,6 +152,10 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getAccount
+  --- Get player account
+  --- @param account string Account name
+  --- @return table
 	self.getAccount = function(account)
 		for k,v in ipairs(self.accounts) do
 			if v.name == account then
@@ -99,6 +164,10 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getInventory
+  --- Get player inventory
+  --- @param minimal boolean Compact output
+  --- @return table
 	self.getInventory = function(minimal)
 		if minimal then
 			local minimalInventory = {}
@@ -115,10 +184,17 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getJob
+  --- Get player job
+  --- @return table
 	self.getJob = function()
 		return self.job
 	end
 
+  --- @function xPlayer:getLoadout
+  --- Get player inventory
+  --- @param minimal boolean Compact output
+  --- @return table
 	self.getLoadout = function(minimal)
 		if minimal then
 			local minimalLoadout = {}
@@ -148,14 +224,26 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getName
+  --- Get player name
+  --- @return string
 	self.getName = function()
 		return self.name
 	end
 
+  --- @function xPlayer:setName
+  --- Set player name
+  --- @param newName string New name
+  --- @return nil
 	self.setName = function(newName)
 		self.name = newName
 	end
 
+  --- @function xPlayer:setAccountMoney
+  --- Set player account money
+  --- @param accountName string Account names
+  --- @param money number Amount
+  --- @return nil
 	self.setAccountMoney = function(accountName, money)
 		if money >= 0 then
 			local account = self.getAccount(accountName)
@@ -170,6 +258,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:addAccountMoney
+  --- Add player account money
+  --- @param accountName string Account names
+  --- @param money number Amount
+  --- @return nil
 	self.addAccountMoney = function(accountName, money)
 		if money > 0 then
 			local account = self.getAccount(accountName)
@@ -183,6 +276,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:addAccountMoney
+  --- Add player account money
+  --- @param accountName string Account names
+  --- @param money number Amount
+  --- @return nil
 	self.removeAccountMoney = function(accountName, money)
 		if money > 0 then
 			local account = self.getAccount(accountName)
@@ -196,6 +294,10 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getInventoryItem
+  --- Get player inventory item
+  --- @param name string Account name
+  --- @return table
 	self.getInventoryItem = function(name)
 		for k,v in ipairs(self.inventory) do
 			if v.name == name then
@@ -206,6 +308,11 @@ function CreateExtendedPlayer(data)
 		return
 	end
 
+  --- @function xPlayer:addInventoryItem
+  --- Add player inventory item
+  --- @param name string Account name
+  --- @param count number Amount
+  --- @return nil
 	self.addInventoryItem = function(name, count)
 		local item = self.getInventoryItem(name)
 
@@ -219,6 +326,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:removeInventoryItem
+  --- Remove player inventory item
+  --- @param name string Account name
+  --- @param count number Amount
+  --- @return nil
 	self.removeInventoryItem = function(name, count)
 		local item = self.getInventoryItem(name)
 
@@ -236,6 +348,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:removeInventoryItem
+  --- Remove player inventory item
+  --- @param name string Account name
+  --- @param count number Amount
+  --- @return nil
 	self.setInventoryItem = function(name, count)
 		local item = self.getInventoryItem(name)
 
@@ -250,14 +367,23 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getWeight
+  --- Get player weight
+  --- @return number
 	self.getWeight = function()
 		return self.weight
 	end
 
+  --- @function xPlayer:getMaxWeight
+  --- Get max player weight
+  --- @return number
 	self.getMaxWeight = function()
 		return self.maxWeight
 	end
 
+  --- @function xPlayer:canCarryItem
+  --- Check if player can carry count of given item
+  --- @return boolean
 	self.canCarryItem = function(name, count)
 		local currentWeight, itemWeight = self.weight, ESX.Items[name].weight
 		local newWeight = currentWeight + (itemWeight * count)
@@ -265,6 +391,9 @@ function CreateExtendedPlayer(data)
 		return newWeight <= self.maxWeight
 	end
 
+  --- @function xPlayer:maxCarryItem
+  --- Get max count of specific item player can carry
+  --- @return number
   self.maxCarryItem = function(name)
 		local count = 0
 		local currentWeight, itemWeight = self.getWeight(), ESX.Items[name].weight
@@ -274,6 +403,13 @@ function CreateExtendedPlayer(data)
 		return math.max(0, math.floor(newWeight / itemWeight))
 	end
 
+  --- @function xPlayer:canSwapItem
+  --- Check if player can sawp item with other item
+  --- @param firstItem string Item to be swapped with testItem
+  --- @param firstItemCount number Count of item to swap with testItem
+  --- @param testItem string Item intended to replace firstItem
+  --- @param testItemCount number Count of item intended to replace firstItem
+  --- @return boolean
 	self.canSwapItem = function(firstItem, firstItemCount, testItem, testItemCount)
 		local firstItemObject = self.getInventoryItem(firstItem)
 		local testItemObject = self.getInventoryItem(testItem)
@@ -288,11 +424,20 @@ function CreateExtendedPlayer(data)
 		return false
 	end
 
+  --- @function xPlayer:setMaxWeight
+  --- Set max player weight
+  --- @param newWeight number New weight
+  --- @return nil
 	self.setMaxWeight = function(newWeight)
 		self.maxWeight = newWeight
 		self.triggerEvent('esx:setMaxWeight', self.maxWeight)
 	end
 
+  --- @function xPlayer:setJob
+  --- Set player job
+  --- @param job string New job
+  --- @param grade string New job grade
+  --- @return nil
 	self.setJob = function(job, grade)
 		grade = tostring(grade)
 		local lastJob = json.decode(json.encode(self.job))
@@ -328,6 +473,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:addWeapon
+  --- Add weapon to player
+  --- @param weaponName string Weapon name
+  --- @param ammo number Ammo
+  --- @return nil
 	self.addWeapon = function(weaponName, ammo)
 		if not self.hasWeapon(weaponName) then
 			local weaponLabel = ESX.GetWeaponLabel(weaponName)
@@ -345,6 +495,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:addWeaponComponent
+  --- Add weapon to player
+  --- @param weaponName string Weapon name
+  --- @param weaponComponent string Weapon component
+  --- @return nil
 	self.addWeaponComponent = function(weaponName, weaponComponent)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -361,6 +516,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:addWeaponAmmo
+  --- Add ammo to player weapon
+  --- @param weaponName string Weapon name
+  --- @param ammoCount number Ammo count
+  --- @return nil
 	self.addWeaponAmmo = function(weaponName, ammoCount)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -370,6 +530,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:updateWeaponAmmo
+  --- Update player weapon ammo
+  --- @param weaponName string Weapon name
+  --- @param ammoCount number Ammo count
+  --- @return nil
 	self.updateWeaponAmmo = function(weaponName, ammoCount)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -380,6 +545,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:setWeaponTint
+  --- Update player weapon ammo
+  --- @param weaponName string Weapon name
+  --- @param weaponTintIndex number Weapon tint index
+  --- @return nil
 	self.setWeaponTint = function(weaponName, weaponTintIndex)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -394,6 +564,10 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:getWeaponTint
+  --- Get player weapon tint index
+  --- @param weaponName string Weapon name
+  --- @return number
 	self.getWeaponTint = function(weaponName)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -404,6 +578,10 @@ function CreateExtendedPlayer(data)
 		return 0
 	end
 
+  --- @function xPlayer:removeWeapon
+  --- Remove player weapon
+  --- @param weaponName string Weapon name
+  --- @return nil
 	self.removeWeapon = function(weaponName)
 		local weaponLabel
 
@@ -426,6 +604,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:removeWeaponComponent
+  --- Remove player weapon component
+  --- @param weaponName string Weapon name
+  --- @param weaponComponent string Weapon component
+  --- @return nil
 	self.removeWeaponComponent = function(weaponName, weaponComponent)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -448,6 +631,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:removeWeaponAmmo
+  --- Remove player weapon ammo
+  --- @param weaponName string Weapon name
+  --- @param ammoCount number Ammo count
+  --- @return nil
 	self.removeWeaponAmmo = function(weaponName, ammoCount)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -457,6 +645,11 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:hasWeaponComponent
+  --- Check if player weapon has component
+  --- @param weaponName string Weapon name
+  --- @param weaponComponent string Weapon component
+  --- @return boolean
 	self.hasWeaponComponent = function(weaponName, weaponComponent)
 		local loadoutNum, weapon = self.getWeapon(weaponName)
 
@@ -473,6 +666,10 @@ function CreateExtendedPlayer(data)
 		end
 	end
 
+  --- @function xPlayer:hasWeapon
+  --- Check if player has weapon
+  --- @param weaponName string Weapon name
+  --- @return boolean
 	self.hasWeapon = function(weaponName)
 		for k,v in ipairs(self.loadout) do
 			if v.name == weaponName then
@@ -483,6 +680,10 @@ function CreateExtendedPlayer(data)
 		return false
 	end
 
+  --- @function xPlayer:getWeapon
+  --- Get player weapon
+  --- @param weaponName string Weapon name
+  --- @return table
 	self.getWeapon = function(weaponName)
 		for k,v in ipairs(self.loadout) do
 			if v.name == weaponName then
@@ -493,14 +694,36 @@ function CreateExtendedPlayer(data)
 		return
 	end
 
+  --- @function xPlayer:showNotification
+  --- Show notification to player
+  --- @param msg string Notification body
+  --- @param flash boolean Weither to flash or not
+  --- @param saveToBrief boolean Save to brief (pause menu)
+  --- @param hudColorIndex Background color
+  --- @return nil
 	self.showNotification = function(msg, flash, saveToBrief, hudColorIndex)
 		self.triggerEvent('esx:showNotification', msg, flash, saveToBrief, hudColorIndex)
 	end
 
+  --- @function xPlayer:showHelpNotification
+  --- Show notification to player
+  --- @param msg string Notification body
+  --- @param thisFrame boolean Show for 1 frame only
+  --- @param beep boolean Weither to beep or not
+  --- @param duration Notification duration
+  --- @return nil
 	self.showHelpNotification = function(msg, thisFrame, beep, duration)
 		self.triggerEvent('esx:showHelpNotification', msg, thisFrame, beep, duration)
 	end
 
+  --- @function xPlayer:serialize
+  --- Serialize player data
+  --- Can be extended by listening for esx:player:serialize event
+  ---
+  --- AddEventHandler('esx:player:serialize', function(add)
+  ---   add({somefield = somevalue})
+  --- end)
+  --- @return table
   self.serialize = function()
 
     local data = {
@@ -526,6 +749,14 @@ function CreateExtendedPlayer(data)
 
   end
 
+  --- @function xPlayer:serializeDB
+  --- Serialize player data for saving in database
+  --- Can be extended by listening for esx:player:serialize:db event
+  ---
+  --- AddEventHandler('esx:player:serialize:db', function(add)
+  ---   add({somefield = somevalue})
+  --- end)
+  --- @return table
   self.serializeDB = function()
 
     local job = self.getJob()
