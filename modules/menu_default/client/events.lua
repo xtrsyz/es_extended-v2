@@ -1,35 +1,36 @@
 local self = ESX.Modules['menu_default']
+local Input = ESX.Modules['input']
 
 AddEventHandler('esx:nui_ready', function()
   ESX.CreateFrame('menu_default', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_default/data/html/ui.html')
 end)
 
-ESX.Modules['input'].On('pressed', 0, 18, function(lastTime)
+Input.On('pressed', 0, 18, function(lastTime)
 	if (GetGameTimer() - lastTime) < 150 then return end
 	ESX.SendFrameMessage('menu_default', {action = 'controlPressed', control = 'ENTER'})
 end)
 
-ESX.Modules['input'].On('pressed', 0, 177, function(lastTime)
+Input.On('pressed', 0, 177, function(lastTime)
 	if (GetGameTimer() - lastTime) < 150 then return end
 	ESX.SendFrameMessage('menu_default', {action  = 'controlPressed', control = 'BACKSPACE'})
 end)
 
-ESX.Modules['input'].On('pressed', 0, 27, function(lastTime)
+Input.On('pressed', 0, 27, function(lastTime)
 	if (GetGameTimer() - lastTime) < 300 then return end
 	ESX.SendFrameMessage('menu_default', {action  = 'controlPressed', control = 'TOP'})
 end)
 
-ESX.Modules['input'].On('pressed', 0, 173, function(lastTime)
+Input.On('pressed', 0, 173, function(lastTime)
 	if (GetGameTimer() - lastTime) < 300 then return end
 	ESX.SendFrameMessage('menu_default', {action  = 'controlPressed', control = 'DOWN'})
 end)
 
-ESX.Modules['input'].On('pressed', 0, 174, function(lastTime)
+Input.On('pressed', 0, 174, function(lastTime)
 	if (GetGameTimer() - lastTime) < 300 then return end
 	ESX.SendFrameMessage('menu_default', {action  = 'controlPressed', control = 'LEFT'})
 end)
 
-ESX.Modules['input'].On('pressed', 0, 175, function(lastTime)
+Input.On('pressed', 0, 175, function(lastTime)
 	if (GetGameTimer() - lastTime) < 300 then return end
 	ESX.SendFrameMessage('menu_default', {action  = 'controlPressed', control = 'RIGHT'})
 end)
