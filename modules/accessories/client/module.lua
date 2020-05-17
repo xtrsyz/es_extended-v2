@@ -65,7 +65,7 @@ self.Init = function()
 				SetBlipAsShortRange(blip, true)
 
 				BeginTextCommandSetBlipName("STRING")
-				AddTextComponentString(_U('accessories:shop', _U(string.lower(k))))
+				AddTextComponentString(_U('accessories:shop', _U('accessories:' .. string.lower(k))))
 				EndTextCommandSetBlipName(blip)
 			end
 		end

@@ -814,6 +814,7 @@ function LoadExtendedPlayer(identifier, playerId, cb)
       playerId   = playerId,
       identifier = identifier,
       weight     = 0,
+      name       = GetPlayerName(playerId),
     }
 
     for entryName, entryValue in pairs(result[1]) do

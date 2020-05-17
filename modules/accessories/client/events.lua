@@ -4,7 +4,7 @@ local Input = ESX.Modules['input']
 
 AddEventHandler('esx_accessories:hasEnteredMarker', function(zone)
 	self.CurrentAction     = 'shop_menu'
-	self.CurrentActionMsg  = _U('press_access')
+	self.CurrentActionMsg  = _U('accessories:press_access')
 	self.CurrentActionData = { accessory = zone }
 end)
 
