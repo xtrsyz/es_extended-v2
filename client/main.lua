@@ -130,7 +130,6 @@ AddEventHandler('esx:playerLoaded', function(playerData)
 		TriggerServerEvent('esx:onPlayerSpawn')
 		TriggerEvent('esx:onPlayerSpawn')
     TriggerEvent('esx:restoreLoadout')
-    TriggerEvent('esx:voiceLoaded')
 
   end)
 
