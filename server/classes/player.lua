@@ -939,21 +939,19 @@ AddEventHandler('esx:player:load:inventory', function(identifier, playerId, row,
 
     local foundItems = {}
 
-    if row.inventory and row.inventory ~= '' then
+    local rowInventory = row.inventory or '[]'
 
-      local inventory = json.decode(row.inventory)
+    local inventory = json.decode(rowInventory)
 
-      for name,count in pairs(inventory) do
+    for name,count in pairs(inventory) do
 
-        local item = ESX.Items[name]
+      local item = ESX.Items[name]
 
-        if item then
-          foundItems[name] = count
-        else
-          print(('[es_extended] [^3WARNING^7] Ignoring invalid item "%s" for "%s"'):format(name, identifier))
-        end
+      if item then
+        foundItems[name] = count
+      else
+        print(('[es_extended] [^3WARNING^7] Ignoring invalid item "%s" for "%s"'):format(name, identifier))
       end
-
     end
 
     for name,item in pairs(ESX.Items) do
@@ -1010,30 +1008,28 @@ AddEventHandler('esx:player:load:loadout', function(identifier, playerId, row, u
 
     local data = {}
 
-    if row.loadout and row.loadout ~= '' then
+    local rowLoadout = row.loadout or '[]'
 
-      local loadout = json.decode(row.loadout)
+    local loadout = json.decode(rowLoadout)
 
-      for name,weapon in pairs(loadout) do
+    for name,weapon in pairs(loadout) do
 
-        local label = ESX.GetWeaponLabel(name)
+      local label = ESX.GetWeaponLabel(name)
 
-        if label then
+      if label then
 
-          if not weapon.components then weapon.components = {} end
-          if not weapon.tintIndex  then weapon.tintIndex  = 0  end
+        if not weapon.components then weapon.components = {} end
+        if not weapon.tintIndex  then weapon.tintIndex  = 0  end
 
-          table.insert(data, {
-            name       = name,
-            ammo       = weapon.ammo,
-            label      = label,
-            components = weapon.components,
-            tintIndex  = weapon.tintIndex
-          })
+        table.insert(data, {
+          name       = name,
+          ammo       = weapon.ammo,
+          label      = label,
+          components = weapon.components,
+          tintIndex  = weapon.tintIndex
+        })
 
-        end
       end
-
     end
 
     cb({loadout = data})
