@@ -241,7 +241,7 @@ function CreateExtendedPlayer(data)
 
   --- @function xPlayer:setAccountMoney
   --- Set player account money
-  --- @param accountName string Account names
+  --- @param accountName string Account name
   --- @param money number Amount
   --- @return nil
 	self.setAccountMoney = function(accountName, money)
@@ -260,7 +260,7 @@ function CreateExtendedPlayer(data)
 
   --- @function xPlayer:addAccountMoney
   --- Add player account money
-  --- @param accountName string Account names
+  --- @param accountName string Account name
   --- @param money number Amount
   --- @return nil
 	self.addAccountMoney = function(accountName, money)
@@ -278,7 +278,7 @@ function CreateExtendedPlayer(data)
 
   --- @function xPlayer:addAccountMoney
   --- Add player account money
-  --- @param accountName string Account names
+  --- @param accountName string Account name
   --- @param money number Amount
   --- @return nil
 	self.removeAccountMoney = function(accountName, money)
@@ -436,7 +436,7 @@ function CreateExtendedPlayer(data)
   --- @function xPlayer:setJob
   --- Set player job
   --- @param job string New job
-  --- @param grade string New job grade
+  --- @param grade number New job grade
   --- @return nil
 	self.setJob = function(job, grade)
 		grade = tostring(grade)
