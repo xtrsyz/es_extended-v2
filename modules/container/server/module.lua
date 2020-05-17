@@ -95,8 +95,6 @@ self.Create = function(name, label, owner, data)
         _data[k] = v
       end
 
-      _data.label = ESX.GetWeaponLabel(weapons[i].name)
-
       data[#data + 1] = _data
 
     end

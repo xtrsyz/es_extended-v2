@@ -20,7 +20,7 @@ self.Open = function(name, title, restrict)
         elseif item.type == 'item' then
           elements[#elements + 1] = {type = 'item', name = item.name, label = item.label .. ' x' .. item.count, rawLabel = item.label}
         elseif item.type == 'weapon' then
-          elements[#elements + 1] = {type = 'weapon', name = item.name, label = item.label .. ' x' .. item.count, rawLabel = item.label}
+          elements[#elements + 1] = {type = 'weapon', name = item.name, label = ESX.GetWeaponLabel(item.name) .. ' x' .. item.count, rawLabel = ESX.GetWeaponLabel(item.name)}
         end
 
       end
@@ -116,7 +116,7 @@ self.OpenUser = function(targetContainerName, targetContainerTitle, restrict)
         elseif item.type == 'item' then
           elements[#elements + 1] = {type = 'item', name = item.name, label = item.label .. ' x' .. item.count, rawLabel = item.label}
         elseif item.type == 'weapon' then
-          elements[#elements + 1] = {type = 'weapon', name = item.name, label = item.label .. ' x' .. item.count, rawLabel = item.label}
+          elements[#elements + 1] = {type = 'weapon', name = item.name, label = ESX.GetWeaponLabel(item.name) .. ' x' .. item.count, rawLabel = ESX.GetWeaponLabel(item.name)}
         end
 
       end

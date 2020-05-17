@@ -60,7 +60,8 @@ ui_page {
 }
 
 files {
-  'client/bootstrap.lua',
+	'client/bootstrap.lua',
+	'data/**/*',
 	'locale.js',
 	'hud/**/*',
 }

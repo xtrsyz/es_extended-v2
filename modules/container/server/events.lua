@@ -53,7 +53,7 @@ ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restri
 
     for i=1, #loadout, 1 do
       local weapon = loadout[i]
-      items[#items + 1] = {type = 'weapon', name = weapon.name, count = 1, label = ESX.GetWeaponLabel(weapon.name)}
+      items[#items + 1] = {type = 'weapon', name = weapon.name, count = 1}
     end
 
   end
@@ -79,7 +79,7 @@ ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, item
     elseif itemType == 'item' then
       xPlayer.addInventoryItem(itemName, itemCount)
     elseif itemType == 'weapon' then
-      xPlayer.addWeapon(itemName, itemCount)
+      xPlayer.addWeapon(itemName)
     end
 
     cb(true)

@@ -201,9 +201,16 @@ end)
 
 RegisterNetEvent('esx:addInventoryItem')
 AddEventHandler('esx:addInventoryItem', function(item, count, showNotification)
-	for k,v in ipairs(ESX.PlayerData.inventory) do
-		if v.name == item then
-			ESX.UI.ShowInventoryItemNotification(true, v.label, count - v.count)
+
+  for k,v in ipairs(ESX.PlayerData.inventory) do
+    if v.name == item then
+
+      if v.type == 'item_weapon' then
+        ESX.UI.ShowInventoryItemNotification(true, ESX.GetWeaponLabel(v.name), count - v.count)
+      else
+        ESX.UI.ShowInventoryItemNotification(true, v.label, count - v.count)
+      end
+
 			ESX.PlayerData.inventory[k].count = count
 			break
 		end
@@ -222,7 +229,13 @@ RegisterNetEvent('esx:removeInventoryItem')
 AddEventHandler('esx:removeInventoryItem', function(item, count, showNotification)
 	for k,v in ipairs(ESX.PlayerData.inventory) do
 		if v.name == item then
-			ESX.UI.ShowInventoryItemNotification(false, v.label, v.count - count)
+
+      if v.type == 'item_weapon' then
+        ESX.UI.ShowInventoryItemNotification(false, ESX.GetWeaponLabel(v.name), count - v.count)
+      else
+        ESX.UI.ShowInventoryItemNotification(false, v.label, math.abs(count - v.count))
+      end
+
 			ESX.PlayerData.inventory[k].count = count
 			break
 		end
@@ -247,7 +260,10 @@ AddEventHandler('esx:addWeapon', function(weaponName, ammo)
 	local playerPed = PlayerPedId()
 	local weaponHash = GetHashKey(weaponName)
 
-	GiveWeaponToPed(playerPed, weaponHash, ammo, false, false)
+  GiveWeaponToPed(playerPed, weaponHash, ammo, false, false)
+
+  ESX.UI.ShowInventoryItemNotification(true, ESX.GetWeaponLabel(weaponName), 1)
+
 end)
 
 RegisterNetEvent('esx:addWeaponComponent')
@@ -281,7 +297,10 @@ AddEventHandler('esx:removeWeapon', function(weaponName)
 	local weaponHash = GetHashKey(weaponName)
 
 	RemoveWeaponFromPed(playerPed, weaponHash)
-	SetPedAmmo(playerPed, weaponHash, 0) -- remove leftover ammo
+  SetPedAmmo(playerPed, weaponHash, 0) -- remove leftover ammo
+
+  ESX.UI.ShowInventoryItemNotification(false, ESX.GetWeaponLabel(weaponName), 1)
+
 end)
 
 RegisterNetEvent('esx:removeWeaponComponent')

@@ -312,9 +312,15 @@ function CreateExtendedPlayer(data)
   --- Add player inventory item
   --- @param name string Account name
   --- @param count number Amount
+  --- @param notify boolean Weither to notify or not
   --- @return nil
-	self.addInventoryItem = function(name, count)
-		local item = self.getInventoryItem(name)
+	self.addInventoryItem = function(name, count, notify)
+
+    if notify == nil then
+      notify = false
+    end
+
+    local item = self.getInventoryItem(name)
 
 		if item then
 			count = ESX.Math.Round(count)
@@ -322,7 +328,7 @@ function CreateExtendedPlayer(data)
 			self.weight = self.weight + (item.weight * count)
 
 			TriggerEvent('esx:onAddInventoryItem', self.source, item.name, item.count)
-			self.triggerEvent('esx:addInventoryItem', item.name, item.count)
+			self.triggerEvent('esx:addInventoryItem', item.name, item.count, notify)
 		end
 	end
 
@@ -330,8 +336,14 @@ function CreateExtendedPlayer(data)
   --- Remove player inventory item
   --- @param name string Account name
   --- @param count number Amount
+  --- @param notify boolean Weither to notify or not
   --- @return nil
-	self.removeInventoryItem = function(name, count)
+  self.removeInventoryItem = function(name, count, notify)
+
+    if notify == nil then
+      notify = false
+    end
+
 		local item = self.getInventoryItem(name)
 
 		if item then
@@ -343,7 +355,7 @@ function CreateExtendedPlayer(data)
 				self.weight = self.weight - (item.weight * count)
 
 				TriggerEvent('esx:onRemoveInventoryItem', self.source, item.name, item.count)
-				self.triggerEvent('esx:removeInventoryItem', item.name, item.count)
+				self.triggerEvent('esx:removeInventoryItem', item.name, item.count, notify)
 			end
 		end
 	end
@@ -478,14 +490,17 @@ function CreateExtendedPlayer(data)
   --- @param weaponName string Weapon name
   --- @param ammo number Ammo
   --- @return nil
-	self.addWeapon = function(weaponName, ammo)
+  self.addWeapon = function(weaponName, ammo)
+
+    if ammo == nil then
+      ammo = 1000
+    end
+
 		if not self.hasWeapon(weaponName) then
-			local weaponLabel = ESX.GetWeaponLabel(weaponName)
 
 			table.insert(self.loadout, {
 				name = weaponName,
 				ammo = ammo,
-				label = weaponLabel,
 				components = {},
 				tintIndex = 0
 			})
@@ -583,25 +598,23 @@ function CreateExtendedPlayer(data)
   --- @param weaponName string Weapon name
   --- @return nil
 	self.removeWeapon = function(weaponName)
-		local weaponLabel
 
 		for k,v in ipairs(self.loadout) do
 			if v.name == weaponName then
-				weaponLabel = v.label
 
 				for k2,v2 in ipairs(v.components) do
 					self.removeWeaponComponent(weaponName, v2)
 				end
 
-				table.remove(self.loadout, k)
-				break
+        table.remove(self.loadout, k)
+
+        self.triggerEvent('esx:removeWeapon', weaponName)
+
+        break
+
 			end
 		end
 
-		if weaponLabel then
-			self.triggerEvent('esx:removeWeapon', weaponName)
-			self.triggerEvent('esx:removeInventoryItem', weaponLabel, false, true)
-		end
 	end
 
   --- @function xPlayer:removeWeaponComponent
@@ -615,7 +628,8 @@ function CreateExtendedPlayer(data)
 		if weapon then
 			local component = ESX.GetWeaponComponent(weaponName, weaponComponent)
 
-			if component then
+      if component then
+
 				if self.hasWeaponComponent(weaponName, weaponComponent) then
 					for k,v in ipairs(self.loadout[loadoutNum].components) do
 						if v == weaponComponent then
@@ -625,7 +639,7 @@ function CreateExtendedPlayer(data)
 					end
 
 					self.triggerEvent('esx:removeWeaponComponent', weaponName, weaponComponent)
-					self.triggerEvent('esx:removeInventoryItem', component.label, false, true)
+
 				end
 			end
 		end

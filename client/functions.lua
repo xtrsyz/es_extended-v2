@@ -974,7 +974,7 @@ ESX.ShowInventory = function()
 	end
 
 	for k,v in ipairs(Config.Weapons) do
-		local weaponHash = GetHashKey(v.name)
+		local weaponHash = v.hash
 
 		if HasPedGotWeapon(playerPed, weaponHash, false) then
 			local ammo, label = GetAmmoInPedWeapon(playerPed, weaponHash)
