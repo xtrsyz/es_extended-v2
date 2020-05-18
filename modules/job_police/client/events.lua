@@ -285,9 +285,9 @@ Input.On('released', Input.Groups.MOVE, Input.Controls.SELECT_CHARACTER_FRANKLIN
   if (not self.IsDead) and self.IsPolice() and (not ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'police_actions')) then
 
     if not self.Config.EnableESXService then
-      OpenPoliceActionsMenu()
+      self.OpenPoliceActionsMenu()
     elseif playerInService then
-      OpenPoliceActionsMenu()
+      self.OpenPoliceActionsMenu()
     else
       ESX.ShowNotification(_U('job_police:service_not'))
     end
