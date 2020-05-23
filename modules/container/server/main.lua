@@ -1,2 +1,2 @@
-local self = ESX.Modules['container']
+local self = module
 

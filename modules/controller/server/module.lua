@@ -1,21 +1,39 @@
-ESX.Modules['controller'] = {}
-local self = ESX.Modules['controller']
+local ModuleController = {}
+local self = ModuleController
 
 self.Table_load = json.decode(LoadResourceFile(GetCurrentResourceName(), './modules/controller/module_controller.json'))
 
-for i=1, #self.Table_load, 1 do
+self.LoadModule = function(name)
 
-    print(self.Table_load[i])
+  if ESX.Modules[name] == nil then
 
-    local env = ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. self.Table_load[i] .. '/server/module.lua', _ENV)
+    local envCopy = {
+      LoadModule = self.LoadModule
+    }
 
-    ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. self.Table_load[i] .. '/server/main.lua', env)
-    ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. self.Table_load[i] .. '/server/events.lua', env)
+    for k,v in pairs(_ENV) do
+      envCopy[k] = v
+    end
+
+    envCopy._G = envCopy
+
+    local env = ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. name .. '/server/module.lua', envCopy)
+
+    ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. name .. '/server/main.lua', env)
+    ESX.EvalFile(GetCurrentResourceName(), 'modules/' .. name .. '/server/events.lua', env)
 
     local module = env['module']
 
-    ESX.Modules[self.Table_load[i]] = module
+    ESX.Modules[name] = module
 
+  end
+
+  return ESX.Modules[name]
+
+end
+
+for i=1, #self.Table_load, 1 do
+  self.LoadModule(self.Table_load[i])
 end
 
 --[[
@@ -39,3 +57,4 @@ if IsDuplicityVersion() -- true = server | false = client
             if not => load dep
                 then load module
 ]]--
+

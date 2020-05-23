@@ -1,4 +1,4 @@
-module = {}
+module     = {}
 local self = module
 
 -- Properties
