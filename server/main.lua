@@ -15,8 +15,6 @@ AddEventHandler('esx:db:ready', function()
 
 		local check = ESX.EnsureMigrations(modules[i])
 
-		print(check)
-
 		if check then
 			inform = true
 		end
