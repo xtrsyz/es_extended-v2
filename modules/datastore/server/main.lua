@@ -1,2 +1,1 @@
-local self = ESX.Modules['datastore']
-
+local self = module

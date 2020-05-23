@@ -1,2 +1,1 @@
-local self = ESX.Modules['hud']
-
+local self = module

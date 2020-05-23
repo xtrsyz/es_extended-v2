@@ -1,4 +1,4 @@
-local self = ESX.Modules['society']
+local self = module
 
 self.Init()
 

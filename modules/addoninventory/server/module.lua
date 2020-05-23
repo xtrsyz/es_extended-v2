@@ -1,5 +1,5 @@
-ESX.Modules['addoninventory'] = {}
-local self = ESX.Modules['addoninventory']
+module = {}
+local self = module
 
 self.Ready             = false
 self.Items             = {}

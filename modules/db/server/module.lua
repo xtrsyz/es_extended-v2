@@ -1,5 +1,5 @@
-ESX.Modules['db'] = {};
-local self        = ESX.Modules['db']
+module = {};
+local self        = module
 
 self.tables = {}
 

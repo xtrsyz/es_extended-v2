@@ -33,7 +33,15 @@ self.LoadModule = function(name)
 end
 
 for i=1, #self.Table_load, 1 do
-  self.LoadModule(self.Table_load[i])
+  if Config.Modules[self.Table_load[i]] then
+    self.LoadModule(self.Table_load[i])
+
+    print("Module loaded: " .. self.Table_load[i])
+
+  else
+    print("Module disabled: " .. self.Table_load[i])
+
+  end
 end
 
 --[[
@@ -57,4 +65,3 @@ if IsDuplicityVersion() -- true = server | false = client
             if not => load dep
                 then load module
 ]]--
-

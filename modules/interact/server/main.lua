@@ -1,3 +1,1 @@
-
-local self = ESX.Modules['interact']
-
+local self = module

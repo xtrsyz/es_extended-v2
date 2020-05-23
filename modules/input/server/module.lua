@@ -1,2 +1,2 @@
-ESX.Modules['input'] = {}
-local self           = ESX.Modules['input']
+module = {}
+local self           = module

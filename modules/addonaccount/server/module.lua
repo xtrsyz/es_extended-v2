@@ -1,5 +1,5 @@
-ESX.Modules['addonaccount'] = {}
-local self = ESX.Modules['addonaccount']
+module = {}
+local self = module
 
 self.Ready          = false
 self.AccountsIndex  = {}

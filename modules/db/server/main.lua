@@ -1,2 +1,1 @@
-local self = ESX.Modules['db']
-
+local self = module

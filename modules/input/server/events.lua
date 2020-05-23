@@ -1,1 +1,1 @@
-local self = ESX.Modules['input']
+local self = module

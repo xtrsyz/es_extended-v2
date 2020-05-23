@@ -1,2 +1,1 @@
-local self = ESX.Modules['addonaccount']
-
+local self = module

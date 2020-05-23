@@ -1,4 +1,4 @@
-local self = ESX.Modules['addoninventory']
+local self = module
 
 AddEventHandler('esx_addoninventory:getInventory', function(name, owner, cb)
 

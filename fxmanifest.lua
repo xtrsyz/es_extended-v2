@@ -82,37 +82,9 @@ file('modules/*/client/main.lua')
 file('modules/*/client/module.lua')
 file('modules/*/client/events.lua')
 
+-- Load Controller
 server_scripts{
 	'modules/controller/server/main.lua',
 	'modules/controller/server/module.lua',
 	'modules/controller/server/events.lua'
 }
-
---[[ DB
-esxmodule 'db' -- Database manbagement
-
--- Misc
-esxmodule 'input' -- Evented input manager
-esxmodule 'interact' -- Interact menu (marker / npc)
-
--- Extend
-esxmodule 'addonaccount' -- Addon account
-esxmodule 'addoninventory' -- Addon inventory
-esxmodule 'datastore' -- Arbitrary data store
-esxmodule 'container' -- Wrapper around addonaccount / addoninventory / datastore stuff
-esxmodule 'society' -- Society management
-
--- UI
-esxmodule 'hud' -- Money / society etc... HUD
-esxmodule 'menu_default' -- Default menu
-esxmodule 'menu_dialog' -- Dialog menu
-esxmodule 'menu_list' -- List menu
-
--- Misc
-esxmodule 'skin' -- Skin management
-esxmodule 'accessories' -- Skin accessories management
-esxmodule 'voice' -- Proximity voice controller
-
--- Jobs
-esxmodule 'job_police' -- Job police
-]]--

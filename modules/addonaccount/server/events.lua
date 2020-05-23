@@ -1,4 +1,4 @@
-local self = ESX.Modules['addonaccount']
+local self = module
 
 AddEventHandler('esx_addonaccount:getAccount', function(name, owner, cb)
 

@@ -1,5 +1,5 @@
-ESX.Modules['accessories'] = {}
-local self = ESX.Modules['accessories']
+module = {}
+local self = module
 
 -- Properties
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/accessories/data/config.lua', {

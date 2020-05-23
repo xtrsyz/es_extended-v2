@@ -1,3 +1,2 @@
-ESX.Modules['skin'] = {}
-local self = ESX.Modules['skin']
-
+module = {}
+local self = module

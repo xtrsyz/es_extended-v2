@@ -1,4 +1,4 @@
-local self = ESX.Modules['db']
+local self = module
 
 MySQL.ready(function()
   TriggerEvent('esx:db:internal:ready', self.InitTable)

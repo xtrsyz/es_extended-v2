@@ -1,2 +1,1 @@
-local self = ESX.Modules['addoninventory']
-
+local self = module

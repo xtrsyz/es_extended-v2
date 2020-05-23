@@ -1,4 +1,4 @@
-local self = ESX.Modules['society']
+local self = module
 
 AddEventHandler('esx:migrations:ensure', function(register)
   register('society')

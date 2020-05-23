@@ -1,3 +1,3 @@
-local self = ESX.Modules['voice']
+local self = module
 
 self.Init()

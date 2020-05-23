@@ -1,4 +1,4 @@
-local self = ESX.Modules['skin']
+local self = module
 
 RegisterServerEvent('esx_skin:save')
 AddEventHandler('esx_skin:save', function(skin)
@@ -63,4 +63,3 @@ end, false, {help = _U('skin')})
 ESX.RegisterCommand('skinsave', 'admin', function(xPlayer, args, showError)
 	xPlayer.triggerEvent('esx_skin:requestSaveSkin')
 end, false, {help = _U('saveskin')})
-

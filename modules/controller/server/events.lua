@@ -1,1 +1,1 @@
-local self = ESX.Modules['controller']
+local self = ModuleController

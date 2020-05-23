@@ -1,3 +1,2 @@
-ESX.Modules['hud'] = {};
-local self = ESX.Modules['hud']
-
+module = {};
+local self = module
