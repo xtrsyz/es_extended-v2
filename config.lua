@@ -9,7 +9,7 @@ Config.Accounts = {
 
 Config.StartingAccountMoney = {bank = 50000}
 
-Config.EnableSocietyPayouts = false -- pay from the society account that the player is employed at? Requirement: esx_society
+Config.EnableSocietyPayouts = false -- pay from the society account that the player is employed at? Requirement= esx_society
 Config.DisableWantedLevel   = true
 Config.EnableHud            = true -- enable the default hud? Display current job and accounts (black, bank & cash)
 Config.EnablePvP            = true -- enable pvp?
@@ -19,3 +19,24 @@ Config.PaycheckInterval = 7 * 60000 -- how often to recieve pay checks in millis
 
 Config.EnableDebug  = false
 Config.InventoryKey = 'REPLAY_START_STOP_RECORDING_SECONDARY' -- Key F2 by default
+
+Config.Modules = {
+
+    accessories = true,
+    addonaccount = true,
+    addoninventory = true,
+    container = true,
+    datastore = true,
+    db = true,
+    hud = true,
+    input = true,
+    interact = true,
+    job_police = true,
+    menu_default = true,
+    menu_dialog = true,
+    menu_list = true,
+    skin = true,
+    society = true,
+    voice = true
+
+}

@@ -10,9 +10,7 @@ ESX.EnsureMigrations = function(module)
         dir = 'modules/' .. module .. '/migrations'
     end
 
-    local result = MySQL.Sync.fetchAll(
-                       'SELECT * FROM `migrations` WHERE `module` = @module',
-                       {['@module'] = module})
+    local result = MySQL.Sync.fetchAll('SELECT * FROM `migrations` WHERE `module` = @module', {['@module'] = module})
     local initial = true
     local i = 0
     local hasmigrated = false
@@ -26,8 +24,7 @@ ESX.EnsureMigrations = function(module)
 
     repeat
 
-        sql = LoadResourceFile(GetCurrentResourceName(),
-                               dir .. '/' .. i .. '.sql')
+        sql = LoadResourceFile(GetCurrentResourceName(), dir .. '/' .. i .. '.sql')
 
         if sql ~= nil then
 

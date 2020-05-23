@@ -76,11 +76,13 @@ dependencies {
 	'skinchanger'
 }
 
-file('modules/*/data/**/*')
-
-file('modules/*/client/main.lua')
-file('modules/*/client/module.lua')
-file('modules/*/client/events.lua')
+-- Client Modules
+files {
+	'modules/*/data/**/*',
+	'modules/*/client/main.lua',
+	'modules/*/client/module.lua',
+	'modules/*/client/events.lua'
+}
 
 -- Load Controller
 server_scripts{

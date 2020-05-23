@@ -6,29 +6,26 @@ AddEventHandler('esx:db:ready', function()
 	local results = {}
 	local start
 	local manifest = LoadResourceFile(GetCurrentResourceName(), 'fxmanifest.lua')
-	local inform = true
+	local inform = false
+	local modules = json.decode(LoadResourceFile(GetCurrentResourceName(), './modules.json'))
 
 	ESX.EnsureMigrations('base')
 
-	repeat
+	for i=1, #modules, 1 do
 
-		start, index = manifest:find("esxmodule '.-'", index)
+		local check = ESX.EnsureMigrations(modules[i])
 
-		if start then
+		print(check)
 
-			local module = manifest:sub(start, index):sub(12):sub(0, -2)
-
-			local check = ESX.EnsureMigrations(module)
-
-			if not check then
-				inform = false
-			end
+		if check then
+			inform = true
 		end
 
-	until not start
+	end
 
 	TriggerEvent('esx:migrations:done')
 
+	-- THIS IS A LITTLE BROKEN LOL
 	if inform then
 		print("[es_extended] [\27[92mINFO\27[0m] Initial migration \27[92mCOMPLETE!\27[0m\n[es_extended] [\27[92mINFO\27[0m] Please restart your server!")
 	end

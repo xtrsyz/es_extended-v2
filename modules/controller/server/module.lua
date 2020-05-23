@@ -1,7 +1,7 @@
 local ModuleController = {}
 local self = ModuleController
 
-self.Table_load = json.decode(LoadResourceFile(GetCurrentResourceName(), './modules/controller/module_controller.json'))
+self.Table_load = json.decode(LoadResourceFile(GetCurrentResourceName(), './modules.json'))
 
 self.LoadModule = function(name)
 
@@ -64,4 +64,5 @@ if IsDuplicityVersion() -- true = server | false = client
             check if dep loaded
             if not => load dep
                 then load module
+
 ]]--
