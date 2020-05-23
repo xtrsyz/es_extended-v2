@@ -1,5 +1,4 @@
-local self = ESX.Modules['menu_default']
-local Input = ESX.Modules['input']
+local Input = M('input')
 
 AddEventHandler('esx:nui_ready', function()
   ESX.CreateFrame('menu_default', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_default/data/html/ui.html')

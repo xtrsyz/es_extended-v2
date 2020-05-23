@@ -1,5 +1,3 @@
-local self = ESX.Modules['interact']
-
 self.LOVE_PLAYER_GROUP = AddRelationshipGroup('LOVE_PLAYER')
 
 SetRelationshipBetweenGroups(0, self.LOVE_PLAYER_GROUP, 'PLAYER')

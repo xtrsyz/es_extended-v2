@@ -1,5 +1,3 @@
-local self = ESX.Modules['job_police']
-
 -- Init
 self.Init()
 
@@ -21,9 +19,7 @@ Citizen.CreateThread(function()
                 not IsPedDeadOrDying(targetPed, true) then
 
                 if not wasDragged then
-                    AttachEntityToEntity(playerPed, targetPed, 11816, 0.54,
-                                         0.54, 0.0, 0.0, 0.0, 0.0, false, false,
-                                         false, false, 2, true)
+                    AttachEntityToEntity(playerPed, targetPed, 11816, 0.54, 0.54, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
                     wasDragged = true
                 else
                     Citizen.Wait(1000)

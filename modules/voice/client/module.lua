@@ -1,8 +1,4 @@
-ESX.Modules['voice'] = {}
-local self = ESX.Modules['voice']
-local Input = ESX.Modules['input']
-
-
+local Input = M('input')
 
 self.Init = function()
   Input.RegisterControl(1, 74)

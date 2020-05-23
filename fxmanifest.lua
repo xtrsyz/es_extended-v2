@@ -76,17 +76,23 @@ dependencies {
 	'skinchanger'
 }
 
--- Client Modules
+-- Modules
 files {
-	'modules/*/data/**/*',
-	'modules/*/client/main.lua',
-	'modules/*/client/module.lua',
-	'modules/*/client/events.lua'
+  'modules.json',
+	'modules/**/data/**/*',
+	'modules/**/client/main.lua',
+	'modules/**/client/module.lua',
+	'modules/**/client/events.lua'
 }
 
--- Load Controller
+client_scripts{
+  'modules/__main__/module.lua',
+	'modules/__main__/events.lua',
+	'modules/__main__/main.lua',
+}
+
 server_scripts{
-	'modules/controller/server/main.lua',
-	'modules/controller/server/module.lua',
-	'modules/controller/server/events.lua'
+  'modules/__main__/module.lua',
+	'modules/__main__/events.lua',
+	'modules/__main__/main.lua',
 }

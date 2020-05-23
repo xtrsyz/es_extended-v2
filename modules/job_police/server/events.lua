@@ -1,5 +1,4 @@
-local self      = module
-local Container = LoadModule('container')
+local Container = M('container')
 
 AddEventHandler('esx:container:ready', function()
   Container.Ensure('society_police', 'Police', nil, {})

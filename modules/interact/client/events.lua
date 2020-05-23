@@ -1,5 +1,3 @@
-local self = ESX.Modules['interact']
-
 AddEventHandler('esx:interact:register', self.Register)
 
 -- Do not use this in prod ! internal event only

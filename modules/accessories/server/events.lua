@@ -1,4 +1,3 @@
-local self = module
 
 -- BEGIN extend xPlayer stuff
 

@@ -1,5 +1,4 @@
-module = {}
-local self = module
+
 
 self.Ready          = false
 self.AccountsIndex  = {}

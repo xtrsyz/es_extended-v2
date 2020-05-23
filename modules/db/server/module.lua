@@ -1,4 +1,4 @@
-module = {};
+;
 local self        = module
 
 self.tables = {}
@@ -206,7 +206,7 @@ self.InitTable = function(name, pk, fields, rows)
 
   self.tables[name] = tbl
 
-  print('[esx] [db] => Init table ' .. name)
+  print('init table ' .. name)
 
 end
 

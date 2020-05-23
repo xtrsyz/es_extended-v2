@@ -1,5 +1,3 @@
-local self = ESX.Modules['society']
-
 self.Init()
 
 Citizen.CreateThread(function()

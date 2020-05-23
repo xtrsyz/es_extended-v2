@@ -1,19 +1,21 @@
 RegisterNetEvent('esx:db:ready')
 AddEventHandler('esx:db:ready', function()
-	print('[esx] ensuring migrations')
 
-	local index   = 0
-	local results = {}
+	print('ensuring migrations')
+
+  local __MAIN__ = ESX.Modules['__MAIN__']
+	local index    = 0
+	local results  = {}
 	local start
 	local manifest = LoadResourceFile(GetCurrentResourceName(), 'fxmanifest.lua')
 	local inform = false
-	local modules = json.decode(LoadResourceFile(GetCurrentResourceName(), './modules.json'))
 
 	ESX.EnsureMigrations('base')
 
-	for i=1, #modules, 1 do
+	for i=1, #__MAIN__.Order, 1 do
 
-		local check = ESX.EnsureMigrations(modules[i])
+    local module = __MAIN__.Order[i]
+		local check  = ESX.EnsureMigrations(module)
 
 		if check then
 			inform = true
@@ -21,12 +23,7 @@ AddEventHandler('esx:db:ready', function()
 
 	end
 
-	TriggerEvent('esx:migrations:done')
-
-	-- THIS IS A LITTLE BROKEN LOL
-	if inform then
-		print("[es_extended] [\27[92mINFO\27[0m] Initial migration \27[92mCOMPLETE!\27[0m\n[es_extended] [\27[92mINFO\27[0m] Please restart your server!")
-	end
+  TriggerEvent('esx:migrations:done')
 
 end)
 

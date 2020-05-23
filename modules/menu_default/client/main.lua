@@ -1,6 +1,4 @@
-
-local self = ESX.Modules['menu_default']
-local Input = ESX.Modules['input']
+local Input = M('input')
 
 ESX.UI.Menu.RegisterType(self.MenuType, self.OpenMenu, self.CloseMenu)
 

@@ -1,11 +1,10 @@
-module = {}
-local self = module
+
 
 self.Containers = {}
 
-local DataStore      = LoadModule('datastore')
-local AddonAccount   = LoadModule('addonaccount')
-local AddonInventory = LoadModule('addoninventory')
+local DataStore      = M('datastore')
+local AddonAccount   = M('addonaccount')
+local AddonInventory = M('addoninventory')
 
 self.MissingDeps = 3
 

@@ -1,5 +1,3 @@
-local self = ESX.Modules['skin']
-
 AddEventHandler('esx:onPlayerSpawn', function()
 	Citizen.CreateThread(function()
 

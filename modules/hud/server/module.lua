@@ -1,2 +1,1 @@
-module = {};
-local self = module
+;

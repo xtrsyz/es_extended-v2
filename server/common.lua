@@ -56,7 +56,7 @@ AddEventHandler('esx:migrations:done', function()
 		end)
 	end)
 
-	print('[es_extended] [^2INFO^7] ESX developed by ESX-Org has been initialized')
+	print('^2server ready^7')
 end)
 
 RegisterServerEvent('esx:clientLog')

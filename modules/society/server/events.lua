@@ -1,4 +1,3 @@
-local self = module
 
 AddEventHandler('esx:migrations:ensure', function(register)
   register('society')

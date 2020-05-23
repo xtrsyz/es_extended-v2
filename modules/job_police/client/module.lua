@@ -1,6 +1,3 @@
-ESX.Modules['job_police'] = {}
-local self = ESX.Modules['job_police']
-
 -- Properties
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/job_police/data/config.lua', {
   vector3 = vector3

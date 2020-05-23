@@ -1,5 +1,3 @@
-local self = ESX.Modules['job_police']
-
 -- Locals
 local Input = ESX.Modules['input']
 

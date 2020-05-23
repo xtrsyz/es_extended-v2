@@ -1,6 +1,4 @@
-ESX.Modules['menu_dialog'] = {};
-local self = ESX.Modules['menu_dialog']
-local Input = ESX.Modules['input']
+local Input = M('input')
 
 self.Timeouts    = {}
 self.OpenedMenus = {}

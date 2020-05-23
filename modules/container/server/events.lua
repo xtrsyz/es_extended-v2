@@ -1,4 +1,3 @@
-local self = module
 
 AddEventHandler('esx_datastore:ready',      self.OnDependencyReady)
 AddEventHandler('esx_addonaccount:ready',   self.OnDependencyReady)

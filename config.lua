@@ -22,21 +22,21 @@ Config.InventoryKey = 'REPLAY_START_STOP_RECORDING_SECONDARY' -- Key F2 by defau
 
 Config.Modules = {
 
-    accessories = true,
-    addonaccount = true,
-    addoninventory = true,
-    container = true,
-    datastore = true,
-    db = true,
-    hud = true,
-    input = true,
-    interact = true,
-    job_police = true,
-    menu_default = true,
-    menu_dialog = true,
-    menu_list = true,
-    skin = true,
-    society = true,
-    voice = true
+  accessories     = true,
+  addonaccount    = true,
+  addoninventory  = true,
+  container       = true,
+  datastore       = true,
+  db              = true,
+  hud             = true,
+  input           = true,
+  interact        = true,
+  job_police      = true,
+  menu_default    = true,
+  menu_dialog     = true,
+  menu_list       = true,
+  skin            = true,
+  society         = true,
+  voice           = true
 
 }

@@ -1,4 +1,3 @@
-local self = module
 
 AddEventHandler('esx_datastore:getDataStore', function(name, owner, cb)
 

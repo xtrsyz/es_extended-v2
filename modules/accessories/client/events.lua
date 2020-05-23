@@ -1,6 +1,4 @@
-local self = ESX.Modules['accessories']
-
-local Input = ESX.Modules['input']
+local Input = M('input')
 
 AddEventHandler('esx_accessories:hasEnteredMarker', function(zone)
 	self.CurrentAction     = 'shop_menu'

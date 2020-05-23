@@ -1,4 +1,3 @@
-local self = module
 
 RegisterServerEvent('esx_skin:save')
 AddEventHandler('esx_skin:save', function(skin)

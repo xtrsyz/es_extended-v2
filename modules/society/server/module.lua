@@ -1,5 +1,4 @@
-module = {}
-local self = module
+
 
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/society/data/config.lua', {
   vector3 = vector3

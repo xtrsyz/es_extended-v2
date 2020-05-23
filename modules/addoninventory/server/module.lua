@@ -1,6 +1,3 @@
-module = {}
-local self = module
-
 self.Ready             = false
 self.Items             = {}
 self.InventoriesIndex  = {}

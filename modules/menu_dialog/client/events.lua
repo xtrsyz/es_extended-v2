@@ -1,5 +1,3 @@
-local self = ESX.Modules['menu_dialog']
-
 AddEventHandler('esx:nui_ready', function()
   ESX.CreateFrame('menu_dialog', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_dialog/data/html/ui.html')
 end)
