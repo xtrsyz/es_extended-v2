@@ -84,3 +84,18 @@ server_scripts{
   'modules/__main__/shared/main.lua',
   'modules/__main__/server/main.lua',
 }
+
+-- Loadscreen
+files {
+  'loadscreen/data/index.html',
+  'loadscreen/data/css/index.css',
+  'loadscreen/data/js/index.js',
+  'loadscreen/data/vid/esx_intro.mp4',
+  'loadscreen/data/vid/esx_loop.mp4'
+}
+
+loadscreen 'loadscreen/data/index.html'
+loadscreen_manual_shutdown 'yes'
+client_script 'loadscreen/client/main.lua'
+
+

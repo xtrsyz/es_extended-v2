@@ -81,8 +81,8 @@ ESX.SetInterval(1000, function()
 
       if distance > 1 then
         previousCoords = playerCoords
-        local playerHeading = ESX.Math.Round(GetEntityHeading(playerPed), 1)
-        local formattedCoords = {x = ESX.Math.Round(playerCoords.x, 1), y = ESX.Math.Round(playerCoords.y, 1), z = ESX.Math.Round(playerCoords.z, 1), heading = playerHeading}
+        local playerHeading = math.round(GetEntityHeading(playerPed), 1)
+        local formattedCoords = {x = math.round(playerCoords.x, 1), y = math.round(playerCoords.y, 1), z = math.round(playerCoords.z, 1), heading = playerHeading}
         emitServer('esx:updateCoords', formattedCoords)
       end
 
