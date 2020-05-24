@@ -1,8 +1,8 @@
-AddEventHandler('esx:nui_ready', function()
+on('esx:nui_ready', function()
   ESX.CreateFrame('menu_dialog', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_dialog/data/html/ui.html')
 end)
 
-AddEventHandler('menu_dialog:message:menu_submit', function(data)
+on('menu_dialog:message:menu_submit', function(data)
 
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 	local cancel = false
@@ -29,7 +29,7 @@ AddEventHandler('menu_dialog:message:menu_submit', function(data)
 	end
 end)
 
-AddEventHandler('menu_dialog:message:menu_cancel', function(data)
+on('menu_dialog:message:menu_cancel', function(data)
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	if menu.cancel ~= nil then
@@ -37,7 +37,7 @@ AddEventHandler('menu_dialog:message:menu_cancel', function(data)
 	end
 end)
 
-AddEventHandler('menu_dialog:message:menu_change', function(data)
+on('menu_dialog:message:menu_change', function(data)
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	if menu.change ~= nil then

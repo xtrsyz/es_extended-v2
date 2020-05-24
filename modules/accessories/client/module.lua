@@ -30,7 +30,7 @@ self.Init = function()
         accessory = k
       })
 
-      AddEventHandler('esx:interact:enter:' .. key, function(data)
+      on('esx:interact:enter:' .. key, function(data)
 
       ESX.ShowHelpNotification(_U('accessories:press_access'))
 
@@ -40,7 +40,7 @@ self.Init = function()
 
       end)
 
-      AddEventHandler('esx:interact:exit:' .. key, function(data) self.CurrentAction = nil end)
+      on('esx:interact:exit:' .. key, function(data) self.CurrentAction = nil end)
 
     end
   end

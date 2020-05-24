@@ -94,6 +94,9 @@ client_scripts{
 
 server_scripts{
   'modules/__main__/shared/module.lua',
-	'modules/__main__/shared/events.lua',
-	'modules/__main__/shared/main.lua',
+  'modules/__main__/server/module.lua',
+  'modules/__main__/shared/events.lua',
+  'modules/__main__/server/events.lua',
+  'modules/__main__/shared/main.lua',
+  'modules/__main__/server/main.lua',
 }

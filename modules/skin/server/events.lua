@@ -1,14 +1,14 @@
 local Command = M('command', true)
 
 onClient('esx_skin:save', function(skin)
-	local xPlayer = ESX.GetPlayerFromId(source)
+	local player = xPlayer.fromId(source)
 	local defaultMaxWeight = ESX.GetConfig().MaxWeight
 	local backpackModifier = Config.BackpackWeight[skin.bags_1]
 
 	if backpackModifier then
-		xPlayer.setMaxWeight(defaultMaxWeight + backpackModifier)
+		player:setMaxWeight(defaultMaxWeight + backpackModifier)
 	else
-		xPlayer.setMaxWeight(defaultMaxWeight)
+		player:setMaxWeight(defaultMaxWeight)
 	end
 
 	MySQL.Async.execute('UPDATE users SET skin = @skin WHERE identifier = @identifier', {

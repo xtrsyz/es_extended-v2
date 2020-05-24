@@ -1,12 +1,12 @@
 local Input = M('input')
 
-AddEventHandler('esx_accessories:hasEnteredMarker', function(zone)
+on('esx_accessories:hasEnteredMarker', function(zone)
 	self.CurrentAction     = 'shop_menu'
 	self.CurrentActionMsg  = _U('accessories:press_access')
 	self.CurrentActionData = { accessory = zone }
 end)
 
-AddEventHandler('esx_accessories:hasExitedMarker', function(zone)
+on('esx_accessories:hasExitedMarker', function(zone)
 	ESX.UI.Menu.CloseAll()
 	self.CurrentAction = nil
 end)

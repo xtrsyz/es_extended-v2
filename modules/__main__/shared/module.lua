@@ -1,5 +1,6 @@
 -- ESX base
 ESX              = {}
+ESX.Ready        = false
 ESX.Modules      = {}
 ESX.Loops        = {}
 ESX.LoopsRunning = {}
@@ -44,7 +45,7 @@ ESX.MakeScope = function(name, func)
 
   return function(...)
 
-    local status, result = xpcall(func, ESX.LogError, function(err)
+    local status, result = xpcall(func, function(err)
       ESX.LogScopeError(name, err)
     end)
 
@@ -59,9 +60,11 @@ ESX.EvalFile = function(resource, file, env)
   env        = env or {}
   env._G     = env
   local code = LoadResourceFile(resource, file)
-  local fn   = load(code, code, 't', env)
+  local fn   = load(code, '@' .. resource .. ':' .. file, 't', env)
 
-  fn()
+  local status, result = xpcall(fn, function(err)
+    ESX.LogError('[error] in @' .. resource .. ':file\n' .. err)
+  end)
 
   return env
 

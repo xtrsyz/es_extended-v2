@@ -45,10 +45,10 @@ on('esx:player:load:job', function(identifier, playerId, row, userData, addTask)
       jobObject, gradeObject = ESX.Jobs[row.job], ESX.Jobs[row.job].grades[tostring(row.job_grade)]
     else
 
-      print(('[es_extended] [^3WARNING^7] Ignoring invalid job for %s [job: %s, grade: %s]'):format(identifier, job, grade))
+      print(('[^3WARNING^7] Ignoring invalid job for %s [job: %s, grade: %s]'):format(identifier, row.job, row.job_grade))
 
       job, grade = 'unemployed', '0'
-      jobObject, gradeObject = ESX.Jobs[row.job], ESX.Jobs[row.job].grades[tostring(rrow.job_grade)]
+      jobObject, gradeObject = ESX.Jobs[row.job], ESX.Jobs[row.job].grades[tostring(row.job_grade)]
 
     end
 
@@ -199,5 +199,35 @@ on('esx:player:load:position', function(identifier, playerId, row, userData, add
     cb({coords = data})
 
   end)
+
+end)
+
+-- Global events
+on('esx:migrations:done', xPlayer.startDBSync)
+
+onClient('esx:onPlayerJoined', function()
+
+  local source = source
+
+  if not xPlayer.fromId(source) then
+		xPlayer.onJoin(source)
+  end
+
+end)
+
+AddEventHandler('playerDropped', function(reason)
+
+  local playerId = source
+	local player   = xPlayer.fromId(source)
+
+  if player then
+
+		emit('esx:playerDropped', playerId, reason)
+
+		player:save(function()
+			player.set(playerId, nil)
+    end)
+
+  end
 
 end)

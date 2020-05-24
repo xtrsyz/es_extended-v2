@@ -1,5 +1,5 @@
 
-AddEventHandler('esx_addonaccount:getAccount', function(name, owner, cb)
+on('esx_addonaccount:getAccount', function(name, owner, cb)
 
   Citizen.CreateThread(function()
 
@@ -13,7 +13,7 @@ AddEventHandler('esx_addonaccount:getAccount', function(name, owner, cb)
 
 end)
 
-AddEventHandler('esx_addonaccount:getSharedAccount', function(name, cb)
+on('esx_addonaccount:getSharedAccount', function(name, cb)
 
   Citizen.CreateThread(function()
 
@@ -27,7 +27,7 @@ AddEventHandler('esx_addonaccount:getSharedAccount', function(name, cb)
 
 end)
 
-AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
+on('esx:playerLoaded', function(playerId, player)
 
 
   Citizen.CreateThread(function()
@@ -56,7 +56,7 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
       table.insert(addonAccounts, account)
     end
 
-    xPlayer.set('addonAccounts', addonAccounts)
+    player:setField('addonAccounts', addonAccounts)
 
   end)
 
@@ -109,6 +109,6 @@ on('esx:migrations:done', function()
 
   self.Ready = true
 
-  TriggerEvent('esx_addonaccount:ready')
+  emit('esx_addonaccount:ready')
 
 end)

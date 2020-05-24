@@ -63,4 +63,5 @@ on('esx:db:internal:ready', function(initTable)
 
   -- database ready for migrations
   emit('esx:db:ready')
+
 end)

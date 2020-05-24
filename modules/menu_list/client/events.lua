@@ -1,4 +1,4 @@
-AddEventHandler('esx:nui_ready', function()
+on('esx:nui_ready', function()
 	ESX.CreateFrame('menu_list', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_list/data/html/ui.html')
 end)
 

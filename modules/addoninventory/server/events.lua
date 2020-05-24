@@ -1,5 +1,5 @@
 
-AddEventHandler('esx_addoninventory:getInventory', function(name, owner, cb)
+on('esx_addoninventory:getInventory', function(name, owner, cb)
 
   Citizen.CreateThread(function()
 
@@ -13,7 +13,7 @@ AddEventHandler('esx_addoninventory:getInventory', function(name, owner, cb)
 
 end)
 
-AddEventHandler('esx_addoninventory:getSharedInventory', function(name, cb)
+on('esx_addoninventory:getSharedInventory', function(name, cb)
 
   Citizen.CreateThread(function()
 
@@ -27,7 +27,7 @@ AddEventHandler('esx_addoninventory:getSharedInventory', function(name, cb)
 
 end)
 
-AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
+on('esx:playerLoaded', function(playerId, player)
 
   Citizen.CreateThread(function()
 
@@ -49,7 +49,7 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
       table.insert(addonInventories, inventory)
     end
 
-    xPlayer.set('addonInventories', addonInventories)
+    player:setField('addonInventories', addonInventories)
 
   end)
 
@@ -120,6 +120,6 @@ on('esx:migrations:done', function()
 
   self.Ready = true
 
-  TriggerEvent('esx_addoninventory:ready')
+  emit('esx_addoninventory:ready')
 
 end)

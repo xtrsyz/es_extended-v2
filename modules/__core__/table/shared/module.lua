@@ -1,3 +1,15 @@
+table.sizeOf = function(t)
+
+  local keys = {}
+
+  for k,v in pairs(t) do
+    table.insert(keys, tonumber(k))
+  end
+
+  return #keys
+
+end
+
 table.indexOf = function(t, val)
 
   for i=1, #t, 1 do
