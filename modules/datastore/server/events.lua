@@ -1,6 +1,4 @@
-local self = ESX.Modules['datastore']
-
-AddEventHandler('esx_datastore:getDataStore', function(name, owner, cb)
+on('esx_datastore:getDataStore', function(name, owner, cb)
 
   Citizen.CreateThread(function()
 
@@ -14,7 +12,7 @@ AddEventHandler('esx_datastore:getDataStore', function(name, owner, cb)
 
 end)
 
-AddEventHandler('esx_datastore:getDataStoreOwners', function(name, cb)
+on('esx_datastore:getDataStoreOwners', function(name, cb)
 
   Citizen.CreateThread(function()
 
@@ -28,7 +26,7 @@ AddEventHandler('esx_datastore:getDataStoreOwners', function(name, cb)
 
 end)
 
-AddEventHandler('esx_datastore:getSharedDataStore', function(name, cb)
+on('esx_datastore:getSharedDataStore', function(name, cb)
 
   Citizen.CreateThread(function()
 
@@ -42,7 +40,7 @@ AddEventHandler('esx_datastore:getSharedDataStore', function(name, cb)
 
 end)
 
-AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
+on('esx:playerLoaded', function(playerId, xPlayer)
 
   Citizen.CreateThread(function()
 
@@ -70,7 +68,8 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
 
 end)
 
-MySQL.ready(function()
+on('esx:migrations:done', function()
+
 	local result = MySQL.Sync.fetchAll('SELECT * FROM datastore')
 
 	for i=1, #result, 1 do
@@ -111,6 +110,6 @@ MySQL.ready(function()
 
   self.Ready = true
 
-  TriggerEvent('esx_datastore:ready')
+  emit('esx_datastore:ready')
 
 end)

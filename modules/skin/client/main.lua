@@ -1,5 +1,3 @@
-local self = ESX.Modules['skin']
-
 self.Init()
 
 Citizen.CreateThread(function()

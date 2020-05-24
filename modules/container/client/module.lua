@@ -1,6 +1,3 @@
-ESX.Modules['container'] = {}
-local self = ESX.Modules['container']
-
 self.Open = function(name, title, restrict)
 
   ESX.TriggerServerCallback('esx:container:get', function(items)

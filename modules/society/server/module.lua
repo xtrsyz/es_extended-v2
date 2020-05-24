@@ -1,5 +1,4 @@
-ESX.Modules['society'] = {}
-local self = ESX.Modules['society']
+
 
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/society/data/config.lua', {
   vector3 = vector3
@@ -56,5 +55,3 @@ self.WashMoneyCRON = function(d, h, m)
 		end
 	end)
 end
-
-

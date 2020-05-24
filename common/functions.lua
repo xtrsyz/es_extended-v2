@@ -4,6 +4,21 @@ for i = 48,  57 do table.insert(Charset, string.char(i)) end
 for i = 65,  90 do table.insert(Charset, string.char(i)) end
 for i = 97, 122 do table.insert(Charset, string.char(i)) end
 
+local _print = print
+
+print = function(...)
+
+  local args = {...}
+  local str  = '[^4esx^7]'
+
+  for i=1, #args, 1 do
+    str = str .. ' ' .. tostring(args[i])
+  end
+
+  _print(str)
+
+end
+
 -- Be careful with this, use it for some config file parsing and such
 ESX.EvalFile = function(resource, file, env)
 

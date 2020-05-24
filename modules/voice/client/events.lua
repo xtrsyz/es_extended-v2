@@ -1,5 +1,4 @@
-local self = ESX.Modules['voice']
-local Input = ESX.Modules['input']
+local Input = M('input')
 
 Input.On('pressed', 1, 74, function(lastPressed)
 

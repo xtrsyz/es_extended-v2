@@ -1,10 +1,9 @@
-local self = ESX.Modules['container']
 
-AddEventHandler('esx_datastore:ready',      self.OnDependencyReady)
-AddEventHandler('esx_addonaccount:ready',   self.OnDependencyReady)
-AddEventHandler('esx_addoninventory:ready', self.OnDependencyReady)
+on('esx_datastore:ready',      self.OnDependencyReady)
+on('esx_addonaccount:ready',   self.OnDependencyReady)
+on('esx_addoninventory:ready', self.OnDependencyReady)
 
-ESX.RegisterServerCallback('esx:container:get', function(source, cb, name, restrict)
+onRequest('esx:container:get', function(source, cb, name, restrict)
 
   restrict = restrict or {
     'account',
@@ -15,13 +14,13 @@ ESX.RegisterServerCallback('esx:container:get', function(source, cb, name, restr
   local container = self.Get(name)
   local _items    = container.getAll()
 
-  local items = ESX.Table.Filter(_items, function(e) return ESX.Table.IndexOf(restrict, e.type) ~= -1 end)
+  local items = table.filter(_items, function(e) return table.indexOf(restrict, e.type) ~= -1 end)
 
   cb(items)
 
 end)
 
-ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restrict)
+onRequest('esx:container:get:user', function(source, cb, restrict)
 
   restrict = restrict or {
     'account',
@@ -29,16 +28,16 @@ ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restri
     'weapon'
   }
 
-  local xPlayer = ESX.GetPlayerFromId(source)
-  local items   = {}
+  local player = xPlayer.fromId(source)
+  local items  = {}
 
-  if ESX.Table.IndexOf(restrict, 'account') ~= -1 then
-    items[#items + 1] = {type = 'account', name = 'money', count = xPlayer.getMoney()}
+  if table.indexOf(restrict, 'account') ~= -1 then
+    items[#items + 1] = {type = 'account', name = 'money', count = player:getMoney()}
   end
 
-  if ESX.Table.IndexOf(restrict, 'item') ~= -1 then
+  if table.indexOf(restrict, 'item') ~= -1 then
 
-    local inventory = xPlayer.getInventory()
+    local inventory = player:getInventory()
 
     for i=1, #inventory, 1 do
       local inventoryItem = inventory[i]
@@ -47,9 +46,9 @@ ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restri
 
   end
 
-  if ESX.Table.IndexOf(restrict, 'weapon') ~= -1 then
+  if table.indexOf(restrict, 'weapon') ~= -1 then
 
-    local loadout = xPlayer.getLoadout()
+    local loadout = player:getLoadout()
 
     for i=1, #loadout, 1 do
       local weapon = loadout[i]
@@ -63,9 +62,9 @@ ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restri
 end)
 
 -- TODO more checks on weight and such
-ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, itemType, itemName, itemCount)
+onRequest('esx:container:pull', function(source, cb, name, itemType, itemName, itemCount)
 
-  local xPlayer   = ESX.GetPlayerFromId(source)
+  local player    = xPlayer.fromId(source)
   local container = self.Get(name)
 
   local item = container.get(itemType, itemName)
@@ -75,11 +74,11 @@ ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, item
     container.remove(itemType, itemName, itemCount)
 
     if itemType == 'account' then
-      xPlayer.addMoney(itemCount)
+      player:addMoney(itemCount)
     elseif itemType == 'item' then
-      xPlayer.addInventoryItem(itemName, itemCount)
+      player:addInventoryItem(itemName, itemCount)
     elseif itemType == 'weapon' then
-      xPlayer.addWeapon(itemName)
+      player:addWeapon(itemName)
     end
 
     cb(true)
@@ -91,7 +90,7 @@ ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, item
 end)
 
 -- TODO more checks on weight and such
-ESX.RegisterServerCallback('esx:container:put', function(source, cb, name, itemType, itemName, itemCount)
+onRequest('esx:container:put', function(source, cb, name, itemType, itemName, itemCount)
 
   local xPlayer   = ESX.GetPlayerFromId(source)
   local container = self.Get(name)
@@ -99,13 +98,13 @@ ESX.RegisterServerCallback('esx:container:put', function(source, cb, name, itemT
   local count = 0
 
   if itemType == 'account' then
-    count = xPlayer.getMoney()
+    count = player:getMoney()
   elseif itemType == 'item' then
-    local inventoryItem = xPlayer.getInventoryItem(itemName)
+    local inventoryItem = player:getInventoryItem(itemName)
     count = inventoryItem.count
   elseif itemType == 'weapon' then
 
-    local loadout = xPlayer.getLoadout()
+    local loadout = player:getLoadout()
 
     local weapon  = ESX.Table.FindIndex(loadout, function(e)
       return e.name == itemName
@@ -117,11 +116,11 @@ ESX.RegisterServerCallback('esx:container:put', function(source, cb, name, itemT
   if count >= itemCount then
 
     if itemType == 'account' then
-      xPlayer.removeMoney(itemCount)
+      player:removeMoney(itemCount)
     elseif itemType == 'item' then
-      xPlayer.removeInventoryItem(itemName, itemCount)
+      player:removeInventoryItem(itemName, itemCount)
     elseif itemType == 'weapon' then
-      xPlayer.removeWeapon(itemName)
+      player:removeWeapon(itemName)
     end
 
     container.add(itemType, itemName, itemCount)

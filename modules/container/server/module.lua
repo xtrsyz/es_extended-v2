@@ -1,11 +1,8 @@
-ESX.Modules['container'] = {}
-local self = ESX.Modules['container']
-
 self.Containers = {}
 
-local DataStore      = ESX.Modules['datastore']
-local AddonAccount   = ESX.Modules['addonaccount']
-local AddonInventory = ESX.Modules['addoninventory']
+local DataStore      = M('datastore')
+local AddonAccount   = M('addonaccount')
+local AddonInventory = M('addoninventory')
 
 self.MissingDeps = 3
 

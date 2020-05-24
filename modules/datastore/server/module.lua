@@ -1,5 +1,4 @@
-ESX.Modules['datastore'] = {}
-local self = ESX.Modules['datastore']
+
 
 self.Ready            = false
 self.DataStores       = {}

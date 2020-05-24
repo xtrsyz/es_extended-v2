@@ -1,7 +1,6 @@
-local self = ESX.Modules['menu_default']
-local Input = ESX.Modules['input']
+local Input = M('input')
 
-AddEventHandler('esx:nui_ready', function()
+on('esx:nui_ready', function()
   ESX.CreateFrame('menu_default', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_default/data/html/ui.html')
 end)
 
@@ -36,7 +35,7 @@ Input.On('pressed', 0, 175, function(lastTime)
 end)
 
 
-AddEventHandler('menu_default:message:menu_submit', function(data)
+on('menu_default:message:menu_submit', function(data)
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	if menu.submit ~= nil then
@@ -44,7 +43,7 @@ AddEventHandler('menu_default:message:menu_submit', function(data)
 	end
 end)
 
-AddEventHandler('menu_default:message:menu_cancel', function(data)
+on('menu_default:message:menu_cancel', function(data)
 
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
@@ -53,7 +52,7 @@ AddEventHandler('menu_default:message:menu_cancel', function(data)
 	end
 end)
 
-AddEventHandler('menu_default:message:menu_change', function(data)
+on('menu_default:message:menu_change', function(data)
 	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	for i=1, #data.elements, 1 do

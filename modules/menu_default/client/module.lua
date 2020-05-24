@@ -1,6 +1,3 @@
-ESX.Modules['menu_default'] = {};
-local self = ESX.Modules['menu_default']
-
 self.GUI      = {}
 self.GUI.Time = 0
 self.MenuType = 'default'

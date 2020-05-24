@@ -1,6 +1,3 @@
-ESX.Modules['addoninventory'] = {}
-local self = ESX.Modules['addoninventory']
-
 self.Ready             = false
 self.Items             = {}
 self.InventoriesIndex  = {}
@@ -108,4 +105,3 @@ self.CreateAddonInventory = function(name, owner, items)
   return _self
 
 end
-

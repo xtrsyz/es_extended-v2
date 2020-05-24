@@ -1,5 +1,5 @@
-ESX.Modules['society'] = {}
-local self = ESX.Modules['society']
+local Menu = M('ui.menu', true)
+local HUD  = M('game.hud', true)
 
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/society/data/config.lua', {
   vector3 = vector3
@@ -32,7 +32,7 @@ self.EnableSocietyMoneyHUDElement = function()
 	local societyMoneyHUDElementTpl = '<div><img src="' .. self.base64MoneyIcon .. '" style="width:20px; height:20px; vertical-align:middle;">&nbsp;{{money}}</div>'
 
 	if ESX.GetConfig().EnableHud then
-		ESX.UI.HUD.RegisterElement('society_money', 3, 0, societyMoneyHUDElementTpl, {
+		HUD.RegisterElement('society_money', 3, 0, societyMoneyHUDElementTpl, {
 			money = 0
 		})
 	end
@@ -42,7 +42,7 @@ end
 
 self.DisableSocietyMoneyHUDElement = function()
 	if ESX.GetConfig().EnableHud then
-		ESX.UI.HUD.RemoveElement('society_money')
+		HUD.RemoveElement('society_money')
 	end
 
 	TriggerEvent('esx_society:toggleSocietyHud', false)
@@ -50,7 +50,7 @@ end
 
 self.UpdateSocietyMoneyHUDElement = function(money)
 	if ESX.GetConfig().EnableHud then
-		ESX.UI.HUD.UpdateElement('society_money', {
+		HUD.UpdateElement('society_money', {
 			money = ESX.Math.GroupDigits(money)
 		})
 	end
@@ -98,13 +98,13 @@ self.OpenBossMenu = function(society, close, options)
 				table.insert(elements, {label = _U('society:salary_management'), value = 'manage_grades'})
 			end
 
-			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'boss_actions_' .. society, {
+			Menu.Open('default', GetCurrentResourceName(), 'boss_actions_' .. society, {
 				title    = _U('society:boss_menu'),
 				align    = 'top-left',
 				elements = elements
 			}, function(data, menu)
 				if data.current.value == 'withdraw_society_money' then
-					ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'withdraw_society_money_amount_' .. society, {
+					Menu.Open('dialog', GetCurrentResourceName(), 'withdraw_society_money_amount_' .. society, {
 						title = _U('society:withdraw_amount')
 					}, function(data2, menu2)
 						local amount = tonumber(data2.value)
@@ -119,7 +119,7 @@ self.OpenBossMenu = function(society, close, options)
 						menu2.close()
 					end)
 				elseif data.current.value == 'deposit_money' then
-					ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'deposit_money_amount_' .. society, {
+					Menu.Open('dialog', GetCurrentResourceName(), 'deposit_money_amount_' .. society, {
 						title = _U('society:deposit_amount')
 					}, function(data2, menu2)
 						local amount = tonumber(data2.value)
@@ -134,7 +134,7 @@ self.OpenBossMenu = function(society, close, options)
 						menu2.close()
 					end)
 				elseif data.current.value == 'wash_money' then
-					ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'wash_money_amount_' .. society, {
+					Menu.Open('dialog', GetCurrentResourceName(), 'wash_money_amount_' .. society, {
 						title = _U('society:wash_money_amount')
 					}, function(data2, menu2)
 						local amount = tonumber(data2.value)
@@ -163,7 +163,7 @@ self.OpenBossMenu = function(society, close, options)
 end
 
 self.OpenManageEmployeesMenu = function(society)
-	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'manage_employees_' .. society, {
+	Menu.Open('default', GetCurrentResourceName(), 'manage_employees_' .. society, {
 		title    = _U('society:employee_management'),
 		align    = 'top-left',
 		elements = {
@@ -201,7 +201,7 @@ self.OpenEmployeeList = function(society)
 			})
 		end
 
-		ESX.UI.Menu.Open('list', GetCurrentResourceName(), 'employee_list_' .. society, elements, function(data, menu)
+		Menu.Open('list', GetCurrentResourceName(), 'employee_list_' .. society, elements, function(data, menu)
 			local employee = data.data
 
 			if data.value == 'promote' then
@@ -236,12 +236,12 @@ self.OpenRecruitMenu = function(society)
 			end
 		end
 
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'recruit_' .. society, {
+		Menu.Open('default', GetCurrentResourceName(), 'recruit_' .. society, {
 			title    = _U('society:recruiting'),
 			align    = 'top-left',
 			elements = elements
 		}, function(data, menu)
-			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'recruit_confirm_' .. society, {
+			Menu.Open('default', GetCurrentResourceName(), 'recruit_confirm_' .. society, {
 				title    = _U('society:do_you_want_to_recruit', data.current.name),
 				align    = 'top-left',
 				elements = {
@@ -280,7 +280,7 @@ self.OpenPromoteMenu = function(society, employee)
 			})
 		end
 
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'promote_employee_' .. society, {
+		Menu.Open('default', GetCurrentResourceName(), 'promote_employee_' .. society, {
 			title    = _U('society:promote_employee', employee.name),
 			align    = 'top-left',
 			elements = elements
@@ -311,12 +311,12 @@ self.OpenManageGradesMenu = function(society)
 			})
 		end
 
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'manage_grades_' .. society, {
+		Menu.Open('default', GetCurrentResourceName(), 'manage_grades_' .. society, {
 			title    = _U('society:salary_management'),
 			align    = 'top-left',
 			elements = elements
 		}, function(data, menu)
-			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'manage_grades_amount_' .. society, {
+			Menu.Open('dialog', GetCurrentResourceName(), 'manage_grades_amount_' .. society, {
 				title = _U('society:salary_amount')
 			}, function(data2, menu2)
 

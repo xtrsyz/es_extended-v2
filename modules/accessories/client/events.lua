@@ -1,14 +1,20 @@
-local self = ESX.Modules['accessories']
+local Input = M('input')
 
-local Input = ESX.Modules['input']
+on('esx:db:init', function(initTable, extendTable)
 
-AddEventHandler('esx_accessories:hasEnteredMarker', function(zone)
+  extendTable('users', {
+    {name = 'accessories', type = 'TEXT', length = nil, default = nil, extra = nil},
+  })
+
+end)
+
+on('esx_accessories:hasEnteredMarker', function(zone)
 	self.CurrentAction     = 'shop_menu'
 	self.CurrentActionMsg  = _U('accessories:press_access')
 	self.CurrentActionData = { accessory = zone }
 end)
 
-AddEventHandler('esx_accessories:hasExitedMarker', function(zone)
+on('esx_accessories:hasExitedMarker', function(zone)
 	ESX.UI.Menu.CloseAll()
 	self.CurrentAction = nil
 end)

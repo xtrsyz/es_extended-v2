@@ -8,40 +8,29 @@ version '2.0.0'
 
 server_scripts {
 	'@async/async.lua',
-	'@mysql-async/lib/MySQL.lua',
+  '@mysql-async/lib/MySQL.lua',
+
 	'locale.lua',
-	'locales/*.lua',
-	'config.lua',
-	'config.weapons.lua',
-	'server/common.lua',
-	'server/classes/player.lua',
-	'server/functions.lua',
-	'server/paycheck.lua',
-	'server/main.lua',
-	'server/commands.lua',
-	'common/modules/math.lua',
-	'common/modules/table.lua',
-	'common/functions.lua',
-	'common/bootstrap.lua'
+  'locales/*.lua',
+
+	'config/default/config.lua',
+  'config/default/config.weapons.lua',
+  'config/default/modules/core/*.lua',
+  'config/default/modules/*.lua',
+  'config/modules/core/*.lua',
+  'config/modules/*.lua',
 }
 
 client_scripts {
 	'locale.lua',
-	'locales/*.lua',
-	'config.lua',
-	'config.weapons.lua',
-	'client/common.lua',
-	'client/entityiter.lua',
-	'client/functions.lua',
-	'client/wrapper.lua',
-	'client/main.lua',
-	'client/modules/death.lua',
-	'client/modules/scaleform.lua',
-	'client/modules/streaming.lua',
-	'common/modules/math.lua',
-	'common/modules/table.lua',
-	'common/functions.lua',
-	'common/bootstrap.lua'
+  'locales/*.lua',
+
+	'config/default/config.lua',
+  'config/default/config.weapons.lua',
+  'config/default/modules/core/*.lua',
+  'config/default/modules/*.lua',
+  'config/modules/core/*.lua',
+  'config/modules/*.lua',
 }
 
 ui_page {
@@ -55,16 +44,6 @@ files {
 	'hud/**/*',
 }
 
-exports {
-	'getSharedObject',
-	'OnESX'
-}
-
-server_exports {
-	'getSharedObject',
-	'OnESX'
-}
-
 dependencies {
 	'spawnmanager',
 	'baseevents',
@@ -74,40 +53,48 @@ dependencies {
 	'skinchanger'
 }
 
--- ESX Modules
-esxmodule = function(name)
-	file('modules/' .. name .. '/data/**/*')
+-- Modules
+files {
+	'modules.json',
+	'modules/__core__/modules.json',
+  'modules/**/data/**/*',
+	'modules/**/shared/module.lua',
+  'modules/**/client/module.lua',
+	'modules/**/shared/events.lua',
+  'modules/**/client/events.lua',
+	'modules/**/shared/main.lua',
+	'modules/**/client/main.lua',
+}
 
-	client_script('modules/' .. name .. '/client/module.lua')
-	client_script('modules/' .. name .. '/client/main.lua')
-	client_script('modules/' .. name .. '/client/events.lua')
+client_scripts{
+  'modules/__main__/shared/module.lua',
+  'modules/__main__/client/module.lua',
+  'modules/__main__/shared/events.lua',
+  'modules/__main__/client/events.lua',
+  'modules/__main__/shared/main.lua',
+  'modules/__main__/client/main.lua',
+}
 
-	server_script('modules/' .. name .. '/server/module.lua')
-	server_script('modules/' .. name .. '/server/main.lua')
-	server_script('modules/' .. name .. '/server/events.lua')
-end
+server_scripts{
+  'modules/__main__/shared/module.lua',
+  'modules/__main__/server/module.lua',
+  'modules/__main__/shared/events.lua',
+  'modules/__main__/server/events.lua',
+  'modules/__main__/shared/main.lua',
+  'modules/__main__/server/main.lua',
+}
 
--- Misc
-esxmodule 'input' -- Evented input manager
-esxmodule 'interact' -- Interact menu (marker / npc)
+-- Loadscreen
+files {
+  'loadscreen/data/index.html',
+  'loadscreen/data/css/index.css',
+  'loadscreen/data/js/index.js',
+  'loadscreen/data/vid/esx_intro.mp4',
+  'loadscreen/data/vid/esx_loop.mp4'
+}
 
--- Extend
-esxmodule 'addonaccount' -- Addon account
-esxmodule 'addoninventory' -- Addon inventory
-esxmodule 'datastore' -- Arbitrary data store
-esxmodule 'container' -- Wrapper around addonaccount / addoninventory / datastore stuff
-esxmodule 'society' -- Society management
+loadscreen 'loadscreen/data/index.html'
+loadscreen_manual_shutdown 'yes'
+client_script 'loadscreen/client/main.lua'
 
--- UI
-esxmodule 'hud' -- Money / society etc... HUD
-esxmodule 'menu_default' -- Default menu
-esxmodule 'menu_dialog' -- Dialog menu
-esxmodule 'menu_list' -- List menu
 
--- Misc
-esxmodule 'skin' -- Skin management
-esxmodule 'accessories' -- Skin accessories management
-esxmodule 'voice' -- Proximity voice controller
-
--- Jobs
-esxmodule 'job_police' -- Job police

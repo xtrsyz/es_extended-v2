@@ -143,13 +143,13 @@ ESX.LogLoopError = function(loop, err)
   TriggerServerEvent('esx:error:log', str);
 end
 
-ESX.Loop = function(name, func, wait, conditions)
+ESX.Loop = function(name, func, wait, condition)
 
   ESX.Loops[name] = {
-    func      = func,
-    wait      = wait,
-    conditons = conditions or {},
-    name      = name,
+    func     = func,
+    wait     = wait,
+    conditon = condition or nil,
+    name     = name,
   }
 
 end

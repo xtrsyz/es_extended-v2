@@ -1,6 +1,3 @@
-ESX.Modules['interact'] = {};
-local self = ESX.Modules['interact']
-
 self.Id    = 0
 self.Data  = {}
 

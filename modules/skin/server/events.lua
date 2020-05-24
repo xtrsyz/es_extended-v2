@@ -1,66 +1,69 @@
-local self = ESX.Modules['skin']
+local Command = M('command', true)
 
-RegisterServerEvent('esx_skin:save')
-AddEventHandler('esx_skin:save', function(skin)
-	local xPlayer = ESX.GetPlayerFromId(source)
+onClient('esx_skin:save', function(skin)
+
+	local player           = xPlayer.fromId(source)
 	local defaultMaxWeight = ESX.GetConfig().MaxWeight
 	local backpackModifier = Config.BackpackWeight[skin.bags_1]
 
 	if backpackModifier then
-		xPlayer.setMaxWeight(defaultMaxWeight + backpackModifier)
+		player:setMaxWeight(defaultMaxWeight + backpackModifier)
 	else
-		xPlayer.setMaxWeight(defaultMaxWeight)
+		player:setMaxWeight(defaultMaxWeight)
 	end
 
 	MySQL.Async.execute('UPDATE users SET skin = @skin WHERE identifier = @identifier', {
-		['@skin'] = json.encode(skin),
-		['@identifier'] = xPlayer.identifier
-	})
+		['@skin']       = json.encode(skin),
+		['@identifier'] = player.identifier
+  })
+
 end)
 
-RegisterServerEvent('esx_skin:responseSaveSkin')
-AddEventHandler('esx_skin:responseSaveSkin', function(skin)
-	local xPlayer = ESX.GetPlayerFromId(source)
+onClient('esx_skin:responseSaveSkin', function(skin)
 
-	if xPlayer.getGroup() == 'admin' then
-		local file = io.open('resources/[esx]/esx_skin/skins.txt', "a")
+	local player = xPlayer.fromId(source)
+
+	if player:getGroup() == 'admin' then
+
+    local file = io.open('resources/es_extended/data/skins.txt', 'a')
 
 		file:write(json.encode(skin) .. "\n\n")
 		file:flush()
-		file:close()
+    file:close()
+
 	else
-		print(('esx_skin: %s attempted saving skin to file'):format(xPlayer.getIdentifier()))
+		print(('esx_skin: %s attempted saving skin to file'):format(player:getIdentifier()))
 	end
 end)
 
-ESX.RegisterServerCallback('esx_skin:getPlayerSkin', function(source, cb)
+onRequest('esx_skin:getPlayerSkin', function(source, cb)
 
-  local xPlayer = ESX.GetPlayerFromId(source)
+  local player = xPlayer.fromId(source)
 
 	MySQL.Async.fetchAll('SELECT skin FROM users WHERE identifier = @identifier', {
-		['@identifier'] = xPlayer.identifier
+		['@identifier'] = player.identifier
   }, function(users)
 
-		local user, skin = users[1]
+		local user = users[1]
 
 		local jobSkin = {
-			skin_male   = xPlayer.job.skin_male,
-			skin_female = xPlayer.job.skin_female
+			skin_male   = player.job.skin_male,
+			skin_female = player.job.skin_female
 		}
 
 		if user.skin then
 			skin = json.decode(user.skin)
 		end
 
-		cb(skin, jobSkin)
+    cb(skin, jobSkin)
+
 	end)
 end)
 
-ESX.RegisterCommand('skin', 'admin', function(xPlayer, args, showError)
-	xPlayer.triggerEvent('esx_skin:openSaveableMenu')
+Command.Register('skin', 'admin', function(player, args, showError)
+	player:emit('esx_skin:openSaveableMenu')
 end, false, {help = _U('skin')})
 
-ESX.RegisterCommand('skinsave', 'admin', function(xPlayer, args, showError)
-	xPlayer.triggerEvent('esx_skin:requestSaveSkin')
+Command.Register('skinsave', 'admin', function(player, args, showError)
+	player:emit('esx_skin:requestSaveSkin')
 end, false, {help = _U('saveskin')})
-

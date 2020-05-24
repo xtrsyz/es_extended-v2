@@ -1,6 +1,3 @@
-ESX.Modules['skin'] = {}
-local self = ESX.Modules['skin']
-
 self.lastSkin       = nil
 self.playerLoaded   = false
 self.cam            = nil

@@ -1,4 +1,3 @@
-local self = ESX.Modules['job_police']
 
 if self.Config.EnableESXService then
 	TriggerEvent('esx_service:activateService', 'police', self.Config.MaxInService)

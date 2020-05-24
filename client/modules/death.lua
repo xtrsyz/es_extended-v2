@@ -9,7 +9,7 @@ AddEventHandler('baseevents:onPlayerDied', function(killerType, deathCoords)
 		deathCause  = GetPedCauseOfDeath(playerPed)
 	}
 
-	TriggerEvent('esx:onPlayerDeath', data)
+	emit('esx:onPlayerDeath', data)
   TriggerServerEvent('esx:onPlayerDeath', data)
 
 end)

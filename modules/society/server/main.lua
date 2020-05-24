@@ -1,4 +1,3 @@
-local self = ESX.Modules['society']
 
 self.Init()
 
