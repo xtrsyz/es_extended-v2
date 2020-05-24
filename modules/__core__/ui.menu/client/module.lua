@@ -131,4 +131,3 @@ end
 self.IsOpen = function(type, namespace, name)
 	return self.GetOpened(type, namespace, name) ~= nil
 end
-

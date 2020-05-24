@@ -6,6 +6,10 @@ ESX.Loops            = {}
 ESX.LoopsRunning     = {}
 ESX.TimeoutCallbacks = {}
 
+ESX.GetConfig = function()
+  return Config
+end
+
 ESX.LogError = function(err)
   local str = '^7' .. err .. ' ' .. debug.traceback()
   print(str)

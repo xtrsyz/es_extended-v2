@@ -1,8 +1,8 @@
 self.handlers         = {}
 self.callbacks        = {}
 self.requestCallbacks = {}
-self.eventId          = 0
-self.requestId        = 0
+self.eventId          = 1
+self.requestId        = 1
 
 local getEventId = function()
 

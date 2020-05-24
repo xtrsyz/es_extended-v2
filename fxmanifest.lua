@@ -8,39 +8,30 @@ version '2.0.0'
 
 server_scripts {
 	'@async/async.lua',
-	'@mysql-async/lib/MySQL.lua',
+  '@mysql-async/lib/MySQL.lua',
+
 	'locale.lua',
-	'locales/*.lua',
-	'config.lua',
-	'config.weapons.lua',
-	'server/common.lua',
-	'server/functions.lua',
-	'server/paycheck.lua',
-	'server/main.lua',
-	'server/commands.lua',
-	'common/modules/math.lua',
-	'common/modules/table.lua',
-	'common/functions.lua',
-	'common/bootstrap.lua'
+  'locales/*.lua',
+
+	'config/default/config.lua',
+  'config/default/config.weapons.lua',
+  'config/default/modules/core/*.lua',
+  'config/default/modules/*.lua',
+  'config/modules/core/*.lua',
+  'config/modules/*.lua',
 }
 
 client_scripts {
+
 	'locale.lua',
-	'locales/*.lua',
-	'config.lua',
-	'config.weapons.lua',
-	'client/common.lua',
-	'client/entityiter.lua',
-	'client/functions.lua',
-	'client/wrapper.lua',
-	'client/main.lua',
-	'client/modules/death.lua',
-	'client/modules/scaleform.lua',
-	'client/modules/streaming.lua',
-	'common/modules/math.lua',
-	'common/modules/table.lua',
-	'common/functions.lua',
-	'common/bootstrap.lua'
+  'locales/*.lua',
+
+	'config/default/config.lua',
+  'config/default/config.weapons.lua',
+  'config/default/modules/core/*.lua',
+  'config/default/modules/*.lua',
+  'config/modules/core/*.lua',
+  'config/modules/*.lua',
 }
 
 ui_page {
@@ -52,16 +43,6 @@ files {
 	'data/**/*',
 	'locale.js',
 	'hud/**/*',
-}
-
-exports {
-	'getSharedObject',
-	'OnESX'
-}
-
-server_exports {
-	'getSharedObject',
-	'OnESX'
 }
 
 dependencies {
@@ -88,8 +69,11 @@ files {
 
 client_scripts{
   'modules/__main__/shared/module.lua',
-	'modules/__main__/shared/events.lua',
-	'modules/__main__/shared/main.lua',
+  'modules/__main__/client/module.lua',
+  'modules/__main__/shared/events.lua',
+  'modules/__main__/client/events.lua',
+  'modules/__main__/shared/main.lua',
+  'modules/__main__/client/main.lua',
 }
 
 server_scripts{

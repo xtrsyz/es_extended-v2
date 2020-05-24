@@ -1,18 +1,18 @@
 
 MySQL.ready(function()
-  emit('esx:db:internal:ready', self.InitTable)
+  emit('esx:db:internal:ready')
 end)
 
-on('esx:db:internal:ready', function(initTable)
+on('esx:db:internal:ready', function()
 
   -- Init minimum required schemas here
-  initTable('migrations', 'id', {
+  self.InitTable('migrations', 'id', {
     {name = 'id',     type = 'INT',     length = 11, default = nil, extra = 'NOT NULL AUTO_INCREMENT'},
     {name = 'module', type = 'VARCHAR', length = 64,  default = nil, extra = nil},
     {name = 'last',   type = 'INT',     length = 11, default = nil, extra = nil},
   })
 
-  initTable('users', 'identifier', {
+  self.InitTable('users', 'identifier', {
     {name = 'identifier', type = 'VARCHAR',  length = 40, default = nil,                                                extra = 'NOT NULL'},
     {name = 'name',       type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
     {name = 'accounts',   type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
@@ -25,14 +25,14 @@ on('esx:db:internal:ready', function(initTable)
     {name = 'is_dead',    type = 'INT',      length = 1, default = 0,                                                  extra = nil},
   })
 
-  initTable('jobs', 'name', {
+  self.InitTable('jobs', 'name', {
     {name = 'name',  type = 'VARCHAR', length = 64,  default = nil,    extra = 'NOT NULL'},
     {name = 'label', type = 'VARCHAR', length = 64,  default = 'NULL', extra = nil},
   }, {
     {name = 'unemployed', label = 'Unemployed'}
   })
 
-  initTable('job_grades', 'id', {
+  self.InitTable('job_grades', 'id', {
     {name = 'id',          type = 'INT',      length = 11,  default = nil,    extra = 'NOT NULL AUTO_INCREMENT'},
     {name = 'job_name',    type = 'VARCHAR',  length = 32,   default = 'NULL', extra = nil},
     {name = 'grade',       type = 'INT',      length = 11,  default = nil,    extra = 'NOT NULL'},
@@ -45,7 +45,7 @@ on('esx:db:internal:ready', function(initTable)
     {job_name = 'unemployed', grade = 0, name = 'unemployed', label = 'Unemployed', salary = 200, skin_male = '{}', skin_female = '{}'}
   })
 
-  initTable('items', 'name', {
+  self.InitTable('items', 'name', {
     {name = 'name',        type = 'VARCHAR',  length = 64,   default = nil,    extra = 'NOT NULL'},
     {name = 'label',       type = 'VARCHAR',  length = 64,   default = nil,    extra = 'NOT NULL'},
     {name = 'weight',      type = 'INT',      length = 11,  default = nil,    extra = 'NOT NULL'},
@@ -54,10 +54,10 @@ on('esx:db:internal:ready', function(initTable)
   })
 
   -- Leave a chance to extend schemas here
-  emit('esx:db:init', self.InitTable)
+  emit('esx:db:init', self.InitTable, self.ExtendTable)
 
   -- Ensure schemas in database
-  for k,v in pairs(self.tables) do
+  for k,v in pairs(self.Tables) do
     v:ensure()
   end
 

@@ -3,15 +3,8 @@ local self = ESX.Modules['__MAIN__']
 -- Need a bit of core modules here
 self.LoadModule('events', true)
 
-RegisterNUICallback('nui_ready', function(data, cb)
-  emit('esx:nui_ready')
-  cb('')
-end)
-
-RegisterNUICallback('frame_message', function(data, cb)
-  emit('esx:frame_message', data.name, data.msg)
-  cb('')
-end)
+local Menu   = self.LoadModule('ui.menu',  true)
+local HUD    = self.LoadModule('game.hud', true)
 
 onServer('esx:playerLoaded', function(playerData)
 
@@ -26,9 +19,10 @@ onServer('esx:playerLoaded', function(playerData)
 	end
 
 	if Config.EnableHud then
-		for k,v in ipairs(playerData.accounts) do
+
+    for k,v in ipairs(playerData.accounts) do
 			local accountTpl = '<div><img src="img/accounts/' .. v.name .. '.png"/>&nbsp;{{money}}</div>'
-			ESX.UI.HUD.RegisterElement('account_' .. v.name, k, 0, accountTpl, {money = ESX.Math.GroupDigits(v.money)})
+			HUD.RegisterElement('account_' .. v.name, k, 0, accountTpl, {money = math.groupDigits(v.money)})
 		end
 
 		local jobTpl = '<div>{{job_label}} - {{grade_label}}</div>'
@@ -37,10 +31,11 @@ onServer('esx:playerLoaded', function(playerData)
 			jobTpl = '<div>{{job_label}}</div>'
 		end
 
-		ESX.UI.HUD.RegisterElement('job', #playerData.accounts, 0, jobTpl, {
+		HUD.RegisterElement('job', #playerData.accounts, 0, jobTpl, {
 			job_label = playerData.job.label,
 			grade_label = playerData.job.grade_label
-		})
+    })
+
 	end
 
 	-- Bringing back spawnmanager, see commit of Smallo92 at https://github.com/extendedmode/extendedmode/commit/9979c204f1237091e94fdd46580c9e7ebc79bca7
@@ -53,7 +48,7 @@ onServer('esx:playerLoaded', function(playerData)
 		skipFade = false
   }, function()
 
-		TriggerServerEvent('esx:onPlayerSpawn')
+		emitServer('esx:onPlayerSpawn')
 		emit('esx:onPlayerSpawn')
     emit('esx:restoreLoadout')
 
@@ -65,9 +60,9 @@ onServer('esx:setMaxWeight', function(newMaxWeight) ESX.PlayerData.maxWeight = n
 
 on('esx:onPlayerSpawn', function() ESX.IsDead = false end)
 on('esx:onPlayerDeath', function() ESX.IsDead = true end)
-on('skinchanger:loadDefaultModel', function() ESX.IsLoadoutLoaded = false end)
+AddEventHandler('skinchanger:loadDefaultModel', function() ESX.IsLoadoutLoaded = false end)
 
-on('skinchanger:modelLoaded', function()
+AddEventHandler('skinchanger:modelLoaded', function()
 
   while not ESX.PlayerLoaded do
 		Citizen.Wait(100)
@@ -117,8 +112,8 @@ onServer('esx:setAccountMoney', function(account)
 	end
 
 	if Config.EnableHud then
-		ESX.UI.HUD.UpdateElement('account_' .. account.name, {
-			money = ESX.Math.GroupDigits(account.money)
+		HUD.UpdateElement('account_' .. account.name, {
+			money = math.groupDigits(account.money)
 		})
 	end
 end)
@@ -240,7 +235,7 @@ end)
 
 onServer('esx:setJob', function(job)
 	if Config.EnableHud then
-		ESX.UI.HUD.UpdateElement('job', {
+		HUD.UpdateElement('job', {
 			job_label   = job.label,
 			grade_label = job.grade_label
 		})

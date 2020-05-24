@@ -1,4 +1,5 @@
 Config = {}
+
 Config.Locale = 'en'
 
 Config.Accounts = {
@@ -7,7 +8,13 @@ Config.Accounts = {
 	money       = _U('account_money')
 }
 
-Config.StartingAccountMoney = {bank = 50000}
+Config.Items = {}
+
+Config.StartingAccountMoney = {
+  bank        = 50000,
+  black_money = 0,
+  money       = 0
+}
 
 Config.EnableSocietyPayouts = false -- pay from the society account that the player is employed at? Requirement= esx_society
 Config.DisableWantedLevel   = true

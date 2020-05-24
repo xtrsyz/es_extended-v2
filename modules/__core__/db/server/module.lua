@@ -1,6 +1,7 @@
+M('class')
 M('events')
 
-self.tables = {}
+self.Tables = {}
 
 -- field
 local DBField = Extends(nil)
@@ -78,6 +79,18 @@ end
 
 function DBTable:row(data)
   self.rows[#self.rows + 1] = data
+end
+
+function DBTable:fieldNames()
+
+  local names = {}
+
+  for i=1, #self.fields, 1 do
+    names[#names + 1] = self.fields[i].name
+  end
+
+  return names
+
 end
 
 function DBTable:sql()
@@ -188,7 +201,8 @@ function DBTable:ensure()
 
 end
 
--- module
+self.DBTable = DBTable
+
 self.InitTable = function(name, pk, fields, rows)
 
   rows      = rows or {}
@@ -203,10 +217,25 @@ self.InitTable = function(name, pk, fields, rows)
     tbl:row(rows[i])
   end
 
-  self.tables[name] = tbl
+  self.Tables[name] = tbl
 
   print('init table ' .. name)
 
 end
 
-self.DBTable = DBTable
+self.ExtendTable = function(name, fields)
+
+  local tbl = self.Tables[name]
+
+  for i=1, #fields, 1 do
+    local field = fields[i]
+    tbl:field(field.name, field.type, field.length, field.default, field.extra)
+  end
+
+  print('extend table ' .. name)
+
+end
+
+self.GetFieldNames = function(tableName)
+  return self.Tables[tableName]:fieldNames()
+end

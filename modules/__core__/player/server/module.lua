@@ -1,4 +1,5 @@
-M('class', true)  -- Require 'class' module, to have Extends method defined globally
+M('class', true)        -- Require 'class' builtin module
+local DB = M('db',true) -- Require 'db' builtin module
 
 ---- Class representing a player
 --- @class xPlayer
@@ -78,6 +79,7 @@ xPlayer = Extends(nil)
 
       MySQL.Async.fetchAll('SELECT * FROM users WHERE identifier = @identifier', { ['@identifier'] = identifier }, function(result)
 
+        local row   = result[1]
         local tasks = {}
 
         local userData = {
@@ -89,9 +91,13 @@ xPlayer = Extends(nil)
           loadout    = {},
         }
 
-        for entryName, entryValue in pairs(result[1]) do
+        local fieldNames = DB.GetFieldNames('users')
 
-          emit('esx:player:load:' .. entryName, identifier, playerId, result[1], userData, function(task)
+        for i=1, #fieldNames, 1 do
+
+          local fieldName = fieldNames[i]
+
+          emit('esx:player:load:' .. fieldName, identifier, playerId, row, userData, function(task)
             tasks[#tasks + 1] = task
           end)
 
@@ -115,7 +121,7 @@ xPlayer = Extends(nil)
 
           emit('esx:playerLoaded', playerId, xPlayer)
 
-          player:emit('esx:playerLoaded',         player:serialize())
+          player:emit('esx:playerLoaded', player:serialize())
           --player:emit('esx:createMissingPickups', ESX.Pickups)
           --player:emit('esx:registerSuggestions',  ESX.RegisteredCommands)
 
@@ -145,7 +151,7 @@ xPlayer = Extends(nil)
 
     Async.parallelLimit(asyncTasks, 8, function(results)
 
-      print(('saved %s player(s)'):format(#xPlayers))
+      print(('saved %s player(s)'):format(#results))
 
       if cb then
         cb()
@@ -202,9 +208,7 @@ xPlayer = Extends(nil)
 
           if result then
 
-            xPlayer.load(identifier, playerId, function(player)
-
-            end)
+            xPlayer.load(identifier, playerId)
 
           else
 
@@ -229,6 +233,15 @@ xPlayer = Extends(nil)
     else
       DropPlayer(playerId, 'there was an error loading your character!\nError code: identifier-missing-ingame\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
     end
+  end
+
+  xPlayer.defineDBField = function(name, default, parse, build)
+
+    local upper             = name:gsub("^%l", string.upper)
+    xPlayer[name]           = default;
+    xPlayer['get' .. upper] = function()  return xPlayer[name] end
+    xPlayer['set' .. upper] = function(v) xPlayer[name] = v    end
+
   end
 
   -- Instance properties / methods

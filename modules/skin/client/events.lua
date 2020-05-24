@@ -1,4 +1,5 @@
 on('esx:onPlayerSpawn', function()
+
 	Citizen.CreateThread(function()
 
     while not ESX.PlayerLoaded do
@@ -8,16 +9,17 @@ on('esx:onPlayerSpawn', function()
 		if self.firstSpawn then
 			request('esx_skin:getPlayerSkin', function(skin, jobSkin)
 				if skin == nil then
-					emit('skinchanger:loadSkin', {sex = 0}, OpenSaveableMenu)
+					TriggerEvent('skinchanger:loadSkin', {sex = 0}, OpenSaveableMenu)
 				else
-					emit('skinchanger:loadSkin', skin)
+					TriggerEvent('skinchanger:loadSkin', skin)
 				end
 			end)
 
       self.firstSpawn = false
 
 		end
-	end)
+  end)
+
 end)
 
 on('esx_skin:getLastSkin', function(cb)

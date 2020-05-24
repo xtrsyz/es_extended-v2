@@ -1,5 +1,13 @@
 local Input = M('input')
 
+on('esx:db:init', function(initTable, extendTable)
+
+  extendTable('users', {
+    {name = 'accessories', type = 'TEXT', length = nil, default = nil, extra = nil},
+  })
+
+end)
+
 on('esx_accessories:hasEnteredMarker', function(zone)
 	self.CurrentAction     = 'shop_menu'
 	self.CurrentActionMsg  = _U('accessories:press_access')

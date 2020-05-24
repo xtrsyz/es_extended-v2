@@ -1,18 +1,36 @@
 local self = ESX.Modules['__MAIN__']
 
+local HUD = self.LoadModule('game.hud', true)
+
+-- Join
+Citizen.CreateThread(function()
+
+  while true do
+		Citizen.Wait(0)
+
+		if NetworkIsPlayerActive(PlayerId()) then
+			emitServer('esx:onPlayerJoined')
+			break
+		end
+  end
+
+end)
+
 -- Pause menu disables HUD display
 if Config.EnableHud then
 	Citizen.CreateThread(function()
-		while true do
+    while true do
+
 			Citizen.Wait(300)
 
-			if IsPauseMenuActive() and not ESX.IsPAused then
-				ESX.IsPAused = true
-				ESX.UI.HUD.SetDisplay(0.0)
-			elseif not IsPauseMenuActive() and ESX.IsPAused then
-				ESX.IsPAused = false
-				ESX.UI.HUD.SetDisplay(1.0)
-			end
+			if IsPauseMenuActive() and not ESX.IsPaused then
+				ESX.IsPaused = true
+				HUD.SetDisplay(0.0)
+			elseif not IsPauseMenuActive() and ESX.IsPaused then
+				ESX.IsPaused = false
+				HUD.SetDisplay(1.0)
+      end
+
 		end
 	end)
 end
@@ -27,7 +45,7 @@ ESX.Loop('server-sync-ammo', function()
 
     if weapon then
       local ammoCount = GetAmmoInPedWeapon(playerPed, weaponHash)
-      TriggerServerEvent('esx:updateWeaponAmmo', weapon.name, ammoCount)
+      emitServer('esx:updateWeaponAmmo', weapon.name, ammoCount)
     end
   end
 
@@ -51,7 +69,7 @@ ESX.Loop('server-sync-coords', function()
       previousCoords = playerCoords
       local playerHeading = ESX.Math.Round(GetEntityHeading(playerPed), 1)
       local formattedCoords = {x = ESX.Math.Round(playerCoords.x, 1), y = ESX.Math.Round(playerCoords.y, 1), z = ESX.Math.Round(playerCoords.z, 1), heading = playerHeading}
-      TriggerServerEvent('esx:updateCoords', formattedCoords)
+      emitServer('esx:updateCoords', formattedCoords)
     end
 
   end
@@ -139,7 +157,7 @@ ESX.Loop('pickup-actions', function()
         ESX.Streaming.RequestAnimDict(dict)
         TaskPlayAnim(playerPed, dict, anim, 8.0, 1.0, 1000, 16, 0.0, false, false, false)
         Citizen.Wait(1000)
-        TriggerServerEvent('esx:onPickup', pickup.id)
+        emitServer('esx:onPickup', pickup.id)
         PlaySoundFrontend(-1, 'PICK_UP', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
 
       end)
