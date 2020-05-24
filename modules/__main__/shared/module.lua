@@ -1,10 +1,11 @@
 -- ESX base
-ESX                  = {}
-ESX.Ready            = false
-ESX.Modules          = {}
-ESX.Loops            = {}
-ESX.LoopsRunning     = {}
-ESX.TimeoutCallbacks = {}
+ESX                   = {}
+ESX.Ready             = false
+ESX.Modules           = {}
+ESX.Loops             = {}
+ESX.LoopsRunning      = {}
+ESX.TimeoutCount      = 1
+ESX.CancelledTimeouts = {}
 
 ESX.GetConfig = function()
   return Config
@@ -77,17 +78,59 @@ end
 
 ESX.SetTimeout = function(msec, cb)
 
-  table.insert(ESX.TimeoutCallbacks, {
-		time = GetGameTimer() + msec,
-		cb   = cb
-  })
+  local id = (ESX.TimeoutCount + 1 < 65635) and (ESX.TimeoutCount + 1) or 1
 
-  return #ESX.TimeoutCallbacks
+  SetTimeout(msec, function()
+
+    if ESX.CancelledTimeouts[id] then
+      ESX.CancelledTimeouts[id] = nil
+    else
+      cb()
+    end
+
+  end)
+
+  ESX.TimeoutCount = id;
+
+  return id
 
 end
 
-ESX.ClearTimeout = function(i)
-  ESX.TimeoutCallbacks[i] = nil
+ESX.ClearTimeout = function(id)
+  CancelledTimeouts[id] = true
+end
+
+ESX.SetInterval = function(msec, cb)
+
+  local id = (ESX.TimeoutCount + 1 < 65635) and (ESX.TimeoutCount + 1) or 1
+
+  local run
+
+  run = function()
+
+    ESX.SetTimeout(msec, function()
+
+      if ESX.CancelledTimeouts[id] then
+        ESX.CancelledTimeouts[id] = nil
+      else
+        cb()
+        run()
+      end
+
+    end)
+
+  end
+
+  ESX.TimeoutCount = id;
+
+  run()
+
+  return id
+
+end
+
+ESX.ClearInterval = function(id)
+  CancelledTimeouts[id] = true
 end
 
 -- ESX main module

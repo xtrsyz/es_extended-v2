@@ -446,7 +446,7 @@ end
 
 self.On = function(event, group, id, cb)
 
-  return AddEventHandler('esx:input:' .. event .. ':' .. group .. ':'  .. id, cb)
+  return on('esx:input:' .. event .. ':' .. group .. ':'  .. id, cb)
 
 end
 
