@@ -1,9 +1,9 @@
 
-AddEventHandler('esx_datastore:ready',      self.OnDependencyReady)
-AddEventHandler('esx_addonaccount:ready',   self.OnDependencyReady)
-AddEventHandler('esx_addoninventory:ready', self.OnDependencyReady)
+on('esx_datastore:ready',      self.OnDependencyReady)
+on('esx_addonaccount:ready',   self.OnDependencyReady)
+on('esx_addoninventory:ready', self.OnDependencyReady)
 
-ESX.RegisterServerCallback('esx:container:get', function(source, cb, name, restrict)
+onRequest('esx:container:get', function(source, cb, name, restrict)
 
   restrict = restrict or {
     'account',
@@ -20,7 +20,7 @@ ESX.RegisterServerCallback('esx:container:get', function(source, cb, name, restr
 
 end)
 
-ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restrict)
+onRequest('esx:container:get:user', function(source, cb, restrict)
 
   restrict = restrict or {
     'account',
@@ -62,7 +62,7 @@ ESX.RegisterServerCallback('esx:container:get:user', function(source, cb, restri
 end)
 
 -- TODO more checks on weight and such
-ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, itemType, itemName, itemCount)
+onRequest('esx:container:pull', function(source, cb, name, itemType, itemName, itemCount)
 
   local xPlayer   = ESX.GetPlayerFromId(source)
   local container = self.Get(name)
@@ -90,7 +90,7 @@ ESX.RegisterServerCallback('esx:container:pull', function(source, cb, name, item
 end)
 
 -- TODO more checks on weight and such
-ESX.RegisterServerCallback('esx:container:put', function(source, cb, name, itemType, itemName, itemCount)
+onRequest('esx:container:put', function(source, cb, name, itemType, itemName, itemCount)
 
   local xPlayer   = ESX.GetPlayerFromId(source)
   local container = self.Get(name)

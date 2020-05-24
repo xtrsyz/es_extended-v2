@@ -59,8 +59,9 @@ ESX.EvalFile = function(resource, file, env)
   env        = env or {}
   env._G     = env
   local code = LoadResourceFile(resource, file)
+  local fn   = load(code, code, 't', env)
 
-  load(code, code, 't', env)()
+  fn()
 
   return env
 
@@ -138,7 +139,8 @@ self.LoadModule = function(name, isCore)
 
     end
 
-    local menv           = setmetatable(_menv, {__index = _G})
+    local menv           = setmetatable(_menv, {__index = _G, __newindex = _G})
+    _menv._ENV           = menv
     _menv.module.__ENV__ = menv
 
     local shared, current = self.GetModuleEntryPoints(name, isCore)
@@ -151,7 +153,13 @@ self.LoadModule = function(name, isCore)
     end
 
     if current then
-      env = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', menv)
+
+      if env then
+        ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', env)
+      else
+        env = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', menv)
+      end
+
       ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/events.lua', env)
       ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/main.lua',   env)
     end

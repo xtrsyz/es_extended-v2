@@ -1,5 +1,7 @@
+M('events', true)
+
 -- xPlayer instance construction
-AddEventHandler('esx:player:load:accounts', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:accounts', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 
@@ -32,7 +34,7 @@ AddEventHandler('esx:player:load:accounts', function(identifier, playerId, row, 
 
 end)
 
-AddEventHandler('esx:player:load:job', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:job', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 
@@ -71,7 +73,7 @@ AddEventHandler('esx:player:load:job', function(identifier, playerId, row, userD
 
 end)
 
-AddEventHandler('esx:player:load:inventory', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:inventory', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 
@@ -127,7 +129,7 @@ AddEventHandler('esx:player:load:inventory', function(identifier, playerId, row,
 
 end)
 
-AddEventHandler('esx:player:load:group', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:group', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 
@@ -145,7 +147,7 @@ AddEventHandler('esx:player:load:group', function(identifier, playerId, row, use
 
 end)
 
-AddEventHandler('esx:player:load:loadout', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:loadout', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 
@@ -181,7 +183,7 @@ AddEventHandler('esx:player:load:loadout', function(identifier, playerId, row, u
 
 end)
 
-AddEventHandler('esx:player:load:position', function(identifier, playerId, row, userData, addTask)
+on('esx:player:load:position', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)
 

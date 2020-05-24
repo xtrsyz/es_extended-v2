@@ -1,5 +1,4 @@
-;
-local self        = module
+M('events')
 
 self.tables = {}
 

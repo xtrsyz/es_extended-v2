@@ -55,7 +55,7 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
 
 end)
 
-MySQL.ready(function()
+on('esx:migrations:done', function()
 
   local items = MySQL.Sync.fetchAll('SELECT * FROM items')
 

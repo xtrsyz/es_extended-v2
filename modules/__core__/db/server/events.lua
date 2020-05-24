@@ -1,9 +1,9 @@
 
 MySQL.ready(function()
-  TriggerEvent('esx:db:internal:ready', self.InitTable)
+  emit('esx:db:internal:ready', self.InitTable)
 end)
 
-AddEventHandler('esx:db:internal:ready', function(initTable)
+on('esx:db:internal:ready', function(initTable)
 
   -- Init minimum required schemas here
   initTable('migrations', 'id', {
@@ -54,7 +54,7 @@ AddEventHandler('esx:db:internal:ready', function(initTable)
   })
 
   -- Leave a chance to extend schemas here
-  TriggerEvent('esx:db:init', self.InitTable)
+  emit('esx:db:init', self.InitTable)
 
   -- Ensure schemas in database
   for k,v in pairs(self.tables) do
@@ -62,5 +62,5 @@ AddEventHandler('esx:db:internal:ready', function(initTable)
   end
 
   -- database ready for migrations
-  TriggerEvent('esx:db:ready')
+  emit('esx:db:ready')
 end)

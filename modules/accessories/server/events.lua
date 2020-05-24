@@ -2,7 +2,7 @@
 -- BEGIN extend xPlayer stuff
 
   -- add properties and methods to xPlayer when bulding its instance
-  AddEventHandler('esx:player:create', function(xPlayer)
+  on('esx:player:create', function(xPlayer)
 
     xPlayer.set('getAccessories', function()
       return xPlayer.get('accessories')
@@ -15,17 +15,17 @@
   end)
 
   -- add field when serializing xPlayer instance (for sending in event for example)
-  AddEventHandler('esx:player:serialize', function(xPlayer, add)
+  on('esx:player:serialize', function(xPlayer, add)
     add({accessories = xPlayer.getAccessories()})
   end)
 
   -- add field when serializing xPlayer instance to DB
-  AddEventHandler('esx:player:serialize:db', function(xPlayer, add)
+  on('esx:player:serialize:db', function(xPlayer, add)
     add({accessories = json.encode(xPlayer.getAccessories())})
   end)
 
   -- handle sql field loading from DB
-  AddEventHandler('esx:player:load:accessories', function(identifier, playerId, row, userData, addTask)
+  on('esx:player:load:accessories', function(identifier, playerId, row, userData, addTask)
 
     addTask(function(cb)
 
@@ -45,8 +45,7 @@
 
 -- END extend xPlayer stuff
 
-RegisterServerEvent('esx_accessories:pay')
-AddEventHandler('esx_accessories:pay', function()
+onRequest('esx_accessories:pay', function()
 
   local xPlayer = ESX.GetPlayerFromId(source)
   xPlayer.removeMoney(self.Config.Price)
@@ -54,8 +53,7 @@ AddEventHandler('esx_accessories:pay', function()
 
 end)
 
-RegisterServerEvent('esx_accessories:save')
-AddEventHandler('esx_accessories:save', function(skin, accessory)
+onRequest('esx_accessories:save', function(skin, accessory)
 
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
@@ -74,7 +72,7 @@ AddEventHandler('esx_accessories:save', function(skin, accessory)
 
 end)
 
-ESX.RegisterServerCallback('esx_accessories:get', function(source, cb, accessory)
+onRequest('esx_accessories:get', function(source, cb, accessory)
 
   local xPlayer = ESX.GetPlayerFromId(source)
 
@@ -85,7 +83,7 @@ ESX.RegisterServerCallback('esx_accessories:get', function(source, cb, accessory
 
 end)
 
-ESX.RegisterServerCallback('esx_accessories:checkMoney', function(source, cb)
+onRequest('esx_accessories:checkMoney', function(source, cb)
 
   local xPlayer = ESX.GetPlayerFromId(source)
   cb(xPlayer.getMoney() >= self.Config.Price)

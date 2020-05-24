@@ -1,6 +1,6 @@
+local Command = M('command', true)
 
-RegisterServerEvent('esx_skin:save')
-AddEventHandler('esx_skin:save', function(skin)
+onClient('esx_skin:save', function(skin)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local defaultMaxWeight = ESX.GetConfig().MaxWeight
 	local backpackModifier = Config.BackpackWeight[skin.bags_1]
@@ -17,8 +17,7 @@ AddEventHandler('esx_skin:save', function(skin)
 	})
 end)
 
-RegisterServerEvent('esx_skin:responseSaveSkin')
-AddEventHandler('esx_skin:responseSaveSkin', function(skin)
+onClient('esx_skin:responseSaveSkin', function(skin)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if xPlayer.getGroup() == 'admin' then
@@ -32,7 +31,7 @@ AddEventHandler('esx_skin:responseSaveSkin', function(skin)
 	end
 end)
 
-ESX.RegisterServerCallback('esx_skin:getPlayerSkin', function(source, cb)
+onRequest('esx_skin:getPlayerSkin', function(source, cb)
 
   local xPlayer = ESX.GetPlayerFromId(source)
 
@@ -55,10 +54,10 @@ ESX.RegisterServerCallback('esx_skin:getPlayerSkin', function(source, cb)
 	end)
 end)
 
-ESX.RegisterCommand('skin', 'admin', function(xPlayer, args, showError)
+Command.Register('skin', 'admin', function(xPlayer, args, showError)
 	xPlayer.triggerEvent('esx_skin:openSaveableMenu')
 end, false, {help = _U('skin')})
 
-ESX.RegisterCommand('skinsave', 'admin', function(xPlayer, args, showError)
+Command.Register('skinsave', 'admin', function(xPlayer, args, showError)
 	xPlayer.triggerEvent('esx_skin:requestSaveSkin')
 end, false, {help = _U('saveskin')})

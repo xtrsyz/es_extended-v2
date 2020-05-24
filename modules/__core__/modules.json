@@ -3,5 +3,8 @@
   "math",
   "class",
   "events",
-  "player"
+  "player",
+  "command",
+  "db",
+  "migrate"
 ]

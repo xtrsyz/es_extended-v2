@@ -62,7 +62,7 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
 
 end)
 
-MySQL.ready(function()
+on('esx:migrations:done', function()
 
 	local result = MySQL.Sync.fetchAll('SELECT * FROM addon_account')
 
