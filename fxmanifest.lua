@@ -73,30 +73,46 @@ dependencies {
 	'skinchanger'
 }
 
+-- Loadscreen
+
+files {
+    'modules/loadscreen/data/index.html',
+    'modules/loadscreen/data/css/index.css',
+    'modules/loadscreen/data/js/index.js',
+    'modules/loadscreen/data/vid/esx_intro.mp4',
+    'modules/loadscreen/data/vid/esx_loop.mp4'
+}
+
+client_script 'modules/loadscreen/client/main.lua'
+
+loadscreen_manual_shutdown "yes"
+loadscreen 'modules/loadscreen/data/index.html'
+
+
 -- Modules
 files {
 	'modules.json',
 	'modules/__core__/modules.json',
-  'modules/**/data/**/*',
+  	'modules/**/data/**/*',
 	'modules/**/shared/module.lua',
-  'modules/**/client/module.lua',
+  	'modules/**/client/module.lua',
 	'modules/**/shared/events.lua',
-  'modules/**/client/events.lua',
+  	'modules/**/client/events.lua',
 	'modules/**/shared/main.lua',
 	'modules/**/client/main.lua',
 }
 
 client_scripts{
-  'modules/__main__/shared/module.lua',
+	'modules/__main__/shared/module.lua',
 	'modules/__main__/shared/events.lua',
 	'modules/__main__/shared/main.lua',
 }
 
 server_scripts{
-  'modules/__main__/shared/module.lua',
-  'modules/__main__/server/module.lua',
-  'modules/__main__/shared/events.lua',
-  'modules/__main__/server/events.lua',
-  'modules/__main__/shared/main.lua',
-  'modules/__main__/server/main.lua',
+  	'modules/__main__/shared/module.lua',
+  	'modules/__main__/server/module.lua',
+  	'modules/__main__/shared/events.lua',
+  	'modules/__main__/server/events.lua',
+  	'modules/__main__/shared/main.lua',
+  	'modules/__main__/server/main.lua',
 }
