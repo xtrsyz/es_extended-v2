@@ -390,14 +390,14 @@ self.Controls = {
 }
 
 self.RegisterControl = function(group, id)
-  if ESX.Table.IndexOf(self.RegisteredControls[group], id) == -1 then
+  if table.indexOf(self.RegisteredControls[group], id) == -1 then
     self.RegisteredControls[group][#self.RegisteredControls[group] + 1] = id
   end
 end
 
 self.UnregisterControl = function(group, id)
-  if ESX.Table.IndexOf(self.RegisteredControls[group], id) ~= -1 then
-    table.remove(self.RegisteredControls[group], ESX.Table.IndexOf(self.RegisteredControls[group], id))
+  if table.indexOf(self.RegisteredControls[group], id) ~= -1 then
+    table.remove(self.RegisteredControls[group], table.indexOf(self.RegisteredControls[group], id))
   end
 end
 
@@ -410,7 +410,7 @@ self.DisableControl = function(group, id)
 end
 
 self.IsControlRegistered = function(group, id)
-  return ESX.Table.IndexOf(self.RegisteredControls[group], id) ~= -1
+  return table.indexOf(self.RegisteredControls[group], id) ~= -1
 end
 
 self.IsControlPressed = function(group, id)

@@ -1,3 +1,4 @@
+-- xPlayer instance construction
 AddEventHandler('esx:player:load:accounts', function(identifier, playerId, row, userData, addTask)
 
   addTask(function(cb)

@@ -79,7 +79,7 @@ function onPlayerJoined(playerId)
 		DropPlayer(playerId, 'there was an error loading your character!\nError code: identifier-missing-ingame\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
 	end
 end
-
+--[[
 AddEventHandler('playerConnecting', function(name, setCallback, deferrals)
 	deferrals.defer()
 	local playerId, identifier = source
@@ -102,6 +102,7 @@ AddEventHandler('playerConnecting', function(name, setCallback, deferrals)
 		deferrals.done('There was an error loading your character!\nError code: identifier-missing\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
 	end
 end)
+]]--
 
 AddEventHandler('chatMessage', function(playerId, author, message)
 	if message:sub(1, 1) == '/' and playerId > 0 then

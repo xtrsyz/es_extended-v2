@@ -1,3 +1,72 @@
+-- ESX base
+ESX              = {}
+ESX.Modules      = {}
+ESX.Loops        = {}
+ESX.LoopsRunning = {}
+
+ESX.LogError = function(err)
+  local str = '^7' .. err .. ' ' .. debug.traceback()
+  print(str)
+end
+
+ESX.LogScopeError = function(scope, err)
+  local str = '^7[esx] error in scope (' .. scope .. ') ' .. err .. ' ' .. debug.traceback()
+  print(str)
+end
+
+
+ESX.LogLoopError = function(loop, err)
+  local str = '^7[esx] error in loop (' .. loop .. ') ' .. err .. ' ' .. debug.traceback()
+  print(str)
+end
+
+ESX.Loop = function(name, func, wait, conditions)
+
+  ESX.Loops[name] = {
+    func      = func,
+    wait      = wait,
+    conditons = conditions or {},
+    name      = name,
+  }
+
+end
+
+ESX.Scope = function(name, func)
+
+  local status, result = xpcall(func, function(err)
+    ESX.LogScopeError(name, err)
+  end)
+
+  return result
+end
+
+ESX.MakeScope = function(name, func)
+
+  return function(...)
+
+    local status, result = xpcall(func, ESX.LogError, function(err)
+      ESX.LogScopeError(name, err)
+    end)
+
+    return result
+
+  end
+
+end
+
+ESX.EvalFile = function(resource, file, env)
+
+  env        = env or {}
+  env._G     = env
+  local code = LoadResourceFile(resource, file)
+
+  load(code, code, 't', env)()
+
+  return env
+
+end
+
+-- ESX main module
 ESX.Modules['__MAIN__'] = {}
 local self              = ESX.Modules['__MAIN__']
 
@@ -102,3 +171,4 @@ self.LoadModule = function(name, isCore)
   return ESX.Modules[name]
 
 end
+

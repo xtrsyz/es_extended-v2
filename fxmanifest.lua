@@ -9,13 +9,11 @@ version '2.0.0'
 server_scripts {
 	'@async/async.lua',
 	'@mysql-async/lib/MySQL.lua',
-	'common/class.lua',
 	'locale.lua',
 	'locales/*.lua',
 	'config.lua',
 	'config.weapons.lua',
 	'server/common.lua',
-	'server/classes/player.lua',
 	'server/functions.lua',
 	'server/paycheck.lua',
 	'server/main.lua',
@@ -27,7 +25,6 @@ server_scripts {
 }
 
 client_scripts {
-	'common/class.lua',
 	'locale.lua',
 	'locales/*.lua',
 	'config.lua',

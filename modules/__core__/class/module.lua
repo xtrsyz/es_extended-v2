@@ -1,6 +1,6 @@
 -- From => http://lua-users.org/wiki/InheritanceTutorial
 
-Extends = (baseClass)
+Extends = function(baseClass)
 
   local newClass = {}
 
