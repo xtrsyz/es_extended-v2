@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
         local distance = #(data.pos - self.Cache.player.coords);
         if
           (distance <= data.distance) and
-          (ESX.Table.FindIndex(self.Cache.current , function(e) return e.__id == data.__id end) == -1)
+          (table.findIndex(self.Cache.current , function(e) return e.__id == data.__id end) == -1)
         then
 
           if (data.check == nil) or data.check(self.Cache.player.ped, self.Cache.player.coords) then
@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
 
         elseif (distance > data.distance) then
 
-          local idx = ESX.Table.FindIndex(self.Cache.current, function(e) return e.__id == data.__id end)
+          local idx = table.findIndex(self.Cache.current, function(e) return e.__id == data.__id end)
 
           if idx ~= -1 then
             toRemove[#toRemove + 1] = idx
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
     end
 
     if #toRemove > 0 then
-      self.Cache.current = ESX.Table.Filter(self.Cache.current, function(e) return ESX.Table.IndexOf(toRemove, e.__id) ~= -1 end)
+      self.Cache.current = table.filter(self.Cache.current, function(e) return table.indexOf(toRemove, e.__id) ~= -1 end)
     end
 
   end

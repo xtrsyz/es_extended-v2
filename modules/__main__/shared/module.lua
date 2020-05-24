@@ -1,9 +1,10 @@
 -- ESX base
-ESX              = {}
-ESX.Ready        = false
-ESX.Modules      = {}
-ESX.Loops        = {}
-ESX.LoopsRunning = {}
+ESX                  = {}
+ESX.Ready            = false
+ESX.Modules          = {}
+ESX.Loops            = {}
+ESX.LoopsRunning     = {}
+ESX.TimeoutCallbacks = {}
 
 ESX.LogError = function(err)
   local str = '^7' .. err .. ' ' .. debug.traceback()
@@ -63,11 +64,26 @@ ESX.EvalFile = function(resource, file, env)
   local fn   = load(code, '@' .. resource .. ':' .. file, 't', env)
 
   local status, result = xpcall(fn, function(err)
-    ESX.LogError('[error] in @' .. resource .. ':file\n' .. err)
+    ESX.LogError('[error] in @' .. resource .. ':' .. file .. '\n' .. err)
   end)
 
   return env
 
+end
+
+ESX.SetTimeout = function(msec, cb)
+
+  table.insert(ESX.TimeoutCallbacks, {
+		time = GetGameTimer() + msec,
+		cb   = cb
+  })
+
+  return #ESX.TimeoutCallbacks
+
+end
+
+ESX.ClearTimeout = function(i)
+  ESX.TimeoutCallbacks[i] = nil
 end
 
 -- ESX main module

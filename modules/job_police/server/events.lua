@@ -134,27 +134,28 @@ onClient('esx_policejob:putStockItems', function(itemName, count)
 end)
 
 onRequest('esx_policejob:getOtherPlayerData', function(source, cb, target, notify)
-	local xPlayer = ESX.GetPlayerFromId(target)
+
+  local player = xPlayer.fromId(target)
 
 	if notify then
-		xPlayer.showNotification(_U('being_searched'))
+		player:showNotification(_U('being_searched'))
 	end
 
 	if xPlayer then
 		local data = {
-			name = xPlayer.getName(),
-			job = xPlayer.job.label,
-			grade = xPlayer.job.grade_label,
-			inventory = xPlayer.getInventory(),
-			accounts = xPlayer.getAccounts(),
-			weapons = xPlayer.getLoadout()
+			name = player:getName(),
+			job = player.job.label,
+			grade = player.job.grade_label,
+			inventory = player:getInventory(),
+			accounts = player:getAccounts(),
+			weapons = player:getLoadout()
 		}
 
 		if self.Config.EnableESXIdentity then
-			data.dob = xPlayer.get('dateofbirth')
-			data.height = xPlayer.get('height')
+			data.dob = player:getField('dateofbirth')
+			data.height = player:getField('height')
 
-			if xPlayer.get('sex') == 'm' then data.sex = 'male' else data.sex = 'female' end
+			if player:getField('sex') == 'm' then data.sex = 'male' else data.sex = 'female' end
 		end
 
 		emit('esx_status:getStatus', target, 'drunk', function(status)

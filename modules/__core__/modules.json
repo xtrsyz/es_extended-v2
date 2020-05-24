@@ -6,5 +6,8 @@
   "player",
   "command",
   "db",
-  "migrate"
+  "migrate",
+  "ui.hud",
+  "ui.menu",
+  "game.hud"
 ]

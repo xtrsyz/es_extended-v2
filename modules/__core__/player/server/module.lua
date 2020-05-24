@@ -74,7 +74,7 @@ xPlayer = Extends(nil)
         Citizen.Wait(0)
       end
 
-      print('loading ' .. playerId .. ' ' .. identifier)
+      print('loading ' .. GetPlayerName(playerId) .. ' (' .. playerId .. '|' .. identifier .. ')')
 
       MySQL.Async.fetchAll('SELECT * FROM users WHERE identifier = @identifier', { ['@identifier'] = identifier }, function(result)
 
@@ -118,6 +118,8 @@ xPlayer = Extends(nil)
           player:emit('esx:playerLoaded',         player:serialize())
           --player:emit('esx:createMissingPickups', ESX.Pickups)
           --player:emit('esx:registerSuggestions',  ESX.RegisteredCommands)
+
+          print('loaded ' .. GetPlayerName(playerId) .. ' (' .. playerId .. '|' .. identifier .. ')')
 
           if cb ~= nil then
             cb(cb)
@@ -192,7 +194,7 @@ xPlayer = Extends(nil)
         DropPlayer(playerId, ('there was an error loading your character!\nError code: identifier-active-ingame\n\nThis error is caused by a player on this server who has the same identifier as you have. Make sure you are not playing on the same Rockstar account.\n\nYour Rockstar identifier: %s'):format(identifier))
       else
 
-        print('client connected =>', playerId, identifier)
+        print('client connected =>', GetPlayerName(playerId) .. ' (' .. playerId .. '|' .. identifier .. ')')
 
         MySQL.Async.fetchScalar('SELECT 1 FROM users WHERE identifier = @identifier', {
           ['@identifier'] = identifier
@@ -278,7 +280,7 @@ xPlayer = Extends(nil)
 
     MySQL.Async.execute(statement, fields, function(rowsChanged)
 
-      print(('Saved player "%s^7"'):format(xPlayer.getName()))
+      print(('Saved player "%s^7"'):format(self:getName()))
 
       if cb then
         cb()

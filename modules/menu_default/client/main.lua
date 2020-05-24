@@ -1,6 +1,7 @@
+local Menu  = M('ui.menu', true)
 local Input = M('input')
 
-ESX.UI.Menu.RegisterType(self.MenuType, self.OpenMenu, self.CloseMenu)
+Menu.RegisterType(self.MenuType, self.OpenMenu, self.CloseMenu)
 
 Input.RegisterControl(0, 18)
 Input.RegisterControl(0, 177)
