@@ -78,21 +78,25 @@ dependencies {
 
 -- Modules
 files {
-  'modules.json',
-	'modules/**/data/**/*',
+	'modules.json',
+	'modules/__core__/modules.json',
+  'modules/**/data/**/*',
+	'modules/**/shared/module.lua',
+  'modules/**/client/module.lua',
+	'modules/**/shared/events.lua',
+  'modules/**/client/events.lua',
+	'modules/**/shared/main.lua',
 	'modules/**/client/main.lua',
-	'modules/**/client/module.lua',
-	'modules/**/client/events.lua'
 }
 
 client_scripts{
-  'modules/__main__/module.lua',
-	'modules/__main__/events.lua',
-	'modules/__main__/main.lua',
+  'modules/__main__/shared/module.lua',
+	'modules/__main__/shared/events.lua',
+	'modules/__main__/shared/main.lua',
 }
 
 server_scripts{
-  'modules/__main__/module.lua',
-	'modules/__main__/events.lua',
-	'modules/__main__/main.lua',
+  'modules/__main__/shared/module.lua',
+	'modules/__main__/shared/events.lua',
+	'modules/__main__/shared/main.lua',
 }
