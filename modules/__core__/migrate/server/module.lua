@@ -1,6 +1,6 @@
 M('db')
 
-self.Ensure = function(module)
+self.Ensure = function(module, isCore)
 
   -- print('ensure migration for ^3' .. module)
 
@@ -9,7 +9,11 @@ self.Ensure = function(module)
   if module == 'base' then
     dir = 'migrations'
   else
-    dir = 'modules/' .. module .. '/migrations'
+    if isCore then
+      dir = 'modules/__core__/' .. module .. '/migrations'
+    else
+      dir = 'modules/' .. module .. '/migrations'
+    end
   end
 
   local result      = MySQL.Sync.fetchAll('SELECT * FROM `migrations` WHERE `module` = @module', {['@module'] = module})

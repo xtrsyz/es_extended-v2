@@ -95,6 +95,3 @@ files {
 
 loadscreen 'loadscreen/data/index.html'
 loadscreen_manual_shutdown 'yes'
-
-
-
