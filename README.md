@@ -5,7 +5,7 @@
 ```
 # minimum resources and config to get it working
 
-set mysql_connection_string "mysql://john:smith@localhost/es_extended"
+set mysql_connection_string "mysql://john:smith@localhost/es_extended?charset=utf8mb4"
 
 stop webadmin
 
