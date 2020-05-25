@@ -1,4 +1,4 @@
-local self = ESX.Modules['__MAIN__']
+local self = ESX.Modules['boot']
 
 AddEventHandler('esx:module:load:before', function(name, isCore)
 

@@ -118,8 +118,8 @@ ESX.ClearInterval = function(id)
 end
 
 -- ESX main module
-ESX.Modules['__MAIN__'] = {}
-local self              = ESX.Modules['__MAIN__']
+ESX.Modules['boot'] = {}
+local self              = ESX.Modules['boot']
 
 local resName = GetCurrentResourceName()
 local modType = IsDuplicityVersion() and 'server' or 'client'

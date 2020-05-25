@@ -67,21 +67,21 @@ files {
 }
 
 client_scripts{
-  'modules/__core__/__main__/shared/module.lua',
-  'modules/__core__/__main__/client/module.lua',
-  'modules/__core__/__main__/shared/events.lua',
-  'modules/__core__/__main__/client/events.lua',
-  'modules/__core__/__main__/shared/main.lua',
-  'modules/__core__/__main__/client/main.lua',
+  'boot/shared/module.lua',
+  'boot/client/module.lua',
+  'boot/shared/events.lua',
+  'boot/client/events.lua',
+  'boot/shared/main.lua',
+  'boot/client/main.lua',
 }
 
 server_scripts{
-  'modules/__core__/__main__/shared/module.lua',
-  'modules/__core__/__main__/server/module.lua',
-  'modules/__core__/__main__/shared/events.lua',
-  'modules/__core__/__main__/server/events.lua',
-  'modules/__core__/__main__/shared/main.lua',
-  'modules/__core__/__main__/server/main.lua',
+  'boot/shared/module.lua',
+  'boot/server/module.lua',
+  'boot/shared/events.lua',
+  'boot/server/events.lua',
+  'boot/shared/main.lua',
+  'boot/server/main.lua',
 }
 
 -- Loadscreen

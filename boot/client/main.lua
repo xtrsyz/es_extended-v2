@@ -1,4 +1,4 @@
-local self = ESX.Modules['__MAIN__']
+local self = ESX.Modules['boot']
 
 local HUD = self.LoadModule('game.hud', true)
 

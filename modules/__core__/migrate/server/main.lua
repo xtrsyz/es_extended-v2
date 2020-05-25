@@ -2,7 +2,7 @@ on('esx:db:ready', function()
 
 	print('ensuring migrations')
 
-  	local __MAIN__ = ESX.Modules['__MAIN__']
+  	local boot = ESX.Modules['boot']
 	local index    = 0
 	local results  = {}
 	local start
@@ -10,16 +10,16 @@ on('esx:db:ready', function()
 
 	self.Ensure('base')
 
-	for i=1, #__MAIN__.CoreOrder, 1 do
+	for i=1, #boot.CoreOrder, 1 do
 
-    	local module = __MAIN__.CoreOrder[i]
+    	local module = boot.CoreOrder[i]
 		self.Ensure(module, true)
 
 	end
 
-	for i=1, #__MAIN__.Order, 1 do
+	for i=1, #boot.Order, 1 do
 
-    	local module = __MAIN__.Order[i]
+    	local module = boot.Order[i]
 		self.Ensure(module, false)
 
 	end

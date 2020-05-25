@@ -1,4 +1,4 @@
-local self = ESX.Modules['__MAIN__']
+local self = ESX.Modules['boot']
 
 for i=1, #self.CoreEntries, 1 do
 

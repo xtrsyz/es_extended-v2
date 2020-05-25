@@ -1,4 +1,4 @@
-local self = ESX.Modules['__MAIN__']
+local self = ESX.Modules['boot']
 
 -- Need a bit of core modules here
 self.LoadModule('events', true)
