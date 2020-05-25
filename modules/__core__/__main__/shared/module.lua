@@ -39,7 +39,7 @@ ESX.GetConfig = function()
 end
 
 ESX.LogError = function(err, loc)
-  loc = loc or '<uknown location>'
+  loc = loc or '<unknown location>'
   print(debug.traceback('^1[error] in ^5' .. loc .. '^7\n\n^5message: ^1' .. err .. '^7\n'))
 end
 
@@ -47,7 +47,7 @@ ESX.EvalFile = function(resource, file, env)
 
   env           = env or {}
   env._G        = env
-  local code    =  LoadResourceFile(resource, file)
+  local code    = LoadResourceFile(resource, file)
   local fn      = load(code, '@' .. resource .. ':' .. file, 't', env)
   local success = true
 

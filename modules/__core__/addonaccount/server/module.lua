@@ -1,5 +1,3 @@
-
-
 self.Ready          = false
 self.AccountsIndex  = {}
 self.Accounts       = {}

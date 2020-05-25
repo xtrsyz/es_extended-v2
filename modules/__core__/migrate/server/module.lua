@@ -56,6 +56,4 @@ self.Ensure = function(module, isCore)
     -- print('no pending migration for ^3' .. module .. '^7')
   end
 
-  return initial
-
 end

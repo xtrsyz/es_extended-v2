@@ -8,7 +8,7 @@ local HUD    = self.LoadModule('game.hud', true)
 
 onServer('esx:playerLoaded', function(playerData)
 
-  ESX.PlayerLoaded = true
+  	ESX.PlayerLoaded = true
 	ESX.PlayerData = playerData
 
 	local playerPed = PlayerPedId()
@@ -46,7 +46,7 @@ onServer('esx:playerLoaded', function(playerData)
 		heading  = playerData.coords.heading,
 		model    = 'mp_m_freemode_01',
 		skipFade = false
-  }, function()
+  	}, function()
 
 
     if Config.EnableLoadScreen then
@@ -54,8 +54,8 @@ onServer('esx:playerLoaded', function(playerData)
       ShutdownLoadingScreenNui()
     end
 
-		emitServer('esx:onPlayerSpawn')
-		emit('esx:onPlayerSpawn')
+	emitServer('esx:onPlayerSpawn')
+	emit('esx:onPlayerSpawn')
     emit('esx:restoreLoadout')
 
     ESX.Ready = true
@@ -74,7 +74,7 @@ AddEventHandler('skinchanger:loadDefaultModel', function() ESX.IsLoadoutLoaded =
 
 AddEventHandler('skinchanger:modelLoaded', function()
 
-  while not ESX.PlayerLoaded do
+  	while not ESX.PlayerLoaded do
 		Citizen.Wait(100)
 	end
 

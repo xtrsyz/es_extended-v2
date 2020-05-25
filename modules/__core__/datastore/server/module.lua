@@ -1,5 +1,3 @@
-
-
 self.Ready            = false
 self.DataStores       = {}
 self.DataStoresIndex  = {}

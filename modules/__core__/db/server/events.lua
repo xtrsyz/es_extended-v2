@@ -1,4 +1,3 @@
-
 MySQL.ready(function()
   emit('esx:db:internal:ready')
 end)
@@ -15,6 +14,10 @@ on('esx:db:internal:ready', function()
   self.InitTable('users', 'identifier', {
     {name = 'identifier', type = 'VARCHAR',  length = 40, default = nil,                                                extra = 'NOT NULL'},
     {name = 'name',       type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
+    {name = 'first_name', type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
+    {name = 'last_name',  type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
+    {name = 'dateofbirth',type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
+    {name = 'sex',        type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
     {name = 'accounts',   type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},
     {name = 'group',      type = 'VARCHAR',  length = 64,  default = 'user',                                             extra = nil},
     {name = 'inventory',  type = 'LONGTEXT', length = nil, default = 'NULL',                                             extra = nil},

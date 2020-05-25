@@ -14,4 +14,3 @@ ESX.DoesJobExist = function(job, grade)
   return false
 
 end
-

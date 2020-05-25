@@ -7,21 +7,20 @@ on('esx:db:ready', function()
 	local results  = {}
 	local start
 	local manifest = LoadResourceFile(GetCurrentResourceName(), 'fxmanifest.lua')
-	local inform = false
 
 	self.Ensure('base')
 
 	for i=1, #__MAIN__.CoreOrder, 1 do
 
     	local module = __MAIN__.CoreOrder[i]
-		local check  = self.Ensure(module, true)
+		self.Ensure(module, true)
 
 	end
 
 	for i=1, #__MAIN__.Order, 1 do
 
     	local module = __MAIN__.Order[i]
-		local check  = self.Ensure(module, false)
+		self.Ensure(module, false)
 
 	end
 
