@@ -45,6 +45,7 @@ Config.Modules = {
   menu_list       = true,
   skin            = true,
   society         = true,
-  voice           = true
+  voice           = true,
+  identity        = true
 
 }
