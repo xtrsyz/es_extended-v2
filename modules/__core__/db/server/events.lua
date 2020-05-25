@@ -3,7 +3,7 @@ MySQL.ready(function()
 end)
 
 -- Locals
-local ADD_COUMN_IN_NOT_EXISTS_PROCEDURE = [[
+local ADD_COLUMN_IN_NOT_EXISTS_PROCEDURE = [[
 -- Copyright (c) 2009 www.cryer.co.uk
 -- Script is free to use provided this copyright header is included.
 
@@ -33,7 +33,7 @@ END;
 
 on('esx:db:internal:ready', function()
 
-  MySQL.Sync.execute(ADD_COUMN_IN_NOT_EXISTS_PROCEDURE)
+  MySQL.Sync.execute(ADD_COLUMN_IN_NOT_EXISTS_PROCEDURE)
 
   -- Init minimum required schemas here
   self.InitTable('migrations', 'id', {

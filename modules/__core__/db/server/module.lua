@@ -36,7 +36,7 @@ function DBField:sqlCompat()
       if self.default == 'NULL' then
         sql = sql .. 'NULL'
       else
-        sql = sql .. '`' .. self.default .. '`'
+        sql = sql .. '\'' .. self.default .. '\''
       end
 
     else
