@@ -1,3 +1,5 @@
+local Menu  = M('ui.menu')
+
 self.Open = function(name, title, restrict)
 
   ESX.TriggerServerCallback('esx:container:get', function(items)
@@ -24,7 +26,7 @@ self.Open = function(name, title, restrict)
 
     end
 
-    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'container_' .. name, {
+    Menu.Open('default', GetCurrentResourceName(), 'container_' .. name, {
       title    = title,
       align    = 'top-left',
       elements = elements
@@ -61,7 +63,7 @@ self.Open = function(name, title, restrict)
 
       else
 
-        ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'container_item_pull_' .. name, {
+        Menu.Open('dialog', GetCurrentResourceName(), 'container_item_pull_' .. name, {
           title = 'Pull ' .. data.current.rawLabel .. ' from ' .. title,
         }, function(data2, menu2)
 
@@ -120,7 +122,7 @@ self.OpenUser = function(targetContainerName, targetContainerTitle, restrict)
 
     end
 
-    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'container_user_' .. targetContainerName, {
+    Menu.Open('default', GetCurrentResourceName(), 'container_user_' .. targetContainerName, {
       title    = 'My inventory',
       align    = 'top-left',
       elements = elements
@@ -142,7 +144,7 @@ self.OpenUser = function(targetContainerName, targetContainerTitle, restrict)
 
       else
 
-        ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'container_item_put_' .. targetContainerName, {
+        Menu.Open('dialog', GetCurrentResourceName(), 'container_item_put_' .. targetContainerName, {
           title = 'Put ' .. data.current.rawLabel .. ' to ' .. targetContainerTitle,
         }, function(data2, menu2)
 

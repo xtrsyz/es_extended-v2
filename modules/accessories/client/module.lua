@@ -1,6 +1,7 @@
 -- Locals
 local Input    = M('input')
 local Interact = M('interact')
+local Menu     = M('ui.menu')
 
 -- Properties
 self.Config = ESX.EvalFile(__RESOURCE__, 'modules/' .. __MODULE__ .. '/data/config.lua', {vector3 = vector3})['Config']
@@ -66,7 +67,7 @@ self.Init = function()
 end
 
 self.OpenAccessoryMenu = function()
-  ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'set_unset_accessory', {
+  Menu.Open('default', GetCurrentResourceName(), 'set_unset_accessory', {
     title = _U('accessories:set_unset'),
     align = 'top-left',
     elements = {
@@ -119,7 +120,7 @@ self.OpenShopMenu = function(accessory)
 
     menu.close()
 
-    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'shop_confirm', {
+    Menu.Open('default', GetCurrentResourceName(), 'shop_confirm', {
       title = _U('accessories:valid_purchase'),
       align = 'top-left',
       elements = {

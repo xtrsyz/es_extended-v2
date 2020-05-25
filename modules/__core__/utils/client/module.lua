@@ -1,5 +1,6 @@
 -- Namespaces
 self.game = self.game or {}
+self.ui   = self.ui   or {}
 
 -- Locals
 local entityEnumerator = {
@@ -383,4 +384,67 @@ self.game.setVehicleProperties = function(vehicle, props)
 			SetVehicleLivery(vehicle, props.modLivery)
 		end
 	end
+end
+
+-- UI
+self.ui.showNotification = function(msg)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentSubstringPlayerName(msg)
+	DrawNotification(false, true)
+end
+
+self.ui.showAdvancedNotification = function(sender, subject, msg, textureDict, iconType, flash, saveToBrief, hudColorIndex)
+
+  if saveToBrief == nil then
+    saveToBrief = true
+  end
+
+  BeginTextCommandThefeedPost('STRING')
+  AddTextComponentSubstringPlayerName(msg)
+
+  if hudColorIndex then
+    ThefeedNextPostBackgroundColor(hudColorIndex)
+  end
+
+	EndTextCommandThefeedPostMessagetext(textureDict, textureDict, false, iconType, sender, subject)
+  EndTextCommandThefeedPostTicker(flash or false, saveToBrief)
+
+end
+
+self.ui.showHelpNotification = function(msg, thisFrame, beep, duration)
+
+  BeginTextCommandDisplayHelp('STRING')
+  AddTextComponentSubstringPlayerName(msg)
+
+	if thisFrame then
+		DisplayHelpTextThisFrame(msg, false)
+	else
+		if beep == nil then beep = true end
+		BeginTextCommandDisplayHelp('esxHelpNotification')
+		EndTextCommandDisplayHelp(0, false, beep, duration or -1)
+  end
+
+end
+
+self.ui.howFloatingHelpNotification = function(msg, coords, timeout)
+
+  timeout     = timeout or 5000
+  local start = GetGameTimer()
+
+  Citizen.CreateThread(function()
+
+    while (GetGameTimer() - start) < timeout do
+
+      SetFloatingHelpTextWorldPosition(1, coords.x, coords.y, coords.z)
+      SetFloatingHelpTextStyle(1, 1, 2, -1, 3, 0)
+      BeginTextCommandDisplayHelp('STRING')
+      AddTextComponentSubstringPlayerName(msg)
+      EndTextCommandDisplayHelp(2, false, true, -1)
+
+      Citizen.Wait(0)
+
+    end
+
+  end)
+
 end

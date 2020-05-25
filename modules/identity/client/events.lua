@@ -1,18 +1,22 @@
-local Menu = M('ui.menu')
+local Menu  = M('ui.menu')
+local utils = M('utils')
 
 on('esx:ready', function()
-	print('Checking Identity')
-	request('esx:identity:check', function(result)
-        if result then
-            emit('esx:identity:loaded')
-        else
-            emit('esx:identity:prompt')
-        end
-    end)
+
+  print('Checking Identity')
+
+  request('esx:identity:check', function(result)
+    if result then
+      emit('esx:identity:loaded')
+    else
+      emit('esx:identity:prompt')
+    end
+  end)
+
 end)
 
 on('esx:identity:loaded', function(playerData)
-    ESX.ShowNotification("Loaded, but doesn\'t do shit yet.")
+  utils.ui.showNotification("Loaded, but doesn\'t do shit yet.")
 end)
 
 on('esx:identity:prompt', function()
@@ -22,7 +26,7 @@ on('esx:identity:prompt', function()
 		local name = tostring(data.value)
 
 		if name == nil then
-			ESX.ShowNotification("Invalid Name")
+			utils.ui.showNotification("Invalid Name")
 		else
 			menu.close()
 			Menu.Open('dialog', GetCurrentResourceName(), 'identity_dob', {
@@ -31,10 +35,10 @@ on('esx:identity:prompt', function()
 				local dob = tostring(data2.value)
 
 				if dob == nil then
-					ESX.ShowNotification("Invalid DOB")
+					utils.ui.showNotification("Invalid DOB")
 				else
 					menu2.close()
-					ESX.ShowNotification("You did it you crazy son of a bitch, you did it!")
+					utils.ui.showNotification("You did it you crazy son of a bitch, you did it!")
 				end
 			end, function(data2, menu2)
 				menu2.close()
@@ -42,5 +46,6 @@ on('esx:identity:prompt', function()
 		end
 	end, function(data, menu)
 		menu.close()
-	end)
+  end)
+
 end)

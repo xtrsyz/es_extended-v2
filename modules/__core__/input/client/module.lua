@@ -1,4 +1,5 @@
 M('table')
+local Menu = M('ui.menu')
 
 self.RegisteredControls   = {}
 self.EnabledControls      = {}
@@ -457,7 +458,7 @@ self.InitESX = function()
   self.RegisterControl(self.Groups.MOVE, self.Controls[Config.InventoryKey])
   self.On('released', self.Groups.MOVE, self.Controls[Config.InventoryKey], function(lastPressed)
 
-    if (not ESX.IsDead) and (not ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory')) then
+    if (not ESX.IsDead) and (not Menu.IsOpen('default', 'es_extended', 'inventory')) then
       ESX.ShowInventory()
     end
 

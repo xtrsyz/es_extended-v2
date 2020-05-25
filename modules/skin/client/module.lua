@@ -1,3 +1,5 @@
+local Menu = M('ui.menu')
+
 self.lastSkin       = nil
 self.playerLoaded   = false
 self.cam            = nil
@@ -83,7 +85,7 @@ self.OpenMenu = function(submitCb, cancelCb, restrict)
 		self.zoomOffset = _components[1].zoomOffset
 		self.camOffset = _components[1].camOffset
 
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'skin', {
+		Menu.Open('default', GetCurrentResourceName(), 'skin', {
 			title    = _U('skin:skin_menu'),
 			align    = 'top-left',
 			elements = elements

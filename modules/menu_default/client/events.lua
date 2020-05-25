@@ -1,4 +1,5 @@
 local Input = M('input')
+local Menu  = M('ui.menu')
 
 on('esx:nui_ready', function()
   ESX.CreateFrame('menu_default', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_default/data/html/ui.html')
@@ -36,7 +37,7 @@ end)
 
 
 on('menu_default:message:menu_submit', function(data)
-	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
+	local menu = Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	if menu.submit ~= nil then
 		menu.submit(data, menu)
@@ -45,7 +46,7 @@ end)
 
 on('menu_default:message:menu_cancel', function(data)
 
-	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
+	local menu = Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	if menu.cancel ~= nil then
 		menu.cancel(data, menu)
@@ -53,7 +54,7 @@ on('menu_default:message:menu_cancel', function(data)
 end)
 
 on('menu_default:message:menu_change', function(data)
-	local menu = ESX.UI.Menu.GetOpened(self.MenuType, data._namespace, data._name)
+	local menu = Menu.GetOpened(self.MenuType, data._namespace, data._name)
 
 	for i=1, #data.elements, 1 do
 		menu.setElement(i, 'value', data.elements[i].value)

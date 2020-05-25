@@ -81,7 +81,7 @@ ESX.SetTimeout = function(msec, cb)
 end
 
 ESX.ClearTimeout = function(id)
-  CancelledTimeouts[id] = true
+  ESX.CancelledTimeouts[id] = true
 end
 
 ESX.SetInterval = function(msec, cb)
@@ -114,7 +114,7 @@ ESX.SetInterval = function(msec, cb)
 end
 
 ESX.ClearInterval = function(id)
-  CancelledTimeouts[id] = true
+  ESX.CancelledTimeouts[id] = true
 end
 
 -- ESX main module

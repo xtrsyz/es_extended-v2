@@ -86,7 +86,7 @@ self.CloseMenu = function(namespace, name)
 		data = data
 	})
 
-  if ESX.Table.SizeOf(self.OpenedMenus) == 0 then
+  if #self.OpenedMenus == 0 then
     self.EnableControls()
 		SetNuiFocus(false)
 	end

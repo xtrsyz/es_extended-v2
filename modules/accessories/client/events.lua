@@ -1,4 +1,5 @@
 local Input = M('input')
+local Menu  = M('ui.menu')
 
 on('esx:db:init', function(initTable, extendTable)
 
@@ -15,7 +16,7 @@ on('esx_accessories:hasEnteredMarker', function(zone)
 end)
 
 on('esx_accessories:hasExitedMarker', function(zone)
-	ESX.UI.Menu.CloseAll()
+	Menu.CloseAll()
 	self.CurrentAction = nil
 end)
 
