@@ -1,5 +1,5 @@
 on('esx:nui_ready', function()
-  ESX.CreateFrame('menu_dialog', 'nui://' .. GetCurrentResourceName() .. '/modules/menu_dialog/data/html/ui.html')
+  ESX.CreateFrame('menu_dialog', 'nui://' .. __RESOURCE__ .. '/modules/menu_dialog/data/html/ui.html')
 end)
 
 on('menu_dialog:message:menu_submit', function(data)

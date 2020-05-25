@@ -1,3 +1,5 @@
+M('table')
+
 self.RegisteredControls   = {}
 self.EnabledControls      = {}
 self.LastPressed          = {}

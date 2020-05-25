@@ -289,3 +289,4 @@ self.LoadModule = function(name)
 
 end
 
+M = self.LoadModule

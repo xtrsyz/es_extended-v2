@@ -50,19 +50,23 @@ self.OpenMenu = function(namespace, name, data)
 
 	for i=1, #self.Timeouts, 1 do
 		ESX.ClearTimeout(self.Timeouts[i])
-	end
+  end
+
+  self.Timeouts = {}
 
 	self.OpenedMenus[namespace .. '_' .. name] = true
 
-	ESX.SendFrameMessage('menu_dialog', {
-		action = 'openMenu',
-		namespace = namespace,
-		name = name,
-		data = data
-	})
+  local timeoutId = ESX.SetTimeout(200, function()
 
-	local timeoutId = ESX.SetTimeout(200, function()
-		ESX.FocusFrame('menu_dialog', true, true)
+    ESX.SendFrameMessage('menu_dialog', {
+      action = 'openMenu',
+      namespace = namespace,
+      name = name,
+      data = data
+    })
+
+    ESX.FocusFrame('menu_dialog', true, true)
+
 	end)
 
   table.insert(self.Timeouts, timeoutId)
