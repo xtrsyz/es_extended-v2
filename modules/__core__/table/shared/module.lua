@@ -1,12 +1,40 @@
 table.sizeOf = function(t)
 
+  local count = 0
+
+  for k,v in pairs(t) do
+    count = count + 1
+  end
+
+  return count
+
+end
+
+table.isArray = function(t)
+
   local keys = {}
 
   for k,v in pairs(t) do
-    table.insert(keys, tonumber(k))
+
+    local num = tonumber(k)
+
+    if num ~= k then
+      return false
+    end
+
+    table.insert(keys, num)
+
   end
 
-  return #keys
+  table.sort(keys, function(a, b) return a < b end)
+
+  for i=1, #keys, 1 do
+    if keys[i] ~= i then
+      return false
+    end
+  end
+
+  return true
 
 end
 

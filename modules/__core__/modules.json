@@ -15,5 +15,6 @@
   "player",
   "table",
   "ui.hud",
-  "ui.menu"
+  "ui.menu",
+  "utils"
 ]

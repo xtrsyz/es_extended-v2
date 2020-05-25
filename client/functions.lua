@@ -63,6 +63,7 @@ ESX.Utils.Random.inRange = function(min, max)
   math.randomseed(GetGameTimer())
 
   return math.random(min, max)
+
 end
 
 -- Format [0-9]{2}[A-Z]{3}[0-9]{3}
