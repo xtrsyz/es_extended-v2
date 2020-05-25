@@ -16,7 +16,7 @@ function DBField:constructor(name, _type, length, default, extra)
 
 end
 
-function DBField:sql()
+function DBField:sqlCompat()
 
   local sql = '`' .. self.name .. '` ';
   sql = sql .. self.type
@@ -48,6 +48,82 @@ function DBField:sql()
   if self.extra ~= nil then
     sql = sql .. ' ' .. self.extra
   end
+
+  return sql
+
+end
+
+function DBField:sql()
+
+  local sql = '`' .. self.name .. '` '
+  sql = sql .. self.type
+
+  if self.length == nil then
+    sql = sql .. ' '
+  else
+    sql = sql .. '(' .. self.length .. ') '
+  end
+
+  if self.default ~= nil then
+
+    sql = sql .. 'DEFAULT '
+
+    if type(self.default) == 'string' then
+
+      if self.default == 'NULL' then
+        sql = sql .. 'NULL'
+      else
+        sql = sql .. '`' .. self.default .. '`'
+      end
+
+    else
+      sql = sql .. self.default
+    end
+
+  end
+
+  if self.extra ~= nil then
+    sql = sql .. ' ' .. self.extra
+  end
+
+  return sql
+
+end
+
+function DBField:sqlAlterCompat(tableName)
+
+  local sql = 'call ADD_COLUMN_IN_NOT_EXISTS(DATABASE(), \'' .. tableName .. '\', \'' .. self.name .. '\', \''
+  sql = sql .. self.type
+
+  if self.length == nil then
+    sql = sql .. ' '
+  else
+    sql = sql .. '(' .. self.length .. ') '
+  end
+
+  if self.default ~= nil then
+
+    sql = sql .. 'DEFAULT '
+
+    if type(self.default) == 'string' then
+
+      if self.default == 'NULL' then
+        sql = sql .. 'NULL'
+      else
+        sql = sql .. '`' .. self.default .. '`'
+      end
+
+    else
+      sql = sql .. self.default
+    end
+
+  end
+
+  if self.extra ~= nil then
+    sql = sql .. ' ' .. self.extra
+  end
+
+  sql = sql .. '\')'
 
   return sql
 
@@ -125,9 +201,11 @@ function DBTable:sql()
 
   end
 
+  sql = sql .. ';\n\n'
+
   for i=1, #self.fields, 1 do
     local field = self.fields[i]
-    sql = sql .. '; ALTER TABLE `' .. self.name .. '` ADD COLUMN IF NOT EXISTS ' .. field:sql()
+    sql = sql .. field:sqlAlterCompat(self.name) .. ';\n'
   end
 
   return sql
