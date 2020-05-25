@@ -48,9 +48,19 @@ onServer('esx:playerLoaded', function(playerData)
 		skipFade = false
   }, function()
 
+
+    if Config.EnableLoadScreen then
+      ShutdownLoadingScreen()
+      ShutdownLoadingScreenNui()
+    end
+
 		emitServer('esx:onPlayerSpawn')
 		emit('esx:onPlayerSpawn')
     emit('esx:restoreLoadout')
+
+    ESX.Ready = true
+
+    emit('esx:ready')
 
   end)
 

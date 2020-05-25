@@ -95,6 +95,6 @@ files {
 
 loadscreen 'loadscreen/data/index.html'
 loadscreen_manual_shutdown 'yes'
-client_script 'loadscreen/client/main.lua'
+
 
 
