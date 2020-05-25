@@ -55,13 +55,13 @@ dependencies {
 files {
 	'modules.json',
 	'modules/__core__/modules.json',
-  'modules/**/data/**/*',
-	'modules/**/shared/module.lua',
-  'modules/**/client/module.lua',
-	'modules/**/shared/events.lua',
-  'modules/**/client/events.lua',
-	'modules/**/shared/main.lua',
-	'modules/**/client/main.lua',
+  'modules/*/data/**/*',
+	'modules/*/shared/module.lua',
+  'modules/*/client/module.lua',
+	'modules/*/shared/events.lua',
+  'modules/*/client/events.lua',
+	'modules/*/shared/main.lua',
+	'modules/*/client/main.lua',
 }
 
 client_scripts{
