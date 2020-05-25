@@ -40,8 +40,5 @@ ensure es_extended
 - xPlayer fully customizable without rewriting core resources (Hello second job, faction system and such...)
 - Added some modules to optimize common things like input, marker and static npc management
 - Extend base lua functionnality when appropriate via module. example: table.indexOf
-
-
-
 ```
 
