@@ -40,17 +40,25 @@ self.game.enumerateObjects = function()
 	return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject)
 end
 
+enumerateObjects = self.game.enumerateObjects -- Make it global for convenience
+
 self.game.enumeratePeds = function()
 	return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed)
 end
+
+enumeratePeds = self.game.enumeratePeds -- Make it global for convenience
 
 self.game.enumerateVehicles = function()
 	return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
 end
 
+enumerateVehicles = self.game.enumerateVehicles -- Make it global for convenience
+
 self.game.enumeratePickups = function()
 	return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup)
 end
+
+enumeratePickups = self.game.enumeratePickups -- Make it global for convenience
 
 self.game.requestModel = function(model, cb)
 
