@@ -38,9 +38,7 @@ ui_page {
 }
 
 files {
-	'client/bootstrap.lua',
 	'data/**/*',
-	'locale.js',
 	'hud/**/*',
 }
 
