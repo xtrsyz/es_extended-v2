@@ -38,23 +38,25 @@ ESX.GetConfig = function()
   return Config
 end
 
-ESX.LogError = function(err)
-  local str = '^7' .. err .. ' ' .. debug.traceback()
-  print(str)
+ESX.LogError = function(err, loc)
+  loc = loc or '<uknown location>'
+  print(debug.traceback('^1[error] in ^5' .. loc .. '^7\n\n^5message: ^1' .. err .. '^7\n'))
 end
 
 ESX.EvalFile = function(resource, file, env)
 
-  env        = env or {}
-  env._G     = env
-  local code = LoadResourceFile(resource, file)
-  local fn   = load(code, '@' .. resource .. ':' .. file, 't', env)
+  env           = env or {}
+  env._G        = env
+  local code    =  LoadResourceFile(resource, file)
+  local fn      = load(code, '@' .. resource .. ':' .. file, 't', env)
+  local success = true
 
   local status, result = xpcall(fn, function(err)
-    ESX.LogError('[error] in @' .. resource .. ':' .. file .. '\n' .. err)
+    success = false
+    ESX.LogError(err, trace, '@' .. resource .. ':' .. file)
   end)
 
-  return env
+  return env, success
 
 end
 
@@ -150,6 +152,14 @@ self.IsCoreModule = function(name)
   return tableIndexOf(self.CoreEntries, name) ~= -1
 end
 
+self.IsUserModule = function(name)
+  return tableIndexOf(self.Entries, name) ~= -1
+end
+
+self.DoesModuleExist = function(name)
+  return self.IsCoreModule(name) or self.IsUserModule(name)
+end
+
 self.ModuleHasEntryPoint = function(name)
 
   local isCore          = self.IsCoreModule(name)
@@ -202,39 +212,76 @@ self.LoadModule = function(name)
 
   if ESX.Modules[name] == nil then
 
+    if not self.DoesModuleExist(name) then
+      ESX.LogError('module [' .. name .. '] is not declared in modules.json', '@' .. resName .. ':modules/__core__/__main__/module.lua')
+    end
+
     TriggerEvent('esx:module:load:before', name, isCore)
 
     local menv            = self.createModuleEnv(name, isCore)
     local shared, current = self.GetModuleEntryPoints(name, isCore)
-    local env
+
+    local env, success = nil, true
+    local _env, _success
 
     if shared then
-      env = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/module.lua', menv)
-      ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/events.lua', env)
-      ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/main.lua',   env)
+
+      env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/module.lua', menv)
+
+      if _success then
+        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/events.lua', env)
+      else
+        success = false
+      end
+
+      if _success then
+        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/main.lua',   env)
+      else
+        success = false
+      end
+
     end
 
     if current then
 
       if env then
-        ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', env)
+        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', env)
       else
-        env = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', menv)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', menv)
       end
 
-      ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/events.lua', env)
-      ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/main.lua',   env)
+      if _success then
+        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/events.lua', env)
+      else
+        success = false
+      end
+
+      if _success then
+        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/main.lua',   env)
+      else
+        success = false
+      end
+
     end
 
-    ESX.Modules[name] = env['module']
+    if success then
 
-    if isCore then
-      self.CoreOrder[#self.CoreOrder + 1] = name
+      ESX.Modules[name] = env['module']
+
+      if isCore then
+        self.CoreOrder[#self.CoreOrder + 1] = name
+      else
+        self.Order[#self.Order + 1] = name
+      end
+
+      TriggerEvent('esx:module:load:done', name, isCore)
+
     else
-      self.Order[#self.Order + 1] = name
-    end
 
-    TriggerEvent('esx:module:load:done', name, isCore)
+      ESX.LogError('module [' .. name .. '] does not exist', '@' .. resName .. ':modules/__core__/__main__/module.lua')
+      TriggerEvent('esx:module:load:error', name, isCore)
+
+    end
 
   end
 

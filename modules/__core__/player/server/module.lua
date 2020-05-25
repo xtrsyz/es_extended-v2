@@ -771,7 +771,7 @@ xPlayer = Extends(nil)
       emit('esx:setJob', self.source, self.job, lastJob)
       self:emit('esx:setJob', self.job)
     else
-      print(('[es_extended] [^3WARNING^7] Ignoring invalid .setJob() usage for "%s"'):format(self.identifier))
+      print(('[^3WARNING^7] Ignoring invalid .setJob() usage for "%s"'):format(self.identifier))
     end
   end
 

@@ -95,7 +95,7 @@ on('esx:player:load:inventory', function(identifier, playerId, row, userData, ad
       if item then
         foundItems[name] = count
       else
-        print(('[es_extended] [^3WARNING^7] Ignoring invalid item "%s" for "%s"'):format(name, identifier))
+        print(('[^3WARNING^7] Ignoring invalid item "%s" for "%s"'):format(name, identifier))
       end
     end
 
@@ -192,7 +192,7 @@ on('esx:player:load:position', function(identifier, playerId, row, userData, add
     if row.position and row.position ~= '' then
       data = json.decode(row.position)
     else
-      print('[es_extended] [^3WARNING^7] Column "position" in "users" table is missing required default value. Using backup coords, fix your database.')
+      print('[^3WARNING^7] Column "position" in "users" table is missing required default value. Using backup coords, fix your database.')
       data = {x = -269.4, y = -955.3, z = 31.2, heading = 205.8}
     end
 

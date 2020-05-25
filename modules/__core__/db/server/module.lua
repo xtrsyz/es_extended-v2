@@ -228,7 +228,7 @@ self.InitTable = function(name, pk, fields, rows)
 
   self.Tables[name] = tbl
 
-  print('init table ' .. name .. ' (' .. fieldNamesStr .. ')')
+  print('init table ^5' .. name .. '^7 (' .. fieldNamesStr .. ')')
 
 end
 
@@ -248,7 +248,7 @@ self.ExtendTable = function(name, fields)
 
   fieldNamesStr = fieldNamesStr .. field.name
 
-  print('extend table ' .. name .. ' (' .. fieldNamesStr .. ')')
+  print('extend table ^5' .. name .. '^7 (' .. fieldNamesStr .. ')')
 
 end
 

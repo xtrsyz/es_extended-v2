@@ -3,9 +3,19 @@ local self = ESX.Modules['__MAIN__']
 AddEventHandler('esx:module:load:before', function(name, isCore)
 
   if isCore then
-    print('^5load^7 [^3@' .. name .. '^7]')
+    print('[^3@' .. name .. '^7] ^5load^7')
   else
-    print('^5load^7 [^3'  .. name .. '^7]')
+    print('[^3'  .. name .. '^7] ^5load^7')
+  end
+
+end)
+
+AddEventHandler('esx:module:load:error', function(name, isCore)
+
+  if isCore then
+    print('[^3@' .. name .. '^7] ^1load error^7')
+  else
+    print('[^3'  .. name .. '^7] ^1load error^7')
   end
 
 end)

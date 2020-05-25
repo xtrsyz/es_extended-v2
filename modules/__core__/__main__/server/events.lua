@@ -36,7 +36,7 @@ on('esx:migrations:done', function()
 				if ESX.Jobs[row.job_name] then
 					ESX.Jobs[row.job_name].grades[tostring(row.grade)] = row
 				else
-					print(('[es_extended] [^3WARNING^7] Ignoring job grades for "%s" due to missing job'):format(row.job_name))
+					print(('[^3WARNING^7] Ignoring job grades for "%s" due to missing job'):format(row.job_name))
         end
 
 			end
@@ -44,7 +44,7 @@ on('esx:migrations:done', function()
 			for k,v in pairs(ESX.Jobs) do
 				if table.sizeOf(v.grades) == 0 then
 					ESX.Jobs[v.name] = nil
-					print(('[es_extended] [^3WARNING^7] Ignoring job "%s" due to no job grades found'):format(v.name))
+					print(('[^3WARNING^7] Ignoring job "%s" due to no job grades found'):format(v.name))
 				end
       end
 
