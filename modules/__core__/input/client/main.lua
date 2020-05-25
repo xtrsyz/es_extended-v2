@@ -1,4 +1,4 @@
-M('events', true)
+M('events')
 
 self.InitESX()
 

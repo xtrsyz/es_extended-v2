@@ -1,21 +1,21 @@
-M('events', true)
+M('events')
 
 self.RegisterdCommands = {}
 
 self.Register = function(name, group, cb, allowConsole, suggestion)
-  
+
   if type(name) == 'table' then
-    
+
     for k, v in ipairs(name) do
       self.Register(v, group, cb, allowConsole, suggestion)
     end
 
     return
-  
+
   end
 
   if self.RegisterdCommands[name] then
-  
+
     print(('[^3WARNING^7] A command "%s" is already registered, overriding command'):format(name))
 
     if self.RegisterdCommands[name].suggestion then
@@ -39,13 +39,13 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
   }
 
   RegisterCommand(name, function(playerId, args, rawCommand)
-      
+
     local command = self.RegisterdCommands[name]
 
     if not command.allowConsole and playerId == 0 then
       print(('[^3WARNING^7] %s'):format( _U('commanderror_console')))
     else
-      
+
       local xPlayer, error = ESX.GetPlayerFromId(playerId), nil
 
       if command.suggestion then
@@ -57,7 +57,7 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
         end
 
         if not error and command.suggestion.arguments then
-          
+
           local newArgs = {}
 
           for k, v in ipairs(command.suggestion.arguments) do
@@ -65,7 +65,7 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
             if v.type then
 
               if v.type == 'number' then
-                
+
                 local newArg = tonumber(args[k])
 
                 if newArg then
@@ -75,7 +75,7 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
                 end
 
               elseif v.type == 'player' or v.type == 'playerId' then
-                
+
                 local targetPlayer = tonumber(args[k])
 
                 if args[k] == 'me' then
@@ -83,11 +83,11 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
                 end
 
                 if targetPlayer then
-                  
+
                   local xTargetPlayer = ESX.GetPlayerFromId(targetPlayer)
 
                     if xTargetPlayer then
-                      
+
                       if v.type == 'player' then
                         newArgs[v.name] = xTargetPlayer
                       else
@@ -114,7 +114,7 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
                 end
 
               elseif v.type == 'weapon' then
-                
+
                 if ESX.GetWeapon(args[k]) then
                   newArgs[v.name] = string.upper(args[k])
                 else
@@ -133,12 +133,12 @@ self.Register = function(name, group, cb, allowConsole, suggestion)
           end
 
           args = newArgs
-          
+
         end
       end
 
       if error then
-        
+
         if playerId == 0 then
           print(('[^3WARNING^7] %s^7'):format(error))
         else

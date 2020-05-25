@@ -1,5 +1,5 @@
-local Menu = M('ui.menu', true)
-local HUD  = M('game.hud', true)
+local Menu = M('ui.menu')
+local HUD  = M('game.hud')
 
 self.Config = ESX.EvalFile(GetCurrentResourceName(), 'modules/society/data/config.lua', {
   vector3 = vector3

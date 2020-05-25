@@ -1,5 +1,5 @@
-M('class', true)        -- Require 'class' builtin module
-local DB = M('db',true) -- Require 'db' builtin module
+M('class')         -- Require 'class' builtin module
+local DB = M('db') -- Require 'db' builtin module
 
 ---- Class representing a player
 --- @class xPlayer

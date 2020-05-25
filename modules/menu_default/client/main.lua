@@ -1,4 +1,4 @@
-local Menu  = M('ui.menu', true)
+local Menu  = M('ui.menu')
 local Input = M('input')
 
 Menu.RegisterType(self.MenuType, self.OpenMenu, self.CloseMenu)

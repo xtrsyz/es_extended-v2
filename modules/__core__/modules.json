@@ -9,5 +9,11 @@
   "migrate",
   "ui.hud",
   "ui.menu",
-  "game.hud"
+  "game.hud",
+  "addonaccount",
+  "addoninventory",
+  "container",
+  "datastore",
+  "input",
+  "interact"
 ]

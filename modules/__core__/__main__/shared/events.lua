@@ -12,6 +12,10 @@ end)
 
 AddEventHandler('luaconsole:getHandlers', function(cb)
 
+  if GetResourceState('luaconsole') ~= 'started' then
+    return
+  end
+
   local name = GetCurrentResourceName()
 
   cb(name, function(code, env)

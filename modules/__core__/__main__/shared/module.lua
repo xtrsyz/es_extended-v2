@@ -1,3 +1,32 @@
+-- Immediate definitions
+
+local _print = print
+
+print = function(...)
+
+  local args = {...}
+  local str  = '[^4esx^7]'
+
+  for i=1, #args, 1 do
+    str = str .. ' ' .. tostring(args[i])
+  end
+
+  _print(str)
+
+end
+
+local tableIndexOf = function(t, val)
+
+  for i=1, #t, 1 do
+    if t[i] == val then
+      return i
+    end
+  end
+
+  return -1
+
+end
+
 -- ESX base
 ESX                   = {}
 ESX.Ready             = false
@@ -99,9 +128,9 @@ self.Entries     = json.decode(LoadResourceFile(resName, 'modules.json'))
 self.CoreOrder   = {}
 self.Order       = {}
 
-self.GetModuleEntryPoints = function(name, isCore)
+self.GetModuleEntryPoints = function(name)
 
-  isCore                = isCore or false
+  local isCore          = self.IsCoreModule(name)
   local prefix          = isCore and '__core__/' or ''
   local shared, current = false, false
 
@@ -117,51 +146,65 @@ self.GetModuleEntryPoints = function(name, isCore)
 
 end
 
-self.ModuleHasEntryPoint = function(name, isCore)
-  local shared, current = self.GetModuleEntryPoints(name, isCore)
-  return shared or current
+self.IsCoreModule = function(name)
+  return tableIndexOf(self.CoreEntries, name) ~= -1
 end
 
-self.LoadModule = function(name, isCore)
+self.ModuleHasEntryPoint = function(name)
 
-  isCore       = isCore or false
+  local isCore          = self.IsCoreModule(name)
+  local shared, current = self.GetModuleEntryPoints(name, isCore)
+
+  return shared or current
+
+end
+
+self.createModuleEnv = function(name, isCore)
+
+  local env = {}
+
+  for k,v in pairs(env) do
+    env[k] = v
+  end
+
+  env.__RESOURCE__ = resName
+  env.__ISCORE__   = isCore
+  env.__MODULE__   = name
+  env.module       = {}
+  env.self         = env.module
+  env.M            = self.LoadModule
+
+  env.print = function(...)
+
+    local args = {...}
+    local str  = '[^3' .. name .. '^7]'
+
+    for i=1, #args, 1 do
+      str = str .. ' ' .. tostring(args[i])
+    end
+
+    print(str)
+
+  end
+
+  local menv           = setmetatable(env, {__index = _G, __newindex = _G})
+  env._ENV           = menv
+  env.module.__ENV__ = menv
+
+  return env
+
+end
+
+self.LoadModule = function(name)
+
+  local isCore = self.IsCoreModule(name)
   local prefix = isCore and '__core__/' or ''
 
   if ESX.Modules[name] == nil then
 
     TriggerEvent('esx:module:load:before', name, isCore)
 
-    local _menv = {}
-
-    for k,v in pairs(_menv) do
-      _menv[k] = v
-    end
-
-    _menv._G           = _menv
-    _menv.__RESOURCE__ = resName
-    _menv.__ISCORE__   = isCore
-    _menv.__MODULE__   = name
-    _menv.module       = {}
-    _menv.self         = _menv.module
-    _menv.M            = self.LoadModule
-
-    _menv.print = function(...)
-
-      local args = {...}
-      local str  = '[^3' .. name .. '^7]'
-
-      for i=1, #args, 1 do
-        str = str .. ' ' .. tostring(args[i])
-      end
-
-      print(str)
-
-    end
-
-    local menv           = setmetatable(_menv, {__index = _G, __newindex = _G})
-    _menv._ENV           = menv
-    _menv.module.__ENV__ = menv
-
+    local menv            = self.createModuleEnv(name, isCore)
     local shared, current = self.GetModuleEntryPoints(name, isCore)
     local env
 
@@ -191,7 +234,7 @@ self.LoadModule = function(name, isCore)
       self.Order[#self.Order + 1] = name
     end
 
-    TriggerEvent('esx:module:load:done', name, isC)
+    TriggerEvent('esx:module:load:done', name, isCore)
 
   end
 

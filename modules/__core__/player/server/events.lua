@@ -1,4 +1,4 @@
-M('events', true)
+M('events')
 
 -- xPlayer instance construction
 on('esx:player:load:accounts', function(identifier, playerId, row, userData, addTask)

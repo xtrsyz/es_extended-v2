@@ -11,7 +11,7 @@ self.OnDependencyReady = function()
   self.MissingDeps = self.MissingDeps - 1
 
   if self.MissingDeps == 0 then
-    TriggerEvent('esx:container:ready')
+    emit('esx:container:ready')
   end
 
 end

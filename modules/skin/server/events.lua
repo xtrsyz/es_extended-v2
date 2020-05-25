@@ -1,4 +1,4 @@
-local Command = M('command', true)
+local Command = M('command')
 
 onClient('esx_skin:save', function(skin)
 

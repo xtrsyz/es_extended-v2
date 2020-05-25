@@ -2,7 +2,7 @@ M('db')
 
 self.Ensure = function(module)
 
-  print('ensure migration for ^3' .. module)
+  -- print('ensure migration for ^3' .. module)
 
   local dir
 
