@@ -1,0 +1,167 @@
+@font-face {
+	font-family: bankgothic;
+	src: url('../fonts/bankgothic.ttf');
+}
+
+@font-face {
+	font-family: pcdown;
+	src: url('../fonts/pdown.ttf');
+}
+
+@font-face {
+	font-family: sweetsansprobold;
+	src: url('../fonts/SweetSansProBold.ttf');
+}
+@font-face {
+	font-family: sweetsansprothin;
+	src: url('../fonts/SweetSansProThin.ttf');
+}
+@font-face {
+	font-family: sweetsansprolight;
+	src: url('../fonts/SweetSansProLight.ttf');
+}
+
+*:focus{
+  outline: none;
+}
+
+#controls {
+	font-family: sweetsansprothin;
+	font-size: 3em;
+	color: rgb(0, 0, 0);
+	position: absolute;
+	bottom: 40;
+	right: 40;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.controls {
+	display: none;
+}
+
+.dialog {
+  font-family: sweetsansprothin;
+  border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.6);
+	color: rgb(0, 0, 0);
+	box-shadow: 0px 0px 50px 0px #000;
+	position: absolute;
+	overflow: hidden;
+	top: 50%;
+	left: 50%;
+	width: 600px;
+	height: 104px;
+	transform: translate(-50%, -50%);
+}
+
+.dialog.big {
+	height: 200px;
+}
+
+.dialog .head {
+	background-color: rgba(255, 255, 255, 0.8);
+  background-image: url(../img/bg_brick_white.png);
+  background-size:cover ;
+  text-transform: uppercase;
+  border-radius: 5px 5px 5px 5px;
+	text-align: center;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.2em;
+  animation: neon 5s linear infinite;
+}
+
+.dialog .head span:before {
+	content: "";
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.dialog input[type="text"] {
+	width: 100%;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: transparent;
+  color: rgb(0, 0, 0);
+}
+
+.dialog textarea {
+	width: 100%;
+  height: 128px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: transparent;
+  color: rgb(0, 0, 0);
+}
+
+.dialog button[name="submit"] {
+	width: 50%;
+  height: 32px;
+  line-height: 32px;
+  font-family: sweetsansprolight;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: solid #b80404 1px;
+  border-radius: 0px 0px 0px 5px;
+  text-decoration: none;
+}
+
+.dialog button[name="cancel"] {
+	width: 50%;
+  height: 32px;
+  line-height: 32px;
+  font-family: sweetsansprolight;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: solid #b80404 1px;
+  border-radius: 0px 0px 5px 0px;
+  text-decoration: none;
+}
+
+.dialog button[name="submit"]:hover {
+	width: 50%;
+  height: 32px;
+  line-height: 32px;
+  font-family: sweetsansprolight;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow:  0px 0px 8px 3px rgba(245, 13, 13,0.62);
+  border: solid #b80404 1px;
+  border-radius: 0px 0px 0px 5px;
+  text-decoration: none;
+}
+
+.dialog button[name="cancel"]:hover {
+	width: 50%;
+  height: 32px;
+  line-height: 32px;
+  font-family: sweetsansprolight;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow:  0px 0px 8px 3px rgba(245, 13, 13,0.62);
+  border: solid #b80404 1px;
+  border-radius: 0px 0px 5px 0px;
+  text-decoration: none;
+}
+
+@keyframes neon {
+  20%,
+  24%,
+  55% {
+    color: #111;
+    text-shadow: none;
+  }
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+
+    text-shadow: 0 0 5px #b80404, 0 0 15px #b80404, 0 0 20px #b80404, 0 0 40px #b80404, 0 0 60px #b80404, 0 0 10px #b80404, 0 0 98px #b80404;
+    color: #d30909;
+  }
+}

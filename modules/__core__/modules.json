@@ -1,0 +1,21 @@
+[
+  "addonaccount",
+  "addoninventory",
+  "class",
+  "command",
+  "container",
+  "datastore",
+  "db",
+  "events",
+  "game.hud",
+  "identity",
+  "input",
+  "interact",
+  "math",
+  "migrate",
+  "player",
+  "table",
+  "ui.hud",
+  "ui.menu",
+  "utils"
+]
