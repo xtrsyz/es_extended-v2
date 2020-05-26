@@ -1031,6 +1031,7 @@ xPlayer = Extends(nil)
   function xPlayer:serialize()
 
     local data = {
+      name       = self:getName(),
       accounts   = self:getAccounts(),
       coords     = self:getCoords(),
       identifier = self:getIdentifier(),
@@ -1067,6 +1068,7 @@ xPlayer = Extends(nil)
 
     local data = {
       identifier = self:getIdentifier(),
+      name       = self:getName(),
       accounts   = json.encode(self:getAccounts(true)),
       group      = self:getGroup(),
       inventory  = json.encode(self:getInventory(true)),

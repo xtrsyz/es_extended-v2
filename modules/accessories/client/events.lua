@@ -41,6 +41,3 @@ if self.Config.EnableControls then
   end)
 
 end
-
-
-

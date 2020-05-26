@@ -11,6 +11,7 @@ end)
 
 on('esx:identity:prompt', function()
   utils.ui.showNotification("Please register your character.")
+  Citizen.Wait(1000)
   Menu.Open('dialog', GetCurrentResourceName(), 'identity_first_name', {
     title = "Enter Your First Name (Max 10 Characters)"
   }, function(data, menu)
@@ -46,12 +47,12 @@ on('esx:identity:prompt', function()
                 title = "Enter Your Sex (m or f)"
               }, function(data4, menu4)
 
-                local sexVal = tostring(data4.value)
+                local sexVal = string.lower(tostring(data4.value))
                 local sex
 
-                if sexVal == "M" or sexVal == "m" then
+                if sexVal == "m" then
                   sex = "Male"
-                elseif sexVal == "F" or sexVal == "f" then
+                elseif sexVal == "f" then
                   sex = "Female"
                 end
 
