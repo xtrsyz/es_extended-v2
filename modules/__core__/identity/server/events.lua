@@ -6,12 +6,6 @@ onRequest('esx:identity:check', function(source, cb)
     if result then
       if result[1] then
         if result[1].first_name and result[1].last_name and result[1].dob then
-
-          print(xPlayer.first_name)
-          print(xPlayer.last_name)
-          print(xPlayer.dob)
-          print(xPlayer.sex)
-
           cb(true)
         else
           cb(false)
