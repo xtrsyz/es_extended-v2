@@ -1,6 +1,8 @@
-# ESX
+# ESX 2
 
-### How to run develop branch
+### Sill looking for old version ? => https://github.com/ESX-Org/es_extended/releases/tag/v1-final
+
+### How to run latest ESX
 
 ```
 # minimum resources and config to get it working

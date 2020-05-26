@@ -100,7 +100,7 @@ function Menu:constructor(name, data, focus)
     end
 
     for k,v in pairs(data) do
-      _items[index][k] = data[k]
+      _items[index ][k] = data[k]
     end
 
     self:emit('item.change', self.items[index], prop, val, index)
@@ -130,14 +130,7 @@ function Menu:emit(name, ...)
 
 end
 
-function Menu:by(k)
-  return table.by(self.items, k)
-end
-
-function Menu:destroy(name)
-  Frame:destroy('ui:menu:' .. name)
-  Frame:unfocus()
-end
+UIMenu = Menu
 
 -- Temp shit old menus compat
 self.RegisteredTypes = {}
@@ -276,7 +269,7 @@ end
 
 --[[ Temp test menu
 
-local menu = Menu:create('test', {
+local menu = UIMenu:create('test', {
   title = 'Test menu',
   items = {
     {name= 'a', label= 'Fufu c\'est ma bro', type= 'slider'},
@@ -310,5 +303,4 @@ end);
 menu:on('item.click', function(item, index)
   print('index', index)
 end)
-
 ]]--
