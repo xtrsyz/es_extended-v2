@@ -193,3 +193,16 @@ table.merge = function(t1, t2)
   return t1
 
 end
+
+table.by = function(t, k)
+
+  local t2 = {}
+
+  for i=1, #t, 1 do
+    local entry = t[i]
+    t2[k] = entry[i]
+  end
+
+  return t2
+
+end

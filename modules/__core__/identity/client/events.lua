@@ -1,4 +1,5 @@
-local Menu  = M('ui.menu')
+M('ui.menu')
+
 local utils = M('utils')
 
 on('esx:ready', function()
@@ -11,71 +12,72 @@ end)
 
 on('esx:identity:prompt', function()
   utils.ui.showNotification("Please register your character.")
-  Citizen.Wait(1000)
-  Menu.Open('dialog', GetCurrentResourceName(), 'identity_first_name', {
-    title = "Enter Your First Name (Max 10 Characters)"
-  }, function(data, menu)
 
-    local firstName = tostring(data.value)
+    local char_create = Menu:create('identity', {
+    title = 'Create Character',
+    items = {
+      {name = 'first', label = "First name", type = "text"},
+      {name = 'last', label = "Last name", type = 'text'},
+      {name = 'dob', label = "Date of birth", type = 'text'},
+      {name = 'gender', label = "Gender", type = 'slider'},
+      {name = 'submit', label = "Submit", type = 'button'},
+    }
+  })
 
-    if firstName == nil then
-      utils.ui.showNotification("Invalid First Name. Try again. (Max 10 Characters)")
-    else
-      menu.close()
-
-      Menu.Open('dialog', GetCurrentResourceName(), 'identity_last_name', {
-        title = "Enter Your Last Name (Max 10 Characters)"
-      }, function(data2, menu2)
-        local lastName = tostring(data2.value)
-
-        if lastName == nil then
-          utils.ui.showNotification("Invalid Last Name. Try again. (Max 10 Characters)")
-        else
-          menu2.close()
-          Menu.Open('dialog', GetCurrentResourceName(), 'identity_dob', {
-            title = "Enter Your DOB (Max 10 Characters)"
-          }, function(data3, menu3)
-
-            local dob = tostring(data3.value)
-
-            if dob == nil or GetLengthOfLiteralString(dob) > 10 then
-              utils.ui.showNotification("Invalid DOB. Try again. (XX/XX/XXXX)")
-            else
-              menu3.close()
-
-              Menu.Open('dialog', GetCurrentResourceName(), 'identity_sex', {
-                title = "Enter Your Sex (m or f)"
-              }, function(data4, menu4)
-
-                local sexVal = string.lower(tostring(data4.value))
-                local sex
-
-                if sexVal == "m" then
-                  sex = "Male"
-                elseif sexVal == "f" then
-                  sex = "Female"
-                end
-
-                if not sex then
-                  utils.ui.showNotification("Invalid Sex. Try again. (M or F)")
-                else
-                  menu4.close()
-                  emitServer('esx:identity:register', firstName, lastName, dob, sex)
-                  utils.ui.showNotification("Thank you for registering.")
-                end
-              end, function(data4, menu4)
-                menu4.close()
-              end)
-            end
-          end, function(data3, menu3)
-            menu3.close()
-          end)
-        end
-      end, function(data2, menu2)
-        menu2.close()
-      end)
-    end
-  end, function(data, menu)
-    menu.close()
+  char_create:on('ready', function()
+    first_name = char_create:by('name')
+    last_name = char_create:by('surname')
+    dob = char_create:by('date')
+    gender = char_create:by('sex')
   end)
+
+  char_create:on('item.change', function(item, prop, val, index)
+
+    if (item.name == 'first') and (prop == 'value') then
+      if val ~= nil then
+        first_name.name = val
+      end
+    end
+
+    if (item.name == 'last') and (prop == 'value') then
+      if val ~= nil then
+        last_name.surname = val
+      end
+    end
+
+    if (item.name == 'dob') and (prop == 'value') then
+      if val ~= nil then
+        dob.date = val
+      end
+    end
+
+    if (item.name == 'gender') and (prop == 'value') then
+      if val ~= nil then
+        if val > 50 then
+          item.label = 'Gender M'
+          gender.sex = "Male"
+        else
+          item.label = 'Gender F'
+          gender.sex = "Female"
+        end
+      end
+    end
+
+  end)
+
+  char_create:on('item.click', function(item, index)
+
+    if item.name == 'submit' then
+      if (first_name.name ~= nil) and (last_name.surname ~= nil) and (dob.date ~= nil) and (gender.sex ~= nil) then
+        char_create:destroy('identity')
+        utils.ui.showNotification("Character created!")
+
+        emit('esx:identity:register', first_name.name, last_name.surname, dob.date, gender.sex)
+      else
+        utils.ui.showNotification("Please fill in all fields before submitting!")
+      end
+    end
+
+  end)
+
 end)
