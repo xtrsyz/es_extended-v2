@@ -1,6 +1,6 @@
 # ESX 2
 
-### Sill looking for old version ? => https://github.com/ESX-Org/es_extended/releases/tag/1.2.0
+### Sill looking for old version ? => https://github.com/ESX-Org/es_extended/tree/v1-final
 
 ### How to run latest ESX
 
