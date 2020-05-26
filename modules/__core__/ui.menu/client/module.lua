@@ -267,7 +267,7 @@ self.IsOpen = function(type, namespace, name)
 	return self.GetOpened(type, namespace, name) ~= nil
 end
 
--- Temp test menu
+--[[ Temp test menu
 
 local menu = UIMenu:create('test', {
   title = 'Test menu',
@@ -303,3 +303,4 @@ end);
 menu:on('item.click', function(item, index)
   print('index', index)
 end)
+]]--
