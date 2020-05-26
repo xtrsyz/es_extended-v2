@@ -12,15 +12,15 @@
 	window.addEventListener('message', e => {
 
 		const msg = e.data;
-	
+
 		switch(msg.action) {
 
 			case 'set' : {
-				
+
 				float = msg.data.float || 'left|top';
 				title = msg.data.title || 'Untitled ESX Menu';
 				items = msg.data.items || [];
-				
+
 				break;
 			}
 
@@ -99,7 +99,7 @@
 		<item class="title">{title}</item>
 
 		{#each _items as item, i}
-			
+
 			{#if item.visible}
 
 				{#if item.type === undefined || item.type === 'default' || item.type === 'button'}
@@ -144,7 +144,7 @@
 		user-select: none;
 		flex-direction: column;
 		border-radius: 10px;
-		min-width: 280px;  
+		min-width: 280px;
 	}
 
 	main.float-left > main-wrap {

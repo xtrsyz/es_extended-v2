@@ -1,3 +1,138 @@
+M('class')
+M('events')
+
+local HUD = M('ui.hud')
+
+Menu = Extends(nil)
+
+function Menu:constructor(name, data, focus)
+
+  self.name     = name
+  self.float    = data.float or 'top|left'
+  self.title    = data.title or 'Untitled ESX Menu'
+  self.items    = {}
+  self.frame    = nil
+  self.handlers = {}
+
+  if focus == nil then
+    focus = true
+  end
+
+  local _items = data.items or {}
+
+  for i=1, #_items, 1 do
+
+    local scope = function(i)
+
+      local item = _items[i]
+
+      if item.visible == nil then
+        item.visible = true
+      end
+
+      if item.type == 'slider' then
+
+        if item.min == nil then
+          item.min = 0
+        end
+
+        if item.max == nil then
+          item.max = 100
+        end
+
+      end
+
+      self.items[i] = setmetatable({}, {
+
+        __index = function(t, k)
+          return item[k]
+        end,
+
+        __newindex = function(t, k, v)
+          item[k] = v
+          self.frame:postMessage({action = 'set_item', index = i - 1, prop = k, val = v})
+        end,
+
+      })
+
+    end
+
+    scope(i)
+
+  end
+
+  self.frame = Frame:create('ui:menu:' .. name, 'nui://' .. __RESOURCE__ .. '/modules/__core__/ui.menu/data/html/index.html', true)
+
+  self.frame:onMessage(function(msg)
+
+    if msg.action == 'ready' then
+      self:emit('internal:ready')
+    elseif msg.action == 'item.change' then
+      self:emit('internal:item.change', msg.prop, msg.val, msg.index + 1)
+    elseif msg.action == 'item.click' then
+      self:emit('internal:item.click', msg.index + 1)
+    end
+
+  end)
+
+  self:on('internal:ready', function()
+
+    self.frame:postMessage({action = 'set', data = {
+      float = self.float,
+      title = self.title,
+      items = _items,
+    }})
+
+    if focus then
+      self.frame:focus(true)
+    end
+
+    self:emit('ready')
+
+  end)
+
+  self:on('internal:item.change', function(prop, val, index)
+
+    local prev = {}
+
+    for k,v in pairs(_items[index]) do
+      prev[k] = v
+    end
+
+    for k,v in pairs(data) do
+      _items[index ][k] = data[k]
+    end
+
+    self:emit('item.change', self.items[index], prop, val, index)
+
+  end)
+
+  self:on('internal:item.click', function(index)
+    self:emit('item.click', self.items[index], index)
+  end)
+
+end
+
+function Menu:on(name, fn)
+  self.handlers[name]     = self.handlers[name] or {}
+  local handlers          = self.handlers[name]
+  handlers[#handlers + 1] = fn
+end
+
+function Menu:emit(name, ...)
+
+  self.handlers[name] = self.handlers[name] or {}
+  local handlers      = self.handlers[name]
+
+  for i=1, #handlers, 1 do
+    handlers[i](...)
+  end
+
+end
+
+UIMenu = Menu
+
+-- Temp shit old menus compat
 self.RegisteredTypes = {}
 self.Opened          = {}
 
@@ -131,3 +266,40 @@ end
 self.IsOpen = function(type, namespace, name)
 	return self.GetOpened(type, namespace, name) ~= nil
 end
+
+-- Temp test menu
+
+local menu = UIMenu:create('test', {
+  title = 'Test menu',
+  items = {
+    {name= 'a', label= 'Fufu c\'est ma bro', type= 'slider'},
+    {name= 'b', label= 'Fuck that shit',     type= 'check'},
+    {name= 'c', label= 'Fuck that shit',     type= 'text'},
+    {name= 'd', label= 'Lorem ipsum'},
+    {name= 'e', label= 'Submit',             type= 'button'},
+  }
+})
+
+menu:on('ready', function()
+  menu.items[1].label = 'TEST';-- label changed instantly in webview
+end);
+
+menu:on('item.change', function(item, prop, val, index)
+
+  if (item.name == 'a') and (prop == 'value') then
+
+    item.label = 'Dynamic label ' .. tostring(val);
+
+  end
+
+  if (item.name == 'b') and (prop == 'value') then
+
+    table.find(menu.items, function(e) return e.name == 'c' end).value = 'Dynamic text ' .. tostring(val);
+
+  end
+
+end);
+
+menu:on('item.click', function(item, index)
+  print('index', index)
+end)

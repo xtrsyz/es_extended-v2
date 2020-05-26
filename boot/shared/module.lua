@@ -280,12 +280,14 @@ self.LoadModule = function(name)
 
       ESX.LogError('module [' .. name .. '] does not exist', '@' .. resName .. ':modules/__core__/__main__/module.lua')
       TriggerEvent('esx:module:load:error', name, isCore)
-
+      
+      return nil, true
+      
     end
 
   end
 
-  return ESX.Modules[name]
+  return ESX.Modules[name], false
 
 end
 

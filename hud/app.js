@@ -5,7 +5,6 @@
     constructor() {
 
       this.frames = {};
-      this.modulePath = '../modules';
 
       window.addEventListener('message', e => {
 
@@ -115,6 +114,6 @@
 
   }
 
-  ESX = new ESX();
+  const esx = new ESX();
 
 })();

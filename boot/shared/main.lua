@@ -1,26 +1,43 @@
-local self = ESX.Modules['boot']
+local self     = ESX.Modules['boot']
+local hasError = false
 
 for i=1, #self.CoreEntries, 1 do
 
   local name = self.CoreEntries[i]
 
   if self.ModuleHasEntryPoint(name, true) then
-    self.LoadModule(name, true)
+    
+    local module, _error = self.LoadModule(name, true)
+
+    if _error then
+      hasError = true
+      break
+    end
+
   end
 
 end
 
-for i=1, #self.Entries, 1 do
+if not hasError then
 
-  local name = self.Entries[i]
+  for i=1, #self.Entries, 1 do
 
-  if Config.Modules[name] and self.ModuleHasEntryPoint(name, false) then
-    self.LoadModule(name, false)
+    local name = self.Entries[i]
+
+    if Config.Modules[name] and self.ModuleHasEntryPoint(name, false) then
+      
+      local module, _error = self.LoadModule(name, false)
+
+      if _error then
+        break
+      end
+
+    end
+
   end
 
 end
 
--- ESX.Loop
 Citizen.CreateThread(function()
 
   if not IsDuplicityVersion() then
