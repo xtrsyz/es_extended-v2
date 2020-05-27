@@ -21,6 +21,7 @@ xPlayer = Extends(nil)
 
   xPlayer.all           = {}
   xPlayer.dbSyncStarted = false
+  xPlayer.accessors     = {}
 
   xPlayer.createAccessor = function(name)
 
@@ -28,13 +29,15 @@ xPlayer = Extends(nil)
     local getter         = 'get' .. firstCharUpper
     local setter         = 'set' .. firstCharUpper
 
-    xPlayer[getter] = function()
+    xPlayer[getter] = function(self)
       return self[name]
     end
 
-    xPlayer[setter] = function(val)
+    xPlayer[setter] = function(self, val)
       self[name] = val
     end
+
+    xPlayer.accessors[name] = {name = name, db = false}
 
   end
 
@@ -48,6 +51,8 @@ xPlayer = Extends(nil)
     local setter         = 'set' .. firstCharUpper
 
     xPlayer.createAccessor(name, default)
+
+    xPlayer.accessors[name] = {name = name, db = true, field = field}
 
     on('esx:db:init', function(initTable, extendTable)
       extendTable('users', {field})

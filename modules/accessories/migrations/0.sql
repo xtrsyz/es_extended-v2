@@ -1,2 +1,0 @@
-ALTER TABLE `users` ADD COLUMN `accessories` LONGTEXT NULL DEFAULT NULL;
-

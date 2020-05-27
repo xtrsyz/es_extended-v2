@@ -59,9 +59,9 @@ on('esx:db:internal:ready', function()
 
   -- Init minimum required schemas here
   self.InitTable('migrations', 'id', {
-    {name = 'id',     type = 'INT',     length = 11, default = nil, extra = 'NOT NULL AUTO_INCREMENT'},
+    {name = 'id',     type = 'INT',     length = 11, default = nil,  extra = 'NOT NULL AUTO_INCREMENT'},
     {name = 'module', type = 'VARCHAR', length = 64,  default = nil, extra = nil},
-    {name = 'last',   type = 'INT',     length = 11, default = nil, extra = nil},
+    {name = 'last',   type = 'INT',     length = 11, default = nil,  extra = nil},
   })
 
   self.InitTable('users', 'identifier', {
