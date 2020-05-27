@@ -1,3 +1,15 @@
+-- Copyright (c) Jérémie N'gadi
+--
+-- All rights reserved.
+--
+-- Even if 'All rights reserved' is very clear :
+--
+--   You shall not use any piece of this software in a commercial product / service
+--   You shall not resell this software
+--   You shall not provide any facility to install this particular software in a commercial product / service
+--   If you redistribute this software, you must link to ORIGINAL repository at https://github.com/ESX-Org/es_extended
+--   This copyright should appear in every part of the project code
+
 table.sizeOf = function(t)
 
   local count = 0
@@ -191,5 +203,18 @@ table.merge = function(t1, t2)
   end
 
   return t1
+
+end
+
+table.by = function(t, k)
+
+  local t2 = {}
+
+  for i=1, #t, 1 do
+    local entry = t[i]
+    t2[k] = entry[i]
+  end
+
+  return t2
 
 end

@@ -1,3 +1,15 @@
+# Copyright (c) Jérémie N'gadi
+#
+# All rights reserved.
+#
+# Even if 'All rights reserved' is very clear :
+#
+#   You shall not use any piece of this software in a commercial product / service
+#   You shall not resell this software
+#   You shall not provide any facility to install this particular software in a commercial product / service
+#   If you redistribute this software, you must link to ORIGINAL repository at https://github.com/ESX-Org/es_extended
+#   This copyright should appear in every part of the project code
+
 import os
 import glob
 import markdown2
@@ -46,12 +58,12 @@ def create_markdown_from_class(cls, file_name):
       if paramCount > 0:
         md = md + ', '
 
-      md = md + '<span style="color:' + colors[param.type.id] + '">' + param.type.id + '</span> ' + param.name 
+      md = md + '<span style="color:' + colors[param.type.id] + '">' + param.type.id + '</span> ' + param.name
 
       paramCount = paramCount + 1
 
     md = md + ' **)**\n\n'
-    
+
     for param in method.params:
       md = md + '* <span style="color:' + colors[param.type.id] + '">' + param.type.id + '</span> ' + param.name + ' *<span style="color: #888">' + param.desc + '</span>*\n\n'
 
