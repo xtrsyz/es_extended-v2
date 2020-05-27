@@ -26,7 +26,7 @@ self.CheckIdentity = function()
 end
 
 self.OpenMenu = function()
-  utils.ui.showNotification("Please register your character.")
+  utils.ui.showNotification(_U('identity_register'))
 
   self.Menu =
     Menu:create(
@@ -71,9 +71,9 @@ self.OpenMenu = function()
           self.Menu:destroy()
           self.Menu = nil
 
-          utils.ui.showNotification("Welcome, " .. props.firstName .. " " .. props.lastName)
+          utils.ui.showNotification(_U('identity_welcome', props.firstName, props.lastName))
         else
-          utils.ui.showNotification("Please fill in all fields before submitting !")
+          utils.ui.showNotification(_U('identity_fill_in'))
         end
       end
     end

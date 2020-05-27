@@ -203,7 +203,7 @@ self.OpenMenu = function(submitCb, cancelCb, restrict)
 						self.Menu = nil
 						self.DeleteSkinCam()
 
-						utils.ui.showNotification("Test")
+						utils.ui.showNotification(_U('skin:skin_saved'))
 
 						TriggerServerEvent("esx_skin:save", props)
 					end
@@ -225,7 +225,7 @@ self.CreateSkinCam = function()
 
 	self.isCameraActive = true
 	SetCamRot(self.cam, 0.0, 0.0, 270.0, true)
-	SetEntityHeading(playerPed, 90.0)
+	SetEntityHeading(playerPed, 0.0)
 end
 
 self.DeleteSkinCam = function()
