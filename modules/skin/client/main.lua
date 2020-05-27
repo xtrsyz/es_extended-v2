@@ -65,7 +65,7 @@ Citizen.CreateThread(
 				SetCamCoord(self.cam, pos.x, pos.y, coords.z + self.camOffset)
 				PointCamAtCoord(self.cam, posToLook.x, posToLook.y, coords.z + self.camOffset)
 
-				utils.ui.showNotification(_U("use_rotate_view"))
+				utils.ui.showHelpNotification(_U('skin:use_rotate_view'))
 			else
 				Citizen.Wait(500)
 			end
