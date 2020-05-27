@@ -4,7 +4,8 @@
 
     constructor() {
 
-      this.frames = {};
+      this.frames  = {};
+      this.resName = GetParentResourceName();
 
       window.addEventListener('message', e => {
 
@@ -19,7 +20,7 @@
 
       });
 
-      $.post('http://es_extended/nui_ready', '{}');
+      $.post('http://' + this.resName + '/nui_ready', '{}');
 
     }
 
@@ -41,13 +42,18 @@
       if(!visible)
         this.hideFrame(name);
 
+      this.frames[name].iframe.contentWindow.addEventListener('DOMContentLoaded', () => {
+        $.post('http://' + this.resName + '/frame_load', JSON.stringify({name}));
+      }, true);
+
       return this.frames[name];
 
     }
 
     destroyFrame(name) {
-      document.querySelector('#frames').removeChild(this.frames[name].frame);
+      this.frames[name].iframe.remove();
       this.frames[name].frame.remove();
+      delete this.frames[name];
     }
 
     showFrame(name) {
@@ -109,7 +115,7 @@
     }
 
     onFrameMessage(name, msg) {
-      $.post('http://es_extended/frame_message', JSON.stringify({name, msg}));
+      $.post('http://' + this.resName + '/frame_message', JSON.stringify({name, msg}));
     }
 
   }

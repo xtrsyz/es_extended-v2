@@ -10,6 +10,55 @@ xPlayer = Extends(nil)
   xPlayer.all           = {}
   xPlayer.dbSyncStarted = false
 
+  xPlayer.createAccessor = function(name)
+
+    local firstCharUpper = name:gsub("^%l", string.upper)
+    local getter         = 'get' .. firstCharUpper
+    local setter         = 'set' .. firstCharUpper
+
+    xPlayer[getter] = function()
+      return self[name]
+    end
+
+    xPlayer[setter] = function(val)
+      self[name] = val
+    end
+
+  end
+
+  xPlayer.createDBAccessor = function(name, field, encode, decode)
+
+    encode = encode or function(x) return x end
+    decode = decode or function(x) return x end
+
+    local firstCharUpper = name:gsub("^%l", string.upper)
+    local getter         = 'get' .. firstCharUpper
+    local setter         = 'set' .. firstCharUpper
+
+    xPlayer.createAccessor(name, default)
+
+    on('esx:db:init', function(initTable, extendTable)
+      extendTable('users', {field})
+    end)
+
+    on('esx:player:load:' .. field.name, function(identifier, playerId, row, userData, addTask)
+
+      addTask(function(cb)
+        cb({[name] = decode(row[field.name])})
+      end)
+
+    end)
+
+    on('esx:player:serialize', function(player, add)
+      add({[name] = player[getter](player)})
+    end)
+
+    on('esx:player:serialize:db', function(player, add)
+      add({[field.name] = encode(player[getter](player))})
+    end)
+
+  end
+
   --- @function xPlayer.fromId
   --- Get xPlayer from id
   --- @param id number Player id
@@ -151,7 +200,7 @@ xPlayer = Extends(nil)
 
     Async.parallelLimit(asyncTasks, 8, function(results)
 
-      print(('saved %s player(s)'):format(#results))
+      print(('saved %s player(s)'):format(#asyncTasks))
 
       if cb then
         cb()
@@ -233,15 +282,6 @@ xPlayer = Extends(nil)
     else
       DropPlayer(playerId, 'there was an error loading your character!\nError code: identifier-missing-ingame\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
     end
-  end
-
-  xPlayer.defineDBField = function(name, default, parse, build)
-
-    local upper             = name:gsub("^%l", string.upper)
-    xPlayer[name]           = default;
-    xPlayer['get' .. upper] = function()  return xPlayer[name] end
-    xPlayer['set' .. upper] = function(v) xPlayer[name] = v    end
-
   end
 
   -- Instance properties / methods

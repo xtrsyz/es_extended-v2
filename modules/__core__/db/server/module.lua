@@ -283,21 +283,12 @@ self.DBTable = DBTable
 
 self.InitTable = function(name, pk, fields, rows)
 
-  rows                = rows or {}
-  local tbl           = DBTable:create(name, pk)
-  local fieldNamesStr = ''
+  rows      = rows or {}
+  local tbl = DBTable:create(name, pk)
 
   for i=1, #fields, 1 do
-
     local field = fields[i]
     tbl:field(field.name, field.type, field.length, field.default, field.extra)
-
-    if i > 1 then
-      fieldNamesStr = fieldNamesStr .. ', '
-    end
-
-    fieldNamesStr = fieldNamesStr .. field.name
-
   end
 
   for i=1, #rows, 1 do
@@ -305,8 +296,6 @@ self.InitTable = function(name, pk, fields, rows)
   end
 
   self.Tables[name] = tbl
-
-  print('init table ^5' .. name .. '^7 (' .. fieldNamesStr .. ')')
 
 end
 
@@ -319,14 +308,6 @@ self.ExtendTable = function(name, fields)
     local field = fields[i]
     tbl:field(field.name, field.type, field.length, field.default, field.extra)
   end
-
-  if i > 1 then
-    fieldNamesStr = fieldNamesStr .. ', '
-  end
-
-  fieldNamesStr = fieldNamesStr .. field.name
-
-  print('extend table ^5' .. name .. '^7 (' .. fieldNamesStr .. ')')
 
 end
 

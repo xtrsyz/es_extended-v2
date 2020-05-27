@@ -102,7 +102,7 @@
 
 			{#if item.visible}
 
-				{#if item.type === undefined || item.type === 'default' || item.type === 'button'}
+				{#if item.type === 'default' || item.type === 'button'}
 					<item class="{item.type === 'button' ? 'button' : ''}" on:click={e => onItemClick(e, item, i)}>{item.label}</item>
 				{/if}
 
@@ -122,7 +122,7 @@
 				{#if item.type === 'text'}
 					<item class="text" on:click={e => onItemClick(e, item, i)}>
 						<div>{item.label}</div>
-						<div><input type="text" bind:value={item.value} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/></div>
+						<div><input type="text" bind:value={item.value} placeholder={item.placeholder || ''} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/></div>
 					</item>
 				{/if}
 
@@ -138,7 +138,7 @@
 		display: flex;
 		position: absolute;
 		border-left: 0;
-		background-color: rgba(0, 0, 0, 0.8);
+		background-color: rgba(0, 0, 0, 0.9);
 		padding: 15px 10px;
 		font-size: 1.1em;
 		user-select: none;
@@ -162,6 +162,20 @@
 	main.float-botttom > main-wrap {
 		bottom: 10px;
 	}
+
+  main.float-center > main-wrap {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  main.float-middle > main-wrap {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  main.float-center.float-middle > main-wrap {
+    transform: translate(-50%, -50%);
+  }
 
 	item {
 		padding: 14px;

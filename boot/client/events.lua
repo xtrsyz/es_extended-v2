@@ -1,61 +1,69 @@
 local self = ESX.Modules['boot']
 
 -- Need a bit of core modules here
-self.LoadModule('events', true)
-
-local Menu   = self.LoadModule('ui.menu',  true)
-local HUD    = self.LoadModule('game.hud', true)
+M('events')
+local Menu = M('ui.menu')
+local HUD  = M('game.hud')
 
 onServer('esx:playerLoaded', function(playerData)
 
-  	ESX.PlayerLoaded = true
-	ESX.PlayerData = playerData
+  ESX.PlayerLoaded = true
+  ESX.PlayerData   = playerData
 
-	local playerPed = PlayerPedId()
+  local playerPed = PlayerPedId()
 
-	if Config.EnablePvP then
-		SetCanAttackFriendly(playerPed, true, false)
-		NetworkSetFriendlyFireOption(true)
-	end
+  if Config.EnablePvP then
+    SetCanAttackFriendly(playerPed, true, false)
+    NetworkSetFriendlyFireOption(true)
+  end
 
-	if Config.EnableHud then
+  if Config.EnableHud then
 
-    for k,v in ipairs(playerData.accounts) do
-			local accountTpl = '<div><img src="img/accounts/' .. v.name .. '.png"/>&nbsp;{{money}}</div>'
-			HUD.RegisterElement('account_' .. v.name, k, 0, accountTpl, {money = math.groupDigits(v.money)})
-		end
+    Citizen.CreateThread(function()
 
-		local jobTpl = '<div>{{job_label}} - {{grade_label}}</div>'
+      while (not HUD.Frame) or (not HUD.Frame.loaded) do
+        Citizen.Wait(0)
+      end
 
-		if playerData.job.grade_label == '' or playerData.job.grade_label == playerData.job.label then
-			jobTpl = '<div>{{job_label}}</div>'
-		end
+      for k,v in ipairs(playerData.accounts) do
+        local accountTpl = '<div><img src="img/accounts/' .. v.name .. '.png"/>&nbsp;{{money}}</div>'
+        HUD.RegisterElement('account_' .. v.name, k, 0, accountTpl, {money = math.groupDigits(v.money)})
+      end
 
-		HUD.RegisterElement('job', #playerData.accounts, 0, jobTpl, {
-			job_label = playerData.job.label,
-			grade_label = playerData.job.grade_label
-    })
+      local jobTpl = '<div>{{job_label}} - {{grade_label}}</div>'
 
-	end
+      if playerData.job.grade_label == '' or playerData.job.grade_label == playerData.job.label then
+        jobTpl = '<div>{{job_label}}</div>'
+      end
 
-	-- Bringing back spawnmanager, see commit of Smallo92 at https://github.com/extendedmode/extendedmode/commit/9979c204f1237091e94fdd46580c9e7ebc79bca7
-	exports.spawnmanager:spawnPlayer({
-		x        = playerData.coords.x,
-		y        = playerData.coords.y,
-		z        = playerData.coords.z,
-		heading  = playerData.coords.heading,
-		model    = 'mp_m_freemode_01',
-		skipFade = false
-  	}, function()
+      HUD.RegisterElement('job', #playerData.accounts, 0, jobTpl, {
+        job_label = playerData.job.label,
+        grade_label = playerData.job.grade_label
+      })
 
+    end)
+
+  end
+
+  -- Bringing back spawnmanager, see commit of Smallo92 at https://github.com/extendedmode/extendedmode/commit/9979c204f1237091e94fdd46580c9e7ebc79bca7
+  exports.spawnmanager:spawnPlayer({
+
+    x        = playerData.coords.x,
+    y        = playerData.coords.y,
+    z        = playerData.coords.z,
+    heading  = playerData.coords.heading,
+    model    = 'mp_m_freemode_01',
+    skipFade = false
+
+  }, function()
 
     if Config.EnableLoadScreen then
       ShutdownLoadingScreen()
       ShutdownLoadingScreenNui()
     end
 
-	emitServer('esx:onPlayerSpawn')
-	emit('esx:onPlayerSpawn')
+    emitServer('esx:onPlayerSpawn')
+    emit('esx:onPlayerSpawn')
     emit('esx:restoreLoadout')
 
     ESX.Ready = true

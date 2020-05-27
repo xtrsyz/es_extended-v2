@@ -29,6 +29,7 @@ end
 
 -- ESX base
 ESX                   = {}
+ESX.Loaded            = false
 ESX.Ready             = false
 ESX.Modules           = {}
 ESX.TimeoutCount      = 1
@@ -197,7 +198,7 @@ self.createModuleEnv = function(name, isCore)
 
   end
 
-  local menv           = setmetatable(env, {__index = _G, __newindex = _G})
+  local menv         = setmetatable(env, {__index = _G, __newindex = _G})
   env._ENV           = menv
   env.module.__ENV__ = menv
 
@@ -229,13 +230,13 @@ self.LoadModule = function(name)
       env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/module.lua', menv)
 
       if _success then
-        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/events.lua', env)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/events.lua', env)
       else
         success = false
       end
 
       if _success then
-        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/main.lua',   env)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/shared/main.lua', env)
       else
         success = false
       end
@@ -245,19 +246,19 @@ self.LoadModule = function(name)
     if current then
 
       if env then
-        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', env)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', env)
       else
         env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/module.lua', menv)
       end
 
       if _success then
-        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/events.lua', env)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/events.lua', env)
       else
         success = false
       end
 
       if _success then
-        _env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/main.lua',   env)
+        env, _success = ESX.EvalFile(resName, 'modules/' .. prefix .. name .. '/' .. modType .. '/main.lua', env)
       else
         success = false
       end
@@ -280,9 +281,9 @@ self.LoadModule = function(name)
 
       ESX.LogError('module [' .. name .. '] does not exist', '@' .. resName .. ':modules/__core__/__main__/module.lua')
       TriggerEvent('esx:module:load:error', name, isCore)
-      
+
       return nil, true
-      
+
     end
 
   end

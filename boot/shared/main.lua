@@ -6,7 +6,7 @@ for i=1, #self.CoreEntries, 1 do
   local name = self.CoreEntries[i]
 
   if self.ModuleHasEntryPoint(name, true) then
-    
+
     local module, _error = self.LoadModule(name, true)
 
     if _error then
@@ -25,7 +25,7 @@ if not hasError then
     local name = self.Entries[i]
 
     if Config.Modules[name] and self.ModuleHasEntryPoint(name, false) then
-      
+
       local module, _error = self.LoadModule(name, false)
 
       if _error then
@@ -38,10 +38,12 @@ if not hasError then
 
 end
 
-Citizen.CreateThread(function()
+ESX.Loaded = true
 
-  if not IsDuplicityVersion() then
+emit('esx:load')
+
+if not IsDuplicityVersion() then
+  Citizen.CreateThread(function()
     AddTextEntry('FE_THDR_GTAO', 'ESX')
-  end
-
-end)
+  end)
+end
