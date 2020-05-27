@@ -14,11 +14,12 @@ local esx_config = {
   enable_loadscreen = true
 }
 
-fx_version  'adamant'
-game        'gta5'
-description 'ESX'
-version     '2.0.0'
-ui_page     'hud/index.html'
+fx_version      'adamant'
+game            'gta5'
+description     'ESX'
+version         '2.0.0'
+ui_page         'hud/index.html'
+ui_page_preload 'yes'
 
 dependencies {
   'spawnmanager',
@@ -36,8 +37,8 @@ files {
   'modules.json',
 
   'modules/__core__/modules.json',
-  'modules/__core__/*/data/**/*',
-  'modules/__core__/*/*.lua',
+  'modules/__core__/**/data/**/*',
+  'modules/__core__/**/*.lua',
 
   'modules/**/data/**/*',
   'modules/**/*.lua',
