@@ -31,7 +31,6 @@ end)
 
 RegisterNUICallback('nui_ready', function(data, cb)
   self.Ready = true
-  print('READY')
   emit('esx:nui:ready')
   cb('')
 end)
