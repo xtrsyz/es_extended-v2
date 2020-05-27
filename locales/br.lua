@@ -235,8 +235,8 @@ Locales['br'] = {
   ['tint_orange'] = 'orange skin',
   ['tint_platinum'] = 'platinum skin',
 
-    -- Identity
-    ['identity_register'] = 'Por favor, registre seu personagem.',
-    ['identity_welcome'] = 'Bem-vinda, ~b~%s %s',
-    ['identity_fill_in'] = 'Preencha todos os campos antes de enviar!',
+  -- Identity
+  ['identity_register'] = 'Por favor, registre seu personagem.',
+  ['identity_welcome'] = 'Bem-vinda, ~b~%s %s',
+  ['identity_fill_in'] = 'Preencha todos os campos antes de enviar!',
 }
