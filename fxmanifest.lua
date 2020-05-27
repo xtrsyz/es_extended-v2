@@ -54,8 +54,10 @@ server_scripts {
 
   'config/default/config.lua',
   'config/default/config.weapons.lua',
+  'config/default/config.items.lua',
   'config/default/modules/core/*.lua',
   'config/default/modules/*.lua',
+
   'config/modules/core/*.lua',
   'config/modules/*.lua',
 
@@ -75,8 +77,10 @@ client_scripts {
 
   'config/default/config.lua',
   'config/default/config.weapons.lua',
+  'config/default/config.items.lua',
   'config/default/modules/core/*.lua',
   'config/default/modules/*.lua',
+
   'config/modules/core/*.lua',
   'config/modules/*.lua',
 

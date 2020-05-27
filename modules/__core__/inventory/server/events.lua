@@ -14,10 +14,11 @@ M('events')
 
 on('esx:db:init', function(initTable, extendTable)
 
-  initTable('datastores', 'name', {
+  initTable('inventories', 'name', {
     {name = 'name',  type = 'VARCHAR',  length = 255, default = nil,    extra = 'NOT NULL'},
     {name = 'owner', type = 'VARCHAR',  length = 64,  default = 'NULL', extra = nil},
-    {name = 'data',  type = 'LONGTEXT', length = nil, default = nil,    extra = nil},
+    {name = 'items', type = 'LONGTEXT', length = nil, default = 'NULL', extra = nil},
   })
 
 end)
+

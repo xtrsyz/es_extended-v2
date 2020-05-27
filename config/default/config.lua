@@ -43,7 +43,7 @@ Config.EnableLoadScreen = true
 Config.Modules = {
 
   accessories     = true,
-  addonaccount    = true,
+  account         = true,
   addoninventory  = true,
   container       = true,
   datastore       = true,
