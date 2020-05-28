@@ -174,7 +174,7 @@ xPlayer.createDBAccessor('someData', {name = 'some_data', type = 'TEXT', length 
 M('string')
 
 xPlayer.createDBAccessor(
-  'someWeirdeData',
+  'someWeirdData',
   {name = 'some_weird_data', type = 'TEXT', length = nil, default = '1,2,3,4,5', extra = nil},
   function(x) -- encode
     return table.concat(x, ',')
