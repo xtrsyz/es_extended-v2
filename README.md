@@ -170,6 +170,7 @@ xPlayer.createDBAccessor('someData', {name = 'some_data', type = 'TEXT', length 
 ```lua
 -- I want to store WHATEVER (comma-separated list for example) :(
 -- No problem
+
 M('string')
 
 xPlayer.createDBAccessor(
@@ -180,6 +181,6 @@ xPlayer.createDBAccessor(
   end,
   function(x) -- decode
     return string.split(x, ',')
-  end,
+  end
 )
 ```
