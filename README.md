@@ -149,6 +149,8 @@ M('player')
 xPlayer.createDBAccessor('faction', {name = 'faction', type = 'VARCHAR', length = 64, default = 'gang.ballas', extra = nil})
 
 -- Now any player (which is instance of xPlayer) have the following methods
+-- Also user table has now a faction column added automatically
+
 local player = xPlayer:fromId(2)
 
 print(player:getFaction())
@@ -156,4 +158,27 @@ print(player:getFaction())
 player:setFaction('another.faction')
 
 player:save()
+```
+
+```lua
+-- I want to store JSON :(
+-- No problem
+
+xPlayer.createDBAccessor('someData', {name = 'some_data', type = 'TEXT', length = nil, default = '{}', extra = nil}, json.encode, json.decode)
+```
+
+-- I want to store WHATEVER (comma-separated list for example) :(
+-- No problem
+M('string')
+
+xPlayer.createDBAccessor(
+  'someWeirdeData',
+  {name = 'some_weird_data', type = 'TEXT', length = nil, default = '1,2,3,4,5', extra = nil},
+  function(x) -- encode
+    return table.concat(x, ',')
+  end,
+  function(x) -- decode
+    return string.split(x, ',')
+  end,
+)
 ```
