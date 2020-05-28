@@ -12,6 +12,29 @@
 
 M('events')
 
+on('esx:db:ready', function()
+
+  local sorted = {}
+
+  for k,v in pairs(xPlayer.accessors) do
+    sorted[#sorted + 1] = v
+  end
+
+  table.sort(sorted, function(a, b) return a.name < b.name end)
+
+  for i=1, #sorted, 1 do
+    local accessor = sorted[i]
+
+    if accessor.db then
+      print('new db accessor => ' .. accessor.name .. ' | ' .. accessor.field.name)
+    else
+      print('new simple accessor => ' .. accessor.name)
+    end
+
+  end
+
+end)
+
 -- xPlayer instance construction
 on('esx:player:load:accounts', function(identifier, playerId, row, userData, addTask)
 
@@ -237,7 +260,7 @@ AddEventHandler('playerDropped', function(reason)
 		emit('esx:playerDropped', playerId, reason)
 
 		player:save(function()
-			player.set(playerId, nil)
+			xPlayer.set(playerId, nil)
     end)
 
   end

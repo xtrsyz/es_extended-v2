@@ -29,9 +29,9 @@ local ADD_COLUMN_IN_NOT_EXISTS_PROCEDURE = [[
 -- Copyright (c) 2009 www.cryer.co.uk
 -- Script is free to use provided this copyright header is included.
 
-DROP PROCEDURE IF EXISTS ADD_COLUMN_IN_NOT_EXISTS;
+DROP PROCEDURE IF EXISTS ADD_COLUMN_IF_NOT_EXISTS;
 
-CREATE PROCEDURE ADD_COLUMN_IN_NOT_EXISTS(
+CREATE PROCEDURE ADD_COLUMN_IF_NOT_EXISTS(
   IN dbName    tinytext,
   IN tableName tinytext,
   IN fieldName tinytext,
@@ -59,9 +59,9 @@ on('esx:db:internal:ready', function()
 
   -- Init minimum required schemas here
   self.InitTable('migrations', 'id', {
-    {name = 'id',     type = 'INT',     length = 11, default = nil, extra = 'NOT NULL AUTO_INCREMENT'},
+    {name = 'id',     type = 'INT',     length = 11, default = nil,  extra = 'NOT NULL AUTO_INCREMENT'},
     {name = 'module', type = 'VARCHAR', length = 64,  default = nil, extra = nil},
-    {name = 'last',   type = 'INT',     length = 11, default = nil, extra = nil},
+    {name = 'last',   type = 'INT',     length = 11, default = nil,  extra = nil},
   })
 
   self.InitTable('users', 'identifier', {
