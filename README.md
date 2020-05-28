@@ -167,6 +167,7 @@ player:save()
 xPlayer.createDBAccessor('someData', {name = 'some_data', type = 'TEXT', length = nil, default = '{}', extra = nil}, json.encode, json.decode)
 ```
 
+```lua
 -- I want to store WHATEVER (comma-separated list for example) :(
 -- No problem
 M('string')
