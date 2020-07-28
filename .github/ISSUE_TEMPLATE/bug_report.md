@@ -1,13 +1,12 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+name: "\U0001F41B Bug Report"
+about: "If something isn't working as expected \U0001F914."
+title: ""
+labels: "i: bug, i: needs triage"
+assignees: ""
 ---
 
-# Template
+## Bug Report
 
 > Please use the template below and replace all example lines with your issue!
 
@@ -15,7 +14,7 @@ assignees: ''
 
 > Please put `x` inside of the box that matches your issue.
 
-- [ ] I'm using the latest version.
+- [ ] I'm using the latest version (develop branch).
 - [ ] The issue has occured more than once.
 - [ ] I have followed the readme and my setup is correct.
 - [ ] I have searched the ESX forum and Github issues for solution before submitting my issue.
@@ -25,21 +24,21 @@ assignees: ''
 
 > In a few short sentences please tell us what the expected result / correct behaviour should occur.
 
-__*Example text*__
+**_Example text_**
 
 ## Current Result
 
 > In a few short sentences please tell us what is currently happening and isn't "normal" (Images are strongly recommended).
 
-__*Example Text*__
+**_Example Text_**
 
 ## How to reproduce the problem
 
 > What steps did you take for the issue to occur? What would we have to do for the same result to happen?
 
-1. __*Example List*__
-2. __*Example List*__
-3. __*Example List*__
+1. **_Example List_**
+2. **_Example List_**
+3. **_Example List_**
 
 ## Errors
 
