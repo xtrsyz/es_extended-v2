@@ -33,7 +33,7 @@ This project and everyone participating in it is governed by the [ESX Framework 
 
 > **Note:** Please don't file an issue to ask a question, you'll get faster results by using the resources below.
 
-We have an official [discord server](https://discord.gg/ztzKWAF) with helpful advice if you have questions. ** Notice: ** We do not provide support for ESX v1 resources, use the [forums](https://forum.esx-framework.org/) to get community-based support for v1 resources. Please understand that you are not guaranteed to receive support.
+We have an official [discord server](https://discord.gg/ztzKWAF) with helpful advice if you have questions. **Notice:** We do not provide support for ESX v1 resources, use the [forums](https://forum.esx-framework.org/) to get community-based support for v1 resources. Please understand that you are not guaranteed to receive support.
 
 ## What should I know before I get started?
 
